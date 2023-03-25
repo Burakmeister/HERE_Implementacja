@@ -1,0 +1,20 @@
+
+‚
+java:S1319v"eThe type of "users" should be an interface such as "List" rather than the implementation "ArrayList".(ÌÁÍ8üÑòéí0
+E
+java:S1604."(Make this anonymous inner class a lambda(Ò„‡¬8ıÑòéí0
+s
+java:S1450!"XRemove the "addButton" field and declare it as a local variable in the relevant methods.(™õù»ÿÿÿÿÿ
+n
+java:S1450""XRemove the "tabLayout" field and declare it as a local variable in the relevant methods.(¤×ä
+z
+java:S1450#"XRemove the "viewPager" field and declare it as a local variable in the relevant methods.(åÙ¬Ïûÿÿÿÿ8¡Òòéí0
+]	java:S125;"<This block of commented-out lines of code should be removed.(µíôµùÿÿÿÿ8‡¿Çëí0
+^
+java:S1874O"<Remove this use of "FragmentPagerAdapter"; it is deprecated.(İ´úşùÿÿÿÿ8«Òòéí0
+J
+java:S1874R".Remove this use of "<init>"; it is deprecated.(‘í›\8«Òòéí0
+Ÿ
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ö¬¥8ŒÈëí0
+Ÿ
+java:S1186¦"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(—ã’å8ŒÑ¿ëí0

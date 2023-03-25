@@ -24,5 +24,7 @@
     <string name="maxSpeedText">Maksymalna prędkość: %1$.1f m/s</string>
     <string name="distanceText">Dystans: %1$.0f m</string>
     <string name="kcalText">Spalone kalorie: %1$d kcal</string>
+    <string name="user_image_content_description">zdjęcie</string>
+    <string name="action_button_content_description">zdjęcie</string>
 
 </resources>
