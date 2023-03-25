@@ -26,5 +26,11 @@
     <string name="kcalText">Spalone kalorie: %1$d kcal</string>
     <string name="user_image_content_description">zdjęcie</string>
     <string name="action_button_content_description">zdjęcie</string>
+    <string-array name="statistics_options">
+        <item>Ostatni trening</item>
+        <item>Ostatnie 5 treningów</item>
+        <item>Ostatnie 10 treningów</item>
+    </string-array>
+    <string name="statistics_training_text">Statystyki:</string>
 
 </resources>
