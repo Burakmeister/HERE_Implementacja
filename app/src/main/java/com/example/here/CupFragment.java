@@ -1,6 +1,7 @@
 package com.example.here;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -30,10 +31,26 @@ public class CupFragment extends Fragment {
         joinRaceButton = view.findViewById(R.id.join_race_button);
         searchRaceButton = view.findViewById(R.id.search_race_button);
 
+        myRacesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Narazie po kliknięciu przechodzi do widoku ustawiania trasy, zmienić to potem!!!!
+                Intent intent = new Intent(getActivity(), SetRouteActivity.class);
+                startActivity(intent);
+            }
+        });
+
         joinRaceButton.setOnClickListener(new View.OnClickListener() {  // po kliknięciu pojawia się popup do wprowadzenia kodu do zapisów
             @Override
             public void onClick(View view) {
                 showJoinRaceDialog();
+            }
+        });
+
+        searchRaceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Wyszukaj wyścig jakoś
             }
         });
 

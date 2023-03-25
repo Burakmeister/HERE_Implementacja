@@ -32,5 +32,10 @@
         <item>Ostatnie 10 treningów</item>
     </string-array>
     <string name="statistics_training_text">Statystyki:</string>
+    <string name="set_route_text">Wyznacz trasę:</string>
+    <string name="reset_route">Wyczyść trasę</string>
+    <string name="set_route">Ustaw trasę</string>
+    <string name="cancel_button">Anuluj</string>
+    <string name="skip_route_button">Pomiń wyznaczanie trasy</string>
 
 </resources>
