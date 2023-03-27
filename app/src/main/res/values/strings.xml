@@ -24,5 +24,18 @@
     <string name="maxSpeedText">Maksymalna prędkość: %1$.1f m/s</string>
     <string name="distanceText">Dystans: %1$.0f m</string>
     <string name="kcalText">Spalone kalorie: %1$d kcal</string>
+    <string name="user_image_content_description">zdjęcie</string>
+    <string name="action_button_content_description">zdjęcie</string>
+    <string-array name="statistics_options">
+        <item>Ostatni trening</item>
+        <item>Ostatnie 5 treningów</item>
+        <item>Ostatnie 10 treningów</item>
+    </string-array>
+    <string name="statistics_training_text">Statystyki:</string>
+    <string name="set_route_text">Wyznacz trasę:</string>
+    <string name="reset_route">Wyczyść trasę</string>
+    <string name="set_route">Ustaw trasę</string>
+    <string name="cancel_button">Anuluj</string>
+    <string name="skip_route_button">Pomiń wyznaczanie trasy</string>
 
 </resources>

@@ -1,11 +1,13 @@
 package com.example.here;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -32,6 +34,8 @@ import java.util.List;
 // Widok strony głównej
 
 public class HomeFragment extends Fragment {
+    private Button userButton;
+
     private View view;
     private MapView mapView;
 
@@ -49,6 +53,17 @@ public class HomeFragment extends Fragment {
         this.mapView.onCreate(savedInstanceState);
 
         setToLastRoute(new Waypoint(new GeoCoordinates(lastTourStartV1, lastTourStartV2)), new Waypoint(new GeoCoordinates(lastTourEndV1, lastTourEndV2)));     //rysowanie poprzedniej trasy po wspolrzednych
+
+        userButton = (Button) view.findViewById(R.id.userButton);
+
+        // Funkcjonalność panelu użytkownika
+        this.userButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {    // przełącz na UserSettingsActivity
+                Intent intent = new Intent(getContext(), UserSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         return view;
