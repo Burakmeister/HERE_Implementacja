@@ -6,12 +6,34 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
-import com.example.here.home.HomeFragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.here.sdk.core.Color;
+import com.here.sdk.core.GeoCoordinates;
+import com.here.sdk.core.GeoPolyline;
 import com.here.sdk.core.engine.SDKNativeEngine;
 import com.here.sdk.core.engine.SDKOptions;
 import com.here.sdk.core.errors.InstantiationErrorException;
+import com.here.sdk.mapview.MapMeasure;
+import com.here.sdk.mapview.MapPolyline;
+import com.here.sdk.mapview.MapScheme;
+import com.here.sdk.mapview.MapView;
+import com.here.sdk.routing.BicycleOptions;
+import com.here.sdk.routing.CalculateRouteCallback;
+import com.here.sdk.routing.Route;
+import com.here.sdk.routing.RoutingEngine;
+import com.here.sdk.routing.RoutingError;
+import com.here.sdk.routing.Waypoint;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -23,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeHERESDK();
