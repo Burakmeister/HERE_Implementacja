@@ -67,7 +67,8 @@ public class RunFragment extends Fragment {
         this.startTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), TrainingActivity.class));
+                Intent intent = new Intent(getActivity(), SetRouteActivity.class);
+                startActivity(intent);
             }
         });
 

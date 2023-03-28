@@ -184,28 +184,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/upcoming_events" />
 
-            <com.here.sdk.mapview.MapView
-                android:id="@+id/mapView"
-                android:layout_width="match_parent"
-                android:layout_height="247dp"
-                android:layout_marginTop="84dp"
-                android:background="@color/lightgrey2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="165dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="24dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.125"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

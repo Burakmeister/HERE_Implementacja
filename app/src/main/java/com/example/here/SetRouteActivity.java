@@ -82,7 +82,8 @@ public class SetRouteActivity extends AppCompatActivity {
         skipSetRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Pomiń wyznaczanie trasy
+                Intent intent = new Intent(SetRouteActivity.this, TrainingActivity.class);
+                startActivity(intent);
             }
         });
 
