@@ -69,5 +69,10 @@
     <string name="setNick">Wpisz nick</string>
     <string name="repassword">Podaj hasło jeszcze raz</string>
     <string name="signup">Zarejestruj się</string>
+
+    <!--    Home page-->
+    <string name="welcome_user">Witaj, Gabriel!</string>
+    <string name="online_friends">Sprawdź, kto jest aktywny z twoich znajomych</string>
+    <string name="upcoming_events">Nadchodzące wydarzenia</string>
   
 </resources>

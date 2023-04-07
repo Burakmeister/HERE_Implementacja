@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F2F2F2">
 
-
     <View
         android:id="@+id/top_view3"
         android:layout_width="385dp"
@@ -31,7 +30,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView_SignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -55,7 +54,6 @@
         app:layout_constraintVertical_bias="0.533">
 
         <TextView
-            android:id="@+id/textView_Email4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/nick"
@@ -63,7 +61,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText_Email4"
+            android:id="@+id/editText_Nick"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="12dp"
@@ -76,7 +74,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView_Email3"
+            android:id="@+id/textView_SignIn_Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -85,7 +83,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText_Email3"
+            android:id="@+id/editText_SignIn_Email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="12dp"
@@ -98,7 +96,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView_Email"
+            android:id="@+id/textView_SignIn_Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -107,7 +105,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText_Email"
+            android:id="@+id/editText_SignIn_Password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="12dp"
@@ -120,7 +118,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView_Password"
+            android:id="@+id/textView_SignIn_RePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -142,7 +140,7 @@
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
+            android:id="@+id/button_SignInButton"
             style="@android:style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -153,6 +151,5 @@
             android:textSize="25sp"
             android:textStyle="bold" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

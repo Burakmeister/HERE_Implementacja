@@ -16,16 +16,6 @@
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp">
-
-    <!-- Obraz amongusa do usunięcia jak będzie się tworzyło widok-->
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="651dp"
-        android:layout_height="993dp"
-        android:src="@drawable/winner_amogus"
-        tools:layout_editor_absoluteX="-134dp"
-        tools:layout_editor_absoluteY="-147dp"
-        tools:ignore="MissingConstraints" />
-
+        
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
