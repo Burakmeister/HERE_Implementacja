@@ -14,4 +14,9 @@
     <color name="pink">#E8B8F4</color>
     <color name="orange">#F79C64</color>
     <color name="red">#E56161</color>
+    <color name="light_green">#BEDBBB</color>
+    <color name="light_green2">#3F825C</color>
+    <color name="dark_green">#8DB596</color>
+    <color name="gray">#D7D6D7</color>
+    <color name="light_gray">#707070</color>
 </resources>

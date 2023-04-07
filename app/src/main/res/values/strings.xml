@@ -24,13 +24,50 @@
     <string name="maxSpeedText">Maksymalna prędkość: %1$.1f m/s</string>
     <string name="distanceText">Dystans: %1$.0f m</string>
     <string name="kcalText">Spalone kalorie: %1$d kcal</string>
+    <string name="user_image_content_description">zdjęcie</string>
+    <string name="action_button_content_description">zdjęcie</string>
+    <string-array name="statistics_options">
+        <item>Ostatni trening</item>
+        <item>Ostatnie 5 treningów</item>
+        <item>Ostatnie 10 treningów</item>
+    </string-array>
+    <string name="statistics_training_text">Statystyki:</string>
+    <string name="set_route_text">Wyznacz trasę:</string>
+    <string name="reset_route">Wyczyść trasę</string>
+    <string name="set_route">Ustaw trasę</string>
+    <string name="cancel_button">Anuluj</string>
+    <string name="skip_route_button">Pomiń wyznaczanie trasy</string>
 
+    <!-- Main layout data-->
     <string name="selectDiscipline"> Wybierz dyscypile sportową</string>
     <string name="userProfile">Twój profil</string>
     <string name="settingsTxt">Ustawienia</string>
+
+    <!--    friends list data: -->
     <string name="checkYourFriendsList">Sprawdź, kto jest aktywny z twoich znajomych:</string>
     <string name="friendsListTxt">Lista znajomych</string>
     <string name="welcomeText">Witaj, Gabriel!</string>
+
+    <!--    Statistic data-->
     <string name="statisticChoose">Wybierz okres aktywności</string>
 
+
+    <!--    Log in -->
+    <string name="welcome_login">Zaloguj się</string>
+    <string name="email">Email</string>
+    <string name="setEmail">Wpisz email</string>
+    <string name="password">Hasło</string>
+    <string name="setPassword">Wpisz hasło</string>
+    <string name="dontRememberPassword">Nie pamiętasz hasła? Zresetuj hasło.</string>
+    <string name="logInOtherWay">Albo zaloguj się z</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+
+    <!--    SignUp-->
+    <string name="welcome_signup">Utwórz konto</string>
+    <string name="nick">Nick</string>
+    <string name="setNick">Wpisz nick</string>
+    <string name="repassword">Podaj hasło jeszcze raz</string>
+    <string name="signup">Zarejestruj się</string>
+  
 </resources>

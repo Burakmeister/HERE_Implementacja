@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@drawable/bg_view"/>
-    <GridLayout
+
+        <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top_view"
