@@ -18,122 +18,88 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
-
-    TextView usersList;
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.api_test);
-
-        usersList = findViewById(R.id.users);
-
-        ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
-        Call<List<UserData>> call = apiInterface.getAllUsersData();
-
-        call.enqueue(new Callback<List<UserData>>() {
-            @Override
-            public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
-                List<UserData> users = response.body();
-                for(UserData u : users) {
-                    usersList.append(u.getNick() + "\n");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<UserData>> call, Throwable t) {
-//                Toast.makeText(MainActivity.this, "FAILURE: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-
-                usersList.setText(t.getMessage());
-
-            }
-        });
-
-    }
-}
-
 
 // W MainActivity znajduję się tylko dolny pasek z menu z tego tutoriala - https://www.geeksforgeeks.org/bottom-navigation-bar-in-android/
 
-//public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
-//
-//    private BottomNavigationView bottomNavigationView;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        initializeHERESDK();
-//
-//// Przełączanie pomiędzy fragmentami w dolnym menu
-//
-//        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-//        bottomNavigationView.setOnItemSelectedListener((BottomNavigationView.OnItemSelectedListener) this);
-//
-//        if (savedInstanceState == null) {
-//            bottomNavigationView.setSelectedItemId(R.id.home);
-//        }
-//
-//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-//    }
-//
-//    HomeFragment homeFragment = new HomeFragment();
-//    RunFragment runFragment = new RunFragment();
-//    CupFragment cupFragment = new CupFragment();
-//    MovingFragment movingFragment = new MovingFragment();
-//    PersonFragment personFragment = new PersonFragment();
-//
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//        switch (item.getItemId()) {
-//            case R.id.home:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-//                return true;
-//            case R.id.run:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, runFragment).commit();
-//                return true;
-//            case R.id.cup:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, cupFragment).commit();
-//                return true;
-//            case R.id.moving:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, movingFragment).commit();
-//                return true;
-//            case R.id.person:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, personFragment).commit();
-//                return true;
-//        }
-//        return false;
-//    }
-//
-//        private void initializeHERESDK() {
-//        String accessKeyID = "-BT3t43rvbrnst8P5yJBig";
-//        String accessKeySecret = "a3jWnLaAjsC10STdlzEgqsGrncFC18grLmXjS5MTBfAFqjV4e615e_67iNqnYfbedjcle3CQavPptu7L9c95KA";
-//        SDKOptions options = new SDKOptions(accessKeyID, accessKeySecret);
-//        try {
-//            Context context = this;
-//            SDKNativeEngine.makeSharedInstance(context, options);
-//            Log.d("HERE_initialize: ", "easy peazy");
-//        } catch (InstantiationErrorException e) {
-//            Log.d("HERE_initialize: ", "failure");
-//            throw new RuntimeException("Initialization of HERE SDK failed: " + e.error.name());
-//        }
-//    }
-//
-//    private void disposeHERESDK() {
-//        SDKNativeEngine sdkNativeEngine = SDKNativeEngine.getSharedInstance();
-//        if (sdkNativeEngine != null) {
-//            sdkNativeEngine.dispose();
-//            SDKNativeEngine.setSharedInstance(null);
-//        }
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        disposeHERESDK();
-//        super.onDestroy();
-//    }
-//}
-//
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
+
+    private BottomNavigationView bottomNavigationView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initializeHERESDK();
+
+// Przełączanie pomiędzy fragmentami w dolnym menu
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener((BottomNavigationView.OnItemSelectedListener) this);
+
+        if (savedInstanceState == null) {
+            bottomNavigationView.setSelectedItemId(R.id.home);
+        }
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+    }
+
+    HomeFragment homeFragment = new HomeFragment();
+    RunFragment runFragment = new RunFragment();
+    CupFragment cupFragment = new CupFragment();
+    MovingFragment movingFragment = new MovingFragment();
+    PersonFragment personFragment = new PersonFragment();
+
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                return true;
+            case R.id.run:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, runFragment).commit();
+                return true;
+            case R.id.cup:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, cupFragment).commit();
+                return true;
+            case R.id.moving:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, movingFragment).commit();
+                return true;
+            case R.id.person:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, personFragment).commit();
+                return true;
+        }
+        return false;
+    }
+
+        private void initializeHERESDK() {
+        String accessKeyID = "-BT3t43rvbrnst8P5yJBig";
+        String accessKeySecret = "a3jWnLaAjsC10STdlzEgqsGrncFC18grLmXjS5MTBfAFqjV4e615e_67iNqnYfbedjcle3CQavPptu7L9c95KA";
+        SDKOptions options = new SDKOptions(accessKeyID, accessKeySecret);
+        try {
+            Context context = this;
+            SDKNativeEngine.makeSharedInstance(context, options);
+            Log.d("HERE_initialize: ", "easy peazy");
+        } catch (InstantiationErrorException e) {
+            Log.d("HERE_initialize: ", "failure");
+            throw new RuntimeException("Initialization of HERE SDK failed: " + e.error.name());
+        }
+    }
+
+    private void disposeHERESDK() {
+        SDKNativeEngine sdkNativeEngine = SDKNativeEngine.getSharedInstance();
+        if (sdkNativeEngine != null) {
+            sdkNativeEngine.dispose();
+            SDKNativeEngine.setSharedInstance(null);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        disposeHERESDK();
+        super.onDestroy();
+    }
+}
+
 ////public class MainActivity extends AppCompatActivity {
 ////
 ////    private double lastTourStartV1 = 53.41178404163292, lastTourStartV2 = 23.516119474276664,           // pobierane z bazy danych / z pamieci urzadzenia
