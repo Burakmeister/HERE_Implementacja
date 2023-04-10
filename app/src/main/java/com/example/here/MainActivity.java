@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
-        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeHERESDK();
@@ -40,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         if (savedInstanceState == null) {
             bottomNavigationView.setSelectedItemId(R.id.home);
+
         }
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);

@@ -5,58 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fillViewport="true"
     android:gravity="center">
 
-        <Button
-            android:id="@+id/start_new_training"
-            android:layout_width="300dp"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
-            android:backgroundTint="@color/green"
-            android:layout_marginTop="10dp"
-            android:text="@string/start_new_training" />
-        <!--            android:layout_below="@id/first_panel"-->
-
-        <TextView
-            android:id="@+id/last_training_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/start_new_training"
-            android:text="@string/last_training_text"
-            android:shadowColor="@color/green"
-            android:shadowDx="-2"
-            android:shadowDy="-2"
-            android:shadowRadius="1"
-            android:textSize="25dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="30dp"
-            android:paddingTop="10dp"/>
-
-        <TextView
-            android:id="@+id/motivation_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/last_training_text"
-            android:text="@string/motivation"
-            android:textColor="@color/green"
-            android:textSize="15dp"
-            android:paddingBottom="15dp"
-            android:paddingLeft="30dp"/>
-
-        <com.here.sdk.mapview.MapView
-            android:id="@+id/map_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:layout_below="@id/motivation_field"/>
+    <Button
+        android:id="@+id/start_new_training"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/green"
+        android:text="@string/start_new_training" />
+    <!--            android:layout_below="@id/first_panel"-->
 
     <TextView
-        android:id="@+id/statistics_training"
+        android:id="@+id/last_training_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/start_new_training"
-        android:text="@string/statistics_training_text"
+        android:text="@string/last_training_text"
         android:shadowColor="@color/green"
         android:shadowDx="-2"
         android:shadowDy="-2"
@@ -64,64 +28,70 @@
         android:textSize="25dp"
         android:paddingBottom="5dp"
         android:paddingLeft="30dp"
-        android:paddingTop="10dp"/>
+        android:paddingTop="20dp"/>
 
-        <LinearLayout
-            android:layout_below="@id/map_view"
+    <TextView
+        android:id="@+id/motivation_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/last_training_text"
+        android:text="@string/motivation"
+        android:textColor="@color/green"
+        android:textSize="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="30dp"/>
+
+    <com.here.sdk.mapview.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/motivation_field"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_below="@id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <TextView
+            android:id="@+id/duration"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:paddingBottom="100dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp">
-
-            <Spinner
-                android:id="@+id/statistics_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_marginBottom="0dp"
-                android:textAlignment="center"
-                android:entries="@array/statistics_options" />
-
-            <TextView
-                android:id="@+id/duration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="szczegóły"
-                android:textSize="20dp"/>
-            <TextView
-                android:id="@+id/avg_speed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="szczegóły"
-                android:textSize="20dp"/>
-            <TextView
-                android:id="@+id/max_speed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="szczegóły"
-                android:textSize="20dp"/>
-            <TextView
-                android:id="@+id/distance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="szczegóły"
-                android:textSize="20dp"/>
-            <TextView
-                android:id="@+id/kcal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="szczegóły"
-                android:textSize="20dp"/>
-            </LinearLayout>
+            android:text="szczegóły"
+            android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/avg_speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="szczegóły"
+            android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/max_speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="szczegóły"
+            android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="szczegóły"
+            android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/kcal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="szczegóły"
+            android:textSize="20dp"/>
+    </LinearLayout>
 
     <!--    <SeekBar-->
     <!--        android:layout_width="match_parent"-->

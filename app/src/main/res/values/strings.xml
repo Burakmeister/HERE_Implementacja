@@ -38,4 +38,41 @@
     <string name="cancel_button">Anuluj</string>
     <string name="skip_route_button">Pomiń wyznaczanie trasy</string>
 
+    <!-- Main layout data-->
+    <string name="selectDiscipline"> Wybierz dyscypile sportową</string>
+    <string name="userProfile">Twój profil</string>
+    <string name="settingsTxt">Ustawienia</string>
+
+    <!--    friends list data: -->
+    <string name="checkYourFriendsList">Sprawdź, kto jest aktywny z twoich znajomych:</string>
+    <string name="friendsListTxt">Lista znajomych</string>
+    <string name="welcomeText">Witaj, Gabriel!</string>
+
+    <!--    Statistic data-->
+    <string name="statisticChoose">Wybierz okres aktywności</string>
+
+
+    <!--    Log in -->
+    <string name="welcome_login">Zaloguj się</string>
+    <string name="email">Email</string>
+    <string name="setEmail">Wpisz email</string>
+    <string name="password">Hasło</string>
+    <string name="setPassword">Wpisz hasło</string>
+    <string name="dontRememberPassword">Nie pamiętasz hasła? Zresetuj hasło.</string>
+    <string name="logInOtherWay">Albo zaloguj się z</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+
+    <!--    SignUp-->
+    <string name="welcome_signup">Utwórz konto</string>
+    <string name="nick">Nick</string>
+    <string name="setNick">Wpisz nick</string>
+    <string name="repassword">Podaj hasło jeszcze raz</string>
+    <string name="signup">Zarejestruj się</string>
+
+    <!--    Home page-->
+    <string name="welcome_user">Witaj, Gabriel!</string>
+    <string name="online_friends">Sprawdź, kto jest aktywny z twoich znajomych</string>
+    <string name="upcoming_events">Nadchodzące wydarzenia</string>
+  
 </resources>

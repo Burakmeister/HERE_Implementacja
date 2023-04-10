@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Ustawienia użytkownika">
+        <Preference
+            android:key="username_preference"
+            android:title="Zmień nazwę użytkownika" />
+        <Preference
+            android:key="password_preference"
+            android:title="Zmień hasło" />
+        <Preference
+            android:key="email_preference"
+            android:title="Zmień email przypisany do konta" />
+        <Preference
+            android:key="avatar_preference"
+            android:title="Zmień awatar" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Zarządzanie kontem">
+        <Preference android:title="Usuń konto" />
+        <Preference android:title="Wyloguj się" />
+    </PreferenceCategory>
+</PreferenceScreen>
