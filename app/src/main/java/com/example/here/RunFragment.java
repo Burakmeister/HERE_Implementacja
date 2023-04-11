@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -35,8 +37,17 @@ public class RunFragment extends Fragment {
 
     private RouteCreator routeCreator;
 
+    private Spinner spinner;
+
     public RunFragment(){
         // require a empty public constructor
+    }
+
+    private void displayStatistics() {
+        this.duration.setText("Długość trwania: " + timeOfActivity + " minut");
+        this.avgSpeed.setText("Średnia prędkość: " + avgSpeedLastTour + " km/h");
+        this.maxSpeed.setText("Najwyższa prędkość: " + maxSpeedLastTour + " km/h");
+        this.kcal.setText("Spalone kalorie: " + loseKcal + " kcal");
     }
 
     @Override
@@ -46,6 +57,7 @@ public class RunFragment extends Fragment {
 
         this.mapView = view.findViewById(R.id.map_view);
         this.startTraining = view.findViewById(R.id.start_new_training);
+
         this.duration = view.findViewById(R.id.duration);
         this.avgSpeed = view.findViewById(R.id.avg_speed);
         this.maxSpeed = view.findViewById(R.id.max_speed);
@@ -55,7 +67,8 @@ public class RunFragment extends Fragment {
         this.startTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), TrainingActivity.class));
+                Intent intent = new Intent(getActivity(), SetRouteActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -67,11 +80,32 @@ public class RunFragment extends Fragment {
                 new Waypoint(new GeoCoordinates(lastTourEndV1, lastTourEndV2))
         ));
 
+        this.spinner = view.findViewById(R.id.statistics_spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0: // Ostatni trening
+                        // Kod do wyświetlenia statystyk dla ostatniego treningu
+                        displayStatistics();
+                        break;
+                    case 1: // Ostatnie 5 treningów
+                        // Kod do wyświetlenia statystyk dla ostatnich 5 treningów
+                        displayStatistics();
+                        break;
+                    case 2: // Ostatnie 10 treningów
+                        // Kod do wyświetlenia statystyk dla ostatnich 10 treningów
+                        displayStatistics();
+                        break;
+                }
+            }
 
-        this.duration.setText("Długość trwania: "+timeOfActivity + " minut");
-        this.avgSpeed.setText("Średnia prędkość: "+avgSpeedLastTour + " km/h");
-        this.maxSpeed.setText("Najwyższa prędkość: "+maxSpeedLastTour + " km/h");
-        this.kcal.setText("Spalone kalorie: "+loseKcal + " kcal");
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Nic nie rób
+            }
+        });
+
         return view;
     }
 

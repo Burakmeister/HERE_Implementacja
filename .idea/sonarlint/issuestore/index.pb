@@ -1,8 +1,4 @@
 
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
-d
-4app/src/main/java/com/example/here/MainActivity.java,2\1\2106911c0b55d142b318509b22d2e5c720f7f401
 l
 <app/src/main/java/com/example/here/UserSettingsFragment.java,a\8\a8a6f760c0bda15a50d175be7d06af59fc5043d8
 l
