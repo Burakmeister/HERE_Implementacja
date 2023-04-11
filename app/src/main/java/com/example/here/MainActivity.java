@@ -1,16 +1,26 @@
 package com.example.here;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.here.home.HomeFragment;
 import com.example.here.models.UserData;
 import com.example.here.restapi.ApiInterface;
 import com.example.here.restapi.RetrofitClient;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.here.sdk.core.engine.SDKNativeEngine;
+import com.here.sdk.core.engine.SDKOptions;
+import com.here.sdk.core.errors.InstantiationErrorException;
 
 import java.util.List;
 

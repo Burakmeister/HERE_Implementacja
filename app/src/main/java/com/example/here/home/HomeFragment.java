@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,8 +45,11 @@ public class HomeFragment extends Fragment {
 
     private FriendStatusAdapter statusAdapter;
     private View view;
-    private MapView mapView;
     private RecyclerView statusView;
+
+    String[] items = {"Marsz","Bieganie","Jazda na rowerze","Kajakarstwo"};
+    AutoCompleteTextView autoCompleteTxt;
+    ArrayAdapter<String> adapterItems;
 
     private double lastTourStartV1 = 53.41178404163292, lastTourStartV2 = 23.516119474276664,           // pobierane z bazy danych / z pamieci urzadzenia
             lastTourEndV1 = 53.1276662351446, lastTourEndV2 = 23.160716949523863;
@@ -52,17 +58,29 @@ public class HomeFragment extends Fragment {
         // require a empty public constructor
     }
 
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        view = inflater.inflate(R.layout.fragment_home, container, false);;
+////        this.mapView = view.findViewById(R.id.mapView);
+////        this.mapView.onCreate(savedInstanceState);
+//
+////        setToLastRoute(new Waypoint(new GeoCoordinates(lastTourStartV1, lastTourStartV2)), new Waypoint(new GeoCoordinates(lastTourEndV1, lastTourEndV2)));     //rysowanie poprzedniej trasy po wspolrzednych*/
+//
+//        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+//
+//        chooseDiscipline();
+//        return view;
+//    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);;
-        this.mapView = view.findViewById(R.id.mapView);
-        this.statusView = view.findViewById(R.id.recyclerView);
-        this.mapView.onCreate(savedInstanceState);
+        this.statusView = view.findViewById(R.id.recyclerView_OnlineFriends);
 
-        setToLastRoute(new Waypoint(new GeoCoordinates(lastTourStartV1, lastTourStartV2)), new Waypoint(new GeoCoordinates(lastTourEndV1, lastTourEndV2)));     //rysowanie poprzedniej trasy po wspolrzednych
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         this.updateView();
+        chooseDiscipline();
+
         return view;
     }
 
@@ -79,61 +97,26 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    public void chooseDiscipline(){
+        autoCompleteTxt = view.findViewById(R.id.auto_complete_txt);
+        adapterItems = new ArrayAdapter<String>(getActivity(),R.layout.list_item,items);
+        autoCompleteTxt.setText(items[0]);
+        autoCompleteTxt.setAdapter(adapterItems);
+        autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                String item = parent.getItemAtPosition(position).toString();
+//                Toast.makeText(getActivity().getApplicationContext(),"Item: "+item,Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         this.updateView();
     }
 
-    private void setToLastRoute(Waypoint start, Waypoint end){
-        RoutingEngine routingEngine;
-        try {
-            routingEngine = new RoutingEngine();
-        } catch (InstantiationErrorException e) {
-            throw new RuntimeException("Initialization of RoutingEngine failed: " + e.error.name());
-        }
-
-        Waypoint startWaypoint = start;
-        Waypoint destinationWaypoint = end;
-
-        List<Waypoint> waypoints =
-                new ArrayList<>(Arrays.asList(startWaypoint, destinationWaypoint));
-
-        routingEngine.calculateRoute(
-                waypoints,
-                new PedestrianOptions(),
-                new CalculateRouteCallback() {
-                    @Override
-                    public void onRouteCalculated(@Nullable RoutingError routingError, @Nullable List<Route> routes) {
-                        if (routingError == null) {
-                            Route route = routes.get(0);
-                            GeoPolyline routeGeoPolyline = route.getGeometry();
-                            float widthInPixels = 10;
-                            MapPolyline routeMapPolyline = new MapPolyline(routeGeoPolyline,
-                                    widthInPixels,
-                                    Color.valueOf(0,1,0)); // RGBA
-
-                            mapView.getMapScene().addMapPolyline(routeMapPolyline);
-//                            long estimatedTravelTimeInSeconds = route.getDuration().getSeconds();     //przewidywany czas
-                            int routeLengthInMeters = route.getLengthInMeters();    //mierzy odleglosc
-                            Log.d("wyliczona odleglosc: ", routeLengthInMeters+"");
-                            loadMapScene(routeLengthInMeters);
-                        }
-                    }
-                });
-    }
-
-    private void loadMapScene(int routeLengthInMeters) {
-        mapView.getMapScene().loadScene(MapScheme.NORMAL_DAY, mapError -> {
-            if (mapError == null) {
-                MapMeasure mapMeasureZoom = new MapMeasure(MapMeasure.Kind.DISTANCE, routeLengthInMeters);
-                mapView.getCamera().lookAt(
-                        new GeoCoordinates((lastTourStartV1+lastTourEndV1)/2, (lastTourStartV2+lastTourEndV2)/2), mapMeasureZoom);
-            } else {
-                Log.d("loadMapScene()", "Loading map failed: mapError: " + mapError.name());
-            }
-        });
-    }
     private class FriendStatusHolder extends RecyclerView.ViewHolder{
         private FriendStatus status;
         private TextView nickname;
@@ -157,11 +140,9 @@ public class HomeFragment extends Fragment {
 
     private class FriendStatusAdapter extends RecyclerView.Adapter<FriendStatusHolder>{
         private final List<FriendStatus> status;
-
         public FriendStatusAdapter(List<FriendStatus> status){
             this.status = status;
         }
-
         @NonNull
         @Override
         public FriendStatusHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
