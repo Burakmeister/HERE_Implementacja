@@ -63,7 +63,6 @@ public abstract class RouteCreator {
                                     Color.valueOf(0,1,0)); // RGBA
 
                             mapView.getMapScene().addMapPolyline(routeMapPolyline);
-//                            long estimatedTravelTimeInSeconds = route.getDuration().getSeconds();     //przewidywany czas
                             currentRouteLength = route.getLengthInMeters();
                             loadMapScene();
                         }

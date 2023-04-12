@@ -29,8 +29,11 @@ import com.here.sdk.mapview.LocationIndicator;
 import com.here.sdk.mapview.MapMeasure;
 import com.here.sdk.mapview.MapScheme;
 import com.here.sdk.mapview.MapView;
+import com.here.sdk.routing.Route;
 import com.here.sdk.routing.Waypoint;
+import com.here.sdk.navigation.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,10 +71,15 @@ public class TrainingActivity extends AppCompatActivity {
     RouteCreatorTrainingActive routeCreatorTrainingActive;
     RouteCreatorTrainingSuspended routeCreatorTrainingSuspended;
     private Bundle savedInstanceState;
+    VisualNavigator navigator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Serializable ser = getIntent().getSerializableExtra("waypoints");
+        if(ser!=null){
+            currentWaypoints = (ArrayList<Waypoint>)ser;
+        }
         this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.training_activity);
         this.mapView = findViewById(R.id.map_view);
@@ -109,9 +117,8 @@ public class TrainingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        startTrainingActivity();
         displayTrainingData();
-        handleAndroidPermissions();
     }
 
     private void startTrainingActivity() {
@@ -181,7 +188,6 @@ public class TrainingActivity extends AppCompatActivity {
 
         this.routeCreatorTrainingActive = new RouteCreatorTrainingActive(this.mapView, this.locationIndicator);
         this.routeCreatorTrainingSuspended = new RouteCreatorTrainingSuspended(this.mapView);
-
         this.fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
 
     }
@@ -211,52 +217,6 @@ public class TrainingActivity extends AppCompatActivity {
         this.maxSpeedTextView.setText(getString(R.string.maxSpeedText, maxSpeed));
         this.distanceTextView.setText(getString(R.string.distanceText, distance));
         this.kcalTextView.setText(getString(R.string.kcalText, kcal));
-    }
-
-    private class TimeMeasure extends Thread{
-        @Override
-        public void run() {
-            try {
-                while(true)
-                    if(trainingActive){
-                        timeInSec++;
-                        timeTextView.setText("Czas: "+String.format("%02d:%02d:%02d",timeInSec/3600,timeInSec%3600/60, timeInSec%60));
-                        sleep(1000);
-                    }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        permissionsRequestor.onRequestPermissionsResult(requestCode, grantResults);
-    }
-
-    private void handleAndroidPermissions() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            startTrainingActivity();
-            return;
-        }
-        permissionsRequestor = new PermissionsRequestor(this);
-        permissionsRequestor.request(new PermissionsRequestor.ResultListener(){
-
-            @Override
-            public void permissionsGranted() {
-                startTrainingActivity();
-            }
-
-            @Override
-            public void permissionsDenied() {
-                Toast.makeText(getApplicationContext(),"Cannot start app: Location service and permissions are needed for this app.",Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
     }
 
     @Override
@@ -289,4 +249,56 @@ public class TrainingActivity extends AppCompatActivity {
             this.mapView.onSaveInstanceState(outState);
     }
 
+    private void startGuidance(Route route) {
+        try {
+            // Without a route set, this starts tracking mode.
+            visualNavigator = new VisualNavigator();
+        } catch (InstantiationErrorException e) {
+            throw new RuntimeException("Initialization of VisualNavigator failed: " + e.error.name());
+        }
+
+        // This enables a navigation view including a rendered navigation arrow.
+        visualNavigator.startRendering(mapView);
+
+        // Hook in one of the many listeners. Here we set up a listener to get instructions on the maneuvers to take while driving.
+        // For more details, please check the "Navigation" example app and the Developer's Guide.
+        visualNavigator.setManeuverNotificationListener(maneuverText -> {
+            Log.d("ManeuverNotifications", maneuverText);
+        });
+
+        // Set a route to follow. This leaves tracking mode.
+        visualNavigator.setRoute(route);
+
+        // VisualNavigator acts as LocationListener to receive location updates directly from a location provider.
+        // Any progress along the route is a result of getting a new location fed into the VisualNavigator.
+        setupLocationSource(visualNavigator, route);
+    }
+
+    private void setupLocationSource(LocationListener locationListener, Route route) {
+        try {
+            // Provides fake GPS signals based on the route geometry.
+            locationSimulator = new LocationSimulator(route, new LocationSimulatorOptions());
+        } catch (InstantiationErrorException e) {
+            throw new RuntimeException("Initialization of LocationSimulator failed: " + e.error.name());
+        }
+
+        locationSimulator.setListener(locationListener);
+        locationSimulator.start();
+    }
+
+    private class TimeMeasure extends Thread{
+        @Override
+        public void run() {
+            try {
+                while(true)
+                    if(trainingActive){
+                        timeInSec++;
+                        timeTextView.setText("Czas: "+String.format("%02d:%02d:%02d",timeInSec/3600,timeInSec%3600/60, timeInSec%60));
+                        sleep(1000);
+                    }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

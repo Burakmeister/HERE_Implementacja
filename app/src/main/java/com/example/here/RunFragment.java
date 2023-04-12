@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.here.routeCreator.RouteCreator;
@@ -55,7 +56,7 @@ public class RunFragment extends Fragment {
         this.startTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), TrainingActivity.class));
+                startActivity(new Intent(getActivity(), SetRouteActivity.class));
             }
         });
 
@@ -75,27 +76,27 @@ public class RunFragment extends Fragment {
         return view;
     }
 
-//    @Override
-//    public void onPause() {
-//        mapView.onPause();
-//        super.onPause();
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        mapView.onResume();
-//        super.onResume();
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        mapView.onDestroy();
-//        super.onDestroy();
-//    }
+    @Override
+    public void onPause() {
+        mapView.onPause();
+        super.onPause();
+    }
 
-//    @Override
-//    public void onSaveInstanceState(@NonNull Bundle outState) {
-//        mapView.onSaveInstanceState(outState);
-//        super.onSaveInstanceState(outState);
-//    }
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        mapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        mapView.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
 }

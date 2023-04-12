@@ -35,6 +35,14 @@
                 android:value="" />
         </activity>
 
+        <activity
+            android:name=".SetRouteActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <provider
             android:name="com.here.sdk.engine.InitProvider"
             android:authorities="com.here.sdk.engine.InitProvider"
