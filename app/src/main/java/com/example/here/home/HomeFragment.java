@@ -1,9 +1,11 @@
 package com.example.here.home;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,30 +16,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.here.R;
 import com.example.here.constants.ActivityType;
-import com.here.sdk.core.Color;
-import com.here.sdk.core.GeoCoordinates;
-import com.here.sdk.core.GeoPolyline;
-import com.here.sdk.core.errors.InstantiationErrorException;
-import com.here.sdk.mapview.MapMeasure;
-import com.here.sdk.mapview.MapPolyline;
-import com.here.sdk.mapview.MapScheme;
-import com.here.sdk.mapview.MapView;
-import com.here.sdk.routing.PedestrianOptions;
-import com.here.sdk.routing.CalculateRouteCallback;
-import com.here.sdk.routing.Route;
-import com.here.sdk.routing.RoutingEngine;
-import com.here.sdk.routing.RoutingError;
-import com.here.sdk.routing.Waypoint;
+import com.example.here.restapi.ApiInterface;
+import com.example.here.restapi.Firstname;
+import com.example.here.restapi.RetrofitClient;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 // Widok strony głównej
 
@@ -46,6 +39,8 @@ public class HomeFragment extends Fragment {
     private FriendStatusAdapter statusAdapter;
     private View view;
     private RecyclerView statusView;
+    private SharedPreferences sp;
+    private TextView welcomeTextView;
 
     String[] items = {"Marsz","Bieganie","Jazda na rowerze","Kajakarstwo"};
     AutoCompleteTextView autoCompleteTxt;
@@ -76,12 +71,38 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);;
         this.statusView = view.findViewById(R.id.recyclerView_OnlineFriends);
 
+        this.welcomeTextView = (TextView) view.findViewById(R.id.textView_WelcomeUser);
+        this.sp = this.getActivity().getSharedPreferences("msb", MODE_PRIVATE);
+        setUserFirstname();
+
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         this.updateView();
         chooseDiscipline();
 
         return view;
+    }
+
+    private void setUserFirstname() {
+        ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
+        Call<Firstname> call = apiInterface.getFirstname("Token " + sp.getString("token", ""));
+        call.enqueue(new Callback<Firstname>() {
+            @Override
+            public void onResponse(Call<Firstname> call, Response<Firstname> response) {
+                if (response.isSuccessful()) {
+                    String firstname = response.body().getFirstname();
+                    //Log.d("retro", firstname);
+                    welcomeTextView.setText(getString(R.string.welcomeText, firstname));
+                } else {
+//                    unsuccessful
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Firstname> call, Throwable t) {
+                //handle network problems
+            }
+        });
     }
 
     private void updateView(){

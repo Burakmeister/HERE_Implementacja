@@ -5,8 +5,6 @@ l
 <app/src/main/java/com/example/here/PermissionsRequestor.java,6\1\61cda66c078956a6d3e68a3b6b5577c4d13c9388
 s
 Capp/src/main/java/com/example/here/PlatformPositioningProvider.java,3\9\391c4e4505c55452a8ed114c604aefa696ff676b
-f
-6app/src/main/java/com/example/here/PersonFragment.java,f\c\fced7fa60a2b77bce762b094b5babdee8603b095
 c
 3app/src/main/java/com/example/here/RunFragment.java,f\5\f5cd3d8462b83babf50f8d112083a0fbbe7f9bdc
 ?

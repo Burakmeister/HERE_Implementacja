@@ -46,7 +46,7 @@
     <!--    friends list data: -->
     <string name="checkYourFriendsList">Sprawdź, kto jest aktywny z twoich znajomych:</string>
     <string name="friendsListTxt">Lista znajomych</string>
-    <string name="welcomeText">Witaj, Gabriel!</string>
+    <string name="welcomeText">Witaj, %1$s!</string>
 
     <!--    Statistic data-->
     <string name="statisticChoose">Wybierz okres aktywności</string>
