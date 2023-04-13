@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -51,15 +52,16 @@ public class MyRacesFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0: // Ostatni trening
+                    // Tutaj do spinnera trzeba dodać funkcjonalność nie tylko wyświetlania odpowiednich wyścigów ale również żeby np. w nadchodzących po naciśnięciu pokazywało odpowiedni widok (patrz skrypt)
+                    case 0: // Aktualne wyścigi
                         // Kod do wyświetlenia aktywnych wyścigów
 
                         break;
-                    case 1: // Ostatnie 5 treningów
+                    case 1: // Nadchodzące wyścigi
                         // Kod do wyświetlenia nadchodzących wyścigów
 
                         break;
-                    case 2: // Ostatnie 10 treningów
+                    case 2: // Zakończone wyścigi
                         // Kod do wyświetlenia zakończonych wyścigów
 
                         break;
@@ -76,7 +78,11 @@ public class MyRacesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Obsługa kliknięcia przycisku Utwórz wyścig
-
+                Fragment newFragment = new CreateRaceFragment(); //utworzenie nowej instancji klasy MyRacesFragment
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
@@ -197,86 +203,6 @@ public class MyRacesFragment extends Fragment {
         }
 
     }
-
-//        // Dodaj fragmenty do ViewPager
-//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-//        adapter.addFragment(new MyRacesCreatedFragment(), "Utworzone");
-//        adapter.addFragment(new MyRacesParticipateFragment(), "Uczestniczę");
-//        viewPager.setAdapter(adapter);
-//
-//        // Ustaw ViewPager jako źródło zakładek w TabLayout
-//        tabLayout.setupWithViewPager(viewPager);
-//
-//        // Wyświetl odpowiedni fragment w zależności od wybranej zakładki
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                int position = tab.getPosition();
-//                if (position == 0) {
-//                    getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.fragment_container, new MyRacesCreatedFragment())
-//                            .commit();
-//                } else if (position == 1) {
-//                    getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.fragment_container, new MyRacesParticipateFragment())
-//                            .commit();
-//                }
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//            }
-//
-//        return view;
-//    }
-//
-//    @Override
-//    protected void onCreateView(@Nullable Bundle savedInstanceState) {
-//        setTheme(R.style.AppTheme);
-////        getSupportActionBar().hide();
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.fragment_myraces);
-//
-//        tabLayout = findViewById(R.id.tab_layout);
-//        viewPager = findViewById(R.id.races_viewpager);
-//
-//        // Dodaj fragmenty do ViewPager
-//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-//        adapter.addFragment(new MyRacesCreatedFragment(), "Utworzone");
-//        adapter.addFragment(new MyRacesParticipateFragment(), "Uczestniczę");
-//        viewPager.setAdapter(adapter);
-//
-//        // Ustaw ViewPager jako źródło zakładek w TabLayout
-//        tabLayout.setupWithViewPager(viewPager);
-//
-//        // Wyświetl odpowiedni fragment w zależności od wybranej zakładki
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                int position = tab.getPosition();
-//                if (position == 0) {
-//                    getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.fragment_container, new MyRacesCreatedFragment())
-//                            .commit();
-//                } else if (position == 1) {
-//                    getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.fragment_container, new MyRacesParticipateFragment())
-//                            .commit();
-//                }
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//            }
-//        });
 
     }
 
