@@ -1,21 +1,0 @@
-
-]	java:S125"<This block of commented-out lines of code should be removed.(ñí ÷øÿÿÿÿ8ëÒ‘¹÷0
-P
-java:S1128".Remove this unused import 'android.os.Bundle'.(°şÊóøÿÿÿÿ8íÒ‘¹÷0
-]
-java:S1128";Remove this unused import 'androidx.fragment.app.Fragment'.(‚Š©“ùÿÿÿÿ8íÒ‘¹÷0
-o
-java:S1128"MRemove this unused import 'androidx.recyclerview.widget.LinearLayoutManager'.(ôœ¹ºıÿÿÿÿ8îÒ‘¹÷0
-h
-java:S1128"FRemove this unused import 'androidx.recyclerview.widget.RecyclerView'.(Îèòçøÿÿÿÿ8îÒ‘¹÷0
-U
-java:S1128	"8Remove this unused import 'android.view.LayoutInflater'.(À¯ÑÇ8îÒ‘¹÷0
-P
-java:S1128
-".Remove this unused import 'android.view.View'.(Ø½­äşÿÿÿÿ8îÒ‘¹÷0
-P
-java:S1128"3Remove this unused import 'android.view.ViewGroup'.(‹îá8îÒ‘¹÷0
-M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8îÒ‘¹÷0
-M
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8îÒ‘¹÷0
