@@ -1,0 +1,31 @@
+
+ˆ
+java:S1319€"eThe type of "users" should be an interface such as "List" rather than the implementation "ArrayList".(¯ü€”ùÿÿÿÿ8åÕÄÎ÷0
+s	java:S117·"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤œƒËÿÿÿÿÿ8ÃÀÌÎ÷0
+E
+java:S16048"(Make this anonymous inner class a lambda(Ò„‡¬8åÕÄÎ÷0
+z
+java:S1488Ò"\Immediately return this expression instead of assigning it to the temporary variable "view".(¿ôÖ£8åÕÄÎ÷0
+b
+java:S2637g"EThis method's return value is marked "@NonNull" but null is returned.(¥¹ï8—ÖÄÎ÷0
+z
+java:S1450+"XRemove the "addButton" field and declare it as a local variable in the relevant methods.(™õù»ÿÿÿÿÿ8—ÖÄÎ÷0
+u
+java:S1450,"XRemove the "tabLayout" field and declare it as a local variable in the relevant methods.(¤×ä8—ÖÄÎ÷0
+z
+java:S1450-"XRemove the "viewPager" field and declare it as a local variable in the relevant methods.(åÙ¬Ïûÿÿÿÿ8—ÖÄÎ÷0
+]	java:S125E"<This block of commented-out lines of code should be removed.(µíôµùÿÿÿÿ8¡ÖÄÎ÷0
+^
+java:S1874Y"<Remove this use of "FragmentPagerAdapter"; it is deprecated.(İ´úşùÿÿÿÿ8¡ÖÄÎ÷0
+J
+java:S1874\".Remove this use of "<init>"; it is deprecated.(‘í›\8¡ÖÄÎ÷0
+Y	java:S125"<This block of commented-out lines of code should be removed.(¹‡ÇÛ8«ÖÄÎ÷0
+Ÿ
+java:S1186›"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ö¬¥8«ÖÄÎ÷0
+O
+java:S1905·",Remove this unnecessary cast to "ArrayList".(¤œƒËÿÿÿÿÿ8ÁÌÎ÷0
+Ÿ
+java:S1186Ì"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(—ã’å8ùÖÌÎ÷0
+^	java:S125Ô"<This block of commented-out lines of code should be removed.(ÈÕœ¤ùÿÿÿÿ8ùÖÌÎ÷0
+K
+java:S3985à"(Remove this unused private "User" class.(™øùÿÿÿÿ8ùÖÌÎ÷0

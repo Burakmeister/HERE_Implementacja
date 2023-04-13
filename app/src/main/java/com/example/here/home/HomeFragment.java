@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
 
         this.welcomeTextView = (TextView) view.findViewById(R.id.textView_WelcomeUser);
         this.sp = this.getActivity().getSharedPreferences("msb", MODE_PRIVATE);
-        setUserFirstname();
+        getUserFirstname();
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void setUserFirstname() {
+    private void getUserFirstname() {
         ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
         Call<Firstname> call = apiInterface.getFirstname("Token " + sp.getString("token", ""));
         call.enqueue(new Callback<Firstname>() {

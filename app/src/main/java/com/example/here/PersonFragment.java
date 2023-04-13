@@ -1,7 +1,9 @@
 package com.example.here;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.here.models.UserData;
+import com.example.here.restapi.ApiInterface;
+import com.example.here.restapi.RetrofitClient;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class PersonFragment extends Fragment {
@@ -113,9 +123,9 @@ public class PersonFragment extends Fragment {
     }
 
     // Adapter dla ListView z listą znajomych i listą zaproszeń
-    private static class FriendsListAdapter extends ArrayAdapter<User> {
+    private static class FriendsListAdapter extends ArrayAdapter<UserData> {
 
-        public FriendsListAdapter(Context context, ArrayList<User> users) {
+        public FriendsListAdapter(Context context, ArrayList<UserData> users) {
             super(context, 0, users);
         }
 
@@ -128,11 +138,12 @@ public class PersonFragment extends Fragment {
             ImageView userIconImageView = convertView.findViewById(R.id.user_image);
             TextView userNameTextView = convertView.findViewById(R.id.user_name);
             TextView userSurnameTextView = convertView.findViewById(R.id.user_surname);
-            User user = getItem(position);
+            UserData user = getItem(position);
             if (user != null) {
-                userIconImageView.setImageResource(user.getIconResource());
-                userNameTextView.setText(user.getName());
-                userSurnameTextView.setText(user.getSurname());
+                //userIconImageView.setImageResource(user.getAvatar());
+                userIconImageView.setImageResource(R.drawable.ic_round_person_24);
+                userNameTextView.setText(user.getNick());
+                userSurnameTextView.setText("");
             }
             return convertView;
         }
@@ -149,14 +160,41 @@ public class PersonFragment extends Fragment {
                                  Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_friends_list, container, false);
             // Dodanie listy znajomych
-            ArrayList<User> friends = new ArrayList<>();
-            friends.add(new User("Jan", "Kowalski", R.drawable.ic_round_person_24));
-            friends.add(new User("Anna", "Nowak", R.drawable.ic_round_person_24));
-            friends.add(new User("Piotr", "Wiśniewski", R.drawable.ic_round_person_24));
+            ArrayList<UserData> friends = new ArrayList<>();
             FriendsListAdapter friendsListAdapter = new FriendsListAdapter(getContext(), friends);
             ListView friendsListView = (ListView) view.findViewById(R.id.friends_list);
             friendsListView.setAdapter(friendsListAdapter);
+
+            getFriendsList(friends, friendsListAdapter);
+
             return view;
+        }
+
+        private void getFriendsList(ArrayList<UserData> friends, FriendsListAdapter friendsListAdapter) {
+            ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
+            SharedPreferences sp = getActivity().getSharedPreferences("msb", Context.MODE_PRIVATE);
+            Call<List<UserData>> call = apiInterface.getFriends("Token " + sp.getString("token", ""));
+            call.enqueue(new Callback<List<UserData>>() {
+                @Override
+                public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
+                    Log.d("retro", "onresponse");
+                    if (response.isSuccessful()) {
+                        Log.d("retro", "success");
+                        List<UserData> friends_list = (ArrayList<UserData>) response.body();
+                        for(UserData userData : friends_list) {
+                            friends.add(userData);
+                        }
+                        friendsListAdapter.notifyDataSetChanged();
+                    } else {
+//                    unsuccessful
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<UserData>> call, Throwable t) {
+                    //handle network problems
+                }
+            });
         }
     }
 
@@ -170,14 +208,14 @@ public class PersonFragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_invitations_list, container, false);
-            // Dodanie listy zaproszeń
-            ArrayList<User> invitations = new ArrayList<>();
-            invitations.add(new User("Tomasz", "Jankowski", R.drawable.ic_round_person_24));
-            invitations.add(new User("Magdalena", "Kaczmarek", R.drawable.ic_round_person_24));
-            invitations.add(new User("Krzysztof", "Lewandowski", R.drawable.ic_round_person_24));
-            FriendsListAdapter invitationsListAdapter = new FriendsListAdapter(getContext(), invitations);
-            ListView invitationsListView = (ListView) view.findViewById(R.id.invitations_list);
-            invitationsListView.setAdapter(invitationsListAdapter);
+//            // Dodanie listy zaproszeń
+//            ArrayList<User> invitations = new ArrayList<>();
+//            invitations.add(new User("Tomasz", "Jankowski", R.drawable.ic_round_person_24));
+//            invitations.add(new User("Magdalena", "Kaczmarek", R.drawable.ic_round_person_24));
+//            invitations.add(new User("Krzysztof", "Lewandowski", R.drawable.ic_round_person_24));
+//            FriendsListAdapter invitationsListAdapter = new FriendsListAdapter(getContext(), invitations);
+//            ListView invitationsListView = (ListView) view.findViewById(R.id.invitations_list);
+//            invitationsListView.setAdapter(invitationsListAdapter);
             return view;
         }
     }

@@ -30,6 +30,9 @@ public class UserData {
     @SerializedName("races")
     private List<Object> races;
 
+    public UserData() {
+
+    }
     public UserData(Integer id, Character sex, Integer height, Float weight, String country, String avatar, String nick, Integer age, String language, Integer user, List<Object> friends, List<Object> races) {
         this.id = id;
         this.sex = sex;
