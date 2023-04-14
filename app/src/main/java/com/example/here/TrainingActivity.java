@@ -1,6 +1,7 @@
 package com.example.here;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -24,13 +25,23 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.here.sdk.core.Color;
 import com.here.sdk.core.GeoCoordinates;
+import com.here.sdk.core.GeoPolyline;
+import com.here.sdk.core.errors.InstantiationErrorException;
 import com.here.sdk.mapview.LocationIndicator;
 import com.here.sdk.mapview.MapMeasure;
+import com.here.sdk.mapview.MapPolyline;
 import com.here.sdk.mapview.MapScheme;
 import com.here.sdk.mapview.MapView;
+import com.here.sdk.routing.CalculateRouteCallback;
+import com.here.sdk.routing.PedestrianOptions;
+import com.here.sdk.routing.Route;
+import com.here.sdk.routing.RoutingEngine;
+import com.here.sdk.routing.RoutingError;
 import com.here.sdk.routing.Waypoint;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +55,8 @@ public class TrainingActivity extends AppCompatActivity {
     private TextView distanceTextView;
     private TextView timeTextView;
     private TextView kcalTextView;
+    private TextView distanceLeft;
+    private TextView timeLeft;
     private MapView mapView;
 
     private int timeInSec;
@@ -64,14 +77,20 @@ public class TrainingActivity extends AppCompatActivity {
     private float distanceUntilWaypoint = 10.0f;
     private LocationIndicator locationIndicator;
     private LocationCallback locationCallback;
+    private Route route;
     private List<Waypoint> currentWaypoints = new ArrayList<>();
+    List<Waypoint> traceWaypoints = new ArrayList<>();
     RouteCreatorTrainingActive routeCreatorTrainingActive;
     RouteCreatorTrainingSuspended routeCreatorTrainingSuspended;
     private Bundle savedInstanceState;
 
+    double[] traceInDoubles;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        traceInDoubles = getIntent().getDoubleArrayExtra("coords");
+
         this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.training_activity);
         this.mapView = findViewById(R.id.map_view);
@@ -82,7 +101,9 @@ public class TrainingActivity extends AppCompatActivity {
         this.avgSpeedTextView = findViewById(R.id.avg_speed);
         this.maxSpeedTextView = findViewById(R.id.max_speed);
         this.distanceTextView = findViewById(R.id.distance);
+        this.distanceLeft = findViewById(R.id.distance_left);
         this.kcalTextView = findViewById(R.id.kcal);
+        this.timeLeft = findViewById(R.id.time_left);
         this.locationIndicator = new LocationIndicator();
 
         this.mapView.onCreate(savedInstanceState);
@@ -90,14 +111,14 @@ public class TrainingActivity extends AppCompatActivity {
         this.pauseReturnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(trainingActive){
+                if (trainingActive) {
                     pauseReturnButton.setText(R.string.paused);
-                    trainingActive =!trainingActive;
+                    trainingActive = !trainingActive;
                     pauseReturnButton.setBackgroundColor(getResources().getColor(R.color.orange));
                     routeCreatorTrainingSuspended.createRoute(currentWaypoints);
-                }else{
+                } else {
                     pauseReturnButton.setText(R.string.started);
-                    trainingActive =!trainingActive;
+                    trainingActive = !trainingActive;
                     pauseReturnButton.setBackgroundColor(getResources().getColor(R.color.green));
                 }
             }
@@ -109,9 +130,43 @@ public class TrainingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        startTrainingActivity();
         displayTrainingData();
-        handleAndroidPermissions();
+    }
+
+    private void initTrace(double[] array) {
+        traceWaypoints.add(new Waypoint(new GeoCoordinates(pastLocation.getLatitude(), pastLocation.getLongitude())));
+        for(int i=0; i<array.length; i++){
+            traceWaypoints.add(new Waypoint(new GeoCoordinates(array[i], array[++i])));
+        }
+        Log.d("nullCzyNie", " NIE ");
+        RoutingEngine routingEngine = null;
+        try {
+            routingEngine = new RoutingEngine();
+        } catch (InstantiationErrorException e) {
+            throw new RuntimeException(e);
+        }
+        routingEngine.calculateRoute(
+                traceWaypoints,
+                new PedestrianOptions(),
+                new CalculateRouteCallback() {
+                    @Override
+                    public void onRouteCalculated(@Nullable RoutingError routingError, @Nullable List<Route> routes) {
+                        if (routingError == null) {
+                            route = routes.get(0);
+                            GeoPolyline routeGeoPolyline = route.getGeometry();
+
+                            float widthInPixels = 10;
+                            MapPolyline routeMapPolyline = new MapPolyline(routeGeoPolyline,
+                                    widthInPixels,
+                                    Color.valueOf(1,0,0)); // RGBA
+
+                            mapView.getMapScene().addMapPolyline(routeMapPolyline);
+                            loadMapScene();
+                        } else {
+                        }
+                    }
+                });
     }
 
     private void startTrainingActivity() {
@@ -145,6 +200,13 @@ public class TrainingActivity extends AppCompatActivity {
 //                mapView.onCreate(savedInstanceState);
 //                mapView.getCamera().lookAt(
 //                        new GeoCoordinates(location.getLatitude(), location.getLongitude()), mapMeasureZoom);
+
+                if(route!=null){
+                    distanceLeft.setText("Pozostało: " + Math.round(route.getLengthInMeters()/10.0)/10.0 + " km");
+                    if(avgSpeed>0)
+                        timeLeft.setText(Math.round(route.getLengthInMeters()/avgSpeed/60) + " minut");
+                }
+
                 if(locationIndicator != null)
                     locationIndicator.updateLocation(LocationConverter.convertToHERE(location));
 
@@ -168,6 +230,14 @@ public class TrainingActivity extends AppCompatActivity {
 
                     pastLocation = new android.location.Location(location);
 
+
+                    /// to nie powinno byc tu! ale nie rozumiem tej lokalizacji XD
+                    if(traceInDoubles!=null){
+                        initTrace(traceInDoubles);
+                        traceInDoubles=null;
+                    }
+
+
                     routeCreatorTrainingActive.createRoute(currentWaypoints);
                 }
             }
@@ -181,9 +251,7 @@ public class TrainingActivity extends AppCompatActivity {
 
         this.routeCreatorTrainingActive = new RouteCreatorTrainingActive(this.mapView, this.locationIndicator);
         this.routeCreatorTrainingSuspended = new RouteCreatorTrainingSuspended(this.mapView);
-
         this.fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
-
     }
 
     private void loadMapScene() {
@@ -195,6 +263,7 @@ public class TrainingActivity extends AppCompatActivity {
                 locationIndicator = new LocationIndicator();
                 locationIndicator.setLocationIndicatorStyle(LocationIndicator.IndicatorStyle.PEDESTRIAN);
                 locationIndicator.updateLocation(LocationConverter.convertToHERE(this.pastLocation)); // start
+
 
                 mapView.addLifecycleListener(locationIndicator);
                 mapView.getCamera().lookAt(
@@ -211,52 +280,6 @@ public class TrainingActivity extends AppCompatActivity {
         this.maxSpeedTextView.setText(getString(R.string.maxSpeedText, maxSpeed));
         this.distanceTextView.setText(getString(R.string.distanceText, distance));
         this.kcalTextView.setText(getString(R.string.kcalText, kcal));
-    }
-
-    private class TimeMeasure extends Thread{
-        @Override
-        public void run() {
-            try {
-                while(true)
-                    if(trainingActive){
-                        timeInSec++;
-                        timeTextView.setText("Czas: "+String.format("%02d:%02d:%02d",timeInSec/3600,timeInSec%3600/60, timeInSec%60));
-                        sleep(1000);
-                    }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        permissionsRequestor.onRequestPermissionsResult(requestCode, grantResults);
-    }
-
-    private void handleAndroidPermissions() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            startTrainingActivity();
-            return;
-        }
-        permissionsRequestor = new PermissionsRequestor(this);
-        permissionsRequestor.request(new PermissionsRequestor.ResultListener(){
-
-            @Override
-            public void permissionsGranted() {
-                startTrainingActivity();
-            }
-
-            @Override
-            public void permissionsDenied() {
-                Toast.makeText(getApplicationContext(),"Cannot start app: Location service and permissions are needed for this app.",Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
     }
 
     @Override
@@ -289,4 +312,19 @@ public class TrainingActivity extends AppCompatActivity {
             this.mapView.onSaveInstanceState(outState);
     }
 
+    private class TimeMeasure extends Thread{
+        @Override
+        public void run() {
+            try {
+                while(true)
+                    if(trainingActive){
+                        timeInSec++;
+                        timeTextView.setText("Czas: "+String.format("%02d:%02d:%02d",timeInSec/3600,timeInSec%3600/60, timeInSec%60));
+                        sleep(1000);
+                    }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
