@@ -65,6 +65,20 @@
             android:gravity="center"
             android:text="szczegóły"
             android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/distance_left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/time_left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textSize="20dp"/>
 
     <Button
         android:id="@+id/return_pause_training"

@@ -103,7 +103,13 @@ public class SetRouteActivity extends AppCompatActivity {
         setRoute.setOnClickListener(view -> {
             // Zapisz zaznaczoną trasę
             Intent intent = new Intent(SetRouteActivity.this, TrainingActivity.class);
-            intent.putExtra("waypoints", (Serializable) currentWaypoints);
+            double []array = new double[currentWaypoints.size()*2];
+            int j=0;
+            for(int i=0; i<currentWaypoints.size(); i++){
+                array[j++] = currentWaypoints.get(i).coordinates.latitude;
+                array[j++] = currentWaypoints.get(i).coordinates.longitude;
+            }
+            intent.putExtra("coords", array);
             startActivity(intent);
         });
 
@@ -135,9 +141,17 @@ public class SetRouteActivity extends AppCompatActivity {
                 locationIndicator.setLocationIndicatorStyle(LocationIndicator.IndicatorStyle.PEDESTRIAN);
                 locationIndicator.updateLocation(LocationConverter.convertToHERE(this.pastLocation)); // start
 
+                double latitude, longitude;
+                if(this.currentWaypoints.size()>0){
+                    latitude = currentWaypoints.get(currentWaypoints.size()-1).coordinates.latitude;
+                    longitude = currentWaypoints.get(currentWaypoints.size()-1).coordinates.longitude;
+                }else{
+                    latitude = pastLocation.getLatitude();
+                    longitude = pastLocation.getLongitude();
+                }
                 mapView.addLifecycleListener(locationIndicator);
                 mapView.getCamera().lookAt(
-                        new GeoCoordinates(pastLocation.getLatitude(), pastLocation.getLongitude()), mapMeasureZoom); //start
+                        new GeoCoordinates(latitude , longitude), mapMeasureZoom); //start
             } else {
                 Log.d("loadMapScene()", "Loading map failed: mapError: " + mapError.name());
             }
@@ -243,7 +257,6 @@ public class SetRouteActivity extends AppCompatActivity {
             switch(gestureState){
                 case BEGIN:
                     this.currentWaypoints.add(new Waypoint(mapView.viewToGeoCoordinates(touchPoint)));
-                    Log.d("coords", currentWaypoints.get(currentWaypoints.size()-1).coordinates.latitude + " " + currentWaypoints.get(currentWaypoints.size()-1).coordinates.longitude);
                     if(currentWaypoints.size()>1){
                         routingEngine.calculateRoute(
                                 currentWaypoints,
