@@ -26,6 +26,7 @@ import com.example.here.constants.ActivityType;
 import com.example.here.restapi.ApiInterface;
 import com.example.here.restapi.Firstname;
 import com.example.here.restapi.RetrofitClient;
+import com.example.here.restapi.Username;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,14 +99,14 @@ public class HomeFragment extends Fragment {
 
     private void getUserFirstname() {
         ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
-        Call<Firstname> call = apiInterface.getFirstname("Token " + sp.getString("token", ""));
-        call.enqueue(new Callback<Firstname>() {
+        Call<Username> call = apiInterface.getUsername("Token " + sp.getString("token", ""));
+        call.enqueue(new Callback<Username>() {
             @Override
-            public void onResponse(Call<Firstname> call, Response<Firstname> response) {
+            public void onResponse(Call<Username> call, Response<Username> response) {
                 if (response.isSuccessful()) {
-                    String firstname = response.body().getFirstname();
+                    String username = response.body().getUsername();
                     //Log.d("retro", firstname);
-                    welcomeTextView.setText(getString(R.string.welcomeText, firstname));
+                    welcomeTextView.setText(getString(R.string.welcomeText, username));
                     progressBar.setVisibility(View.GONE);
                     scrollView.setVisibility(View.VISIBLE);
                 } else {
@@ -114,7 +115,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Firstname> call, Throwable t) {
+            public void onFailure(Call<Username> call, Throwable t) {
                 //handle network problems
             }
         });

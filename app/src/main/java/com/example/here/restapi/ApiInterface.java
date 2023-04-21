@@ -20,9 +20,16 @@ public interface ApiInterface {
     @GET("/api/user/firstname")
     Call<Firstname> getFirstname(@Header("Authorization") String authorization);
 
+    @GET("/api/user/username")
+    Call<Username> getUsername(@Header("Authorization") String authorization);
+
     @GET("/api/user/friends")
     Call<List<UserData>> getFriends(@Header("Authorization") String authorization);
 
     @POST("/api/auth")
     Call<Token> getAuthToken(@Body Credentials credentials);
+
+    @POST("/api/user/register")
+    Call<Token> register(@Body RegisterCredentials credentials);
+
 }

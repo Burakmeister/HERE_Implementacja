@@ -1,0 +1,26 @@
+
+|
+java:S2293‹"YReplace the type specification in this constructor call with the diamond operator ("<>").(í¡•úÿÿÿÿ8±‘­ú0
+F
+java:S1604"(Make this anonymous inner class a lambda(Üã»8±‘­ú0
+n
+java:S16596"LDeclare "lastTourStartV2" and all following declarations on a separate line.(àİ‹”úÿÿÿÿ8½’­ú0
+]	java:S125="<This block of commented-out lines of code should be removed.(şŸ–¼üÿÿÿÿ8½’­ú0
+9
+java:S1116L"Remove this empty statement.(¯á©÷8½’­ú0
+X	java:S125l"<This block of commented-out lines of code should be removed.(âŠšÍ8Ç’­ú0
+[
+java:S1854‘"8Remove this useless assignment to local variable "item".(¨ĞĞÿÿÿÿÿ8Ñ’­ú0
+L
+java:S1481‘")Remove this unused "item" local variable.(¨ĞĞÿÿÿÿÿ8Ñ’­ú0
+Y	java:S125’"<This block of commented-out lines of code should be removed.(×¼”ï8Ñ’­ú0
+x
+java:S1450"URemove the "status" field and declare it as a local variable in the relevant methods.(ÚºåÙüÿÿÿÿ8Ñ’­ú0
+U
+java:S10686"3Remove this unused "lastTourStartV1" private field.(àİ‹”úÿÿÿÿ8¡¨ˆÀ÷0
+U
+java:S10686"3Remove this unused "lastTourStartV2" private field.(àİ‹”úÿÿÿÿ8¡¨ˆÀ÷0
+S
+java:S10687"1Remove this unused "lastTourEndV1" private field.(ùÿş†ûÿÿÿÿ8Û’­ú0
+S
+java:S10687"1Remove this unused "lastTourEndV2" private field.(ùÿş†ûÿÿÿÿ8Û’­ú0

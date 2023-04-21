@@ -77,5 +77,7 @@
     <string name="noAccountRegister">Nie masz konta? Stwórz je teraz!</string>
     <string name="wrong_email_or_password">Błędny email lub hasło</string>
     <string name="please_complete_the_form">Wypełnij wszystkie pola formularza</string>
+    <string name="wrong_repeated_password">Powtórzone hasło jest błędne</string>
+    <string name="something_went_wrong">Coś poszło nie tak</string>
 
 </resources>
