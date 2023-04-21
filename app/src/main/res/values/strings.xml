@@ -71,8 +71,11 @@
     <string name="signup">Zarejestruj się</string>
 
     <!--    Home page-->
-    <string name="welcome_user">Witaj, Gabriel!</string>
+    <!--<string name="welcome_user">Witaj, Gabriel!</string>-->
     <string name="online_friends">Sprawdź, kto jest aktywny z twoich znajomych</string>
     <string name="upcoming_events">Nadchodzące wydarzenia</string>
-  
+    <string name="noAccountRegister">Nie masz konta? Stwórz je teraz!</string>
+    <string name="wrong_email_or_password">Błędny email lub hasło</string>
+    <string name="please_complete_the_form">Wypełnij wszystkie pola formularza</string>
+
 </resources>

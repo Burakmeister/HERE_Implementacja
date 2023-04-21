@@ -17,8 +17,6 @@ f
 6app/src/main/java/com/example/here/MovingFragment.java,1\a\1a11d4e6a9942c3de8ccd7334cb936794c145c52
 c
 3app/src/main/java/com/example/here/CupFragment.java,3\6\3684c734b26a4e56c91ce04d9600a8d147361ff0
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 k
 ;app/src/main/java/com/example/here/restapi/Credentials.java,b\d\bd15ce78df06427c48325797faf555c335bdba8a
 n
@@ -31,7 +29,3 @@ d
 4app/src/main/java/com/example/here/MainActivity.java,2\1\2106911c0b55d142b318509b22d2e5c720f7f401
 g
 7app/src/main/java/com/example/here/models/UserData.java,1\4\146be587be6a006262f327949ad67d952bb710c2
-l
-<app/src/main/java/com/example/here/restapi/ApiInterface.java,7\1\714a504d3346a2da09807a883b57c47eadd49d0e
-f
-6app/src/main/java/com/example/here/PersonFragment.java,f\c\fced7fa60a2b77bce762b094b5babdee8603b095

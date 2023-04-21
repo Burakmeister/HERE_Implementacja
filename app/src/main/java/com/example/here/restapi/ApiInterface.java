@@ -17,10 +17,10 @@ public interface ApiInterface {
 //    @GET("/api/users_data")
 //    Call<List<UserData>> getAllUsersData();
 
-    @GET("/api/firstname")
+    @GET("/api/user/firstname")
     Call<Firstname> getFirstname(@Header("Authorization") String authorization);
 
-    @GET("/api/friends")
+    @GET("/api/user/friends")
     Call<List<UserData>> getFriends(@Header("Authorization") String authorization);
 
     @POST("/api/auth")

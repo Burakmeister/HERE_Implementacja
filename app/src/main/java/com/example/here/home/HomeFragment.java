@@ -43,6 +43,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView statusView;
     private SharedPreferences sp;
     private TextView welcomeTextView;
+    private ProgressBar progressBar;
+    private ScrollView scrollView;
 
     String[] items = {"Marsz","Bieganie","Jazda na rowerze","Kajakarstwo"};
     AutoCompleteTextView autoCompleteTxt;
@@ -72,15 +74,15 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);;
         this.statusView = view.findViewById(R.id.recyclerView_OnlineFriends);
-        ProgressBar progressBar = view.findViewById(R.id.progressBar);
-        ScrollView scrollView = view.findViewById(R.id.scrollView2);
-        progressBar.setVisibility(View.VISIBLE);
-        scrollView.setVisibility(View.GONE);
-
+        this.progressBar = view.findViewById(R.id.progressBar);
+        this.scrollView = view.findViewById(R.id.scrollView2);
+        this.progressBar.setVisibility(View.VISIBLE);
+        this.scrollView.setVisibility(View.GONE);
         this.welcomeTextView = (TextView) view.findViewById(R.id.textView_WelcomeUser);
+
         this.sp = this.getActivity().getSharedPreferences("msb", MODE_PRIVATE);
 
-        loadData(progressBar, scrollView);
+        loadData();
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
@@ -90,11 +92,11 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void loadData(ProgressBar progressBar, ScrollView scrollView) {
-        getUserFirstname(progressBar, scrollView);
+    private void loadData() {
+        getUserFirstname();
     }
 
-    private void getUserFirstname(ProgressBar progressBar, ScrollView scrollView) {
+    private void getUserFirstname() {
         ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
         Call<Firstname> call = apiInterface.getFirstname("Token " + sp.getString("token", ""));
         call.enqueue(new Callback<Firstname>() {
