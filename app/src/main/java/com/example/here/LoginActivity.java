@@ -22,7 +22,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     Button login;
-    TextView email, password;
+    TextView email, password, registerButton;
     SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,8 @@ public class LoginActivity extends AppCompatActivity {
 
         login = (Button) findViewById(R.id.button_Login);
         email = (TextView) findViewById(R.id.editText_Email);
-        password = (TextView) findViewById(R.id.editText_Password);
+        password = (TextView) findViewById(R.id.editText_Password_Again);
+        registerButton = (TextView) findViewById(R.id.registerTextView);
 
         sp = getSharedPreferences("msb",MODE_PRIVATE);
         sp.edit().putBoolean("logged", false).apply(); // FOR TESTING!!!!11
@@ -44,9 +45,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(email.getText().toString().equals("") || password.getText().toString().equals(""))
-                    Toast.makeText(getApplicationContext(), "Please complete the login form", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.please_complete_the_form, Toast.LENGTH_SHORT).show();
                 else
                     authenticateUser(email.getText().toString(), password.getText().toString());
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRegisterActivity();
             }
         });
     }
@@ -63,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                     sp.edit().putBoolean("logged",true).apply();
                     goToMainActivity();
                 } else {
-                    Toast.makeText(getApplicationContext(),"Wrong email or password",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.wrong_email_or_password,Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -76,6 +84,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goToMainActivity(){
         Intent i = new Intent(this,MainActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    public void goToRegisterActivity(){
+        Intent i = new Intent(this,RegisterActivity.class);
         startActivity(i);
         finish();
     }

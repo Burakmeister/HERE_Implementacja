@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class PersonFragment extends Fragment {
     private Button addButton;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private static ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -164,13 +166,16 @@ public class PersonFragment extends Fragment {
             FriendsListAdapter friendsListAdapter = new FriendsListAdapter(getContext(), friends);
             ListView friendsListView = (ListView) view.findViewById(R.id.friends_list);
             friendsListView.setAdapter(friendsListAdapter);
+            progressBar = view.findViewById(R.id.friendProgressBar);
+            progressBar.setVisibility(View.VISIBLE);
+            friendsListView.setVisibility(View.GONE);
 
-            getFriendsList(friends, friendsListAdapter);
+            getFriendsList(friends, friendsListAdapter, friendsListView);
 
             return view;
         }
 
-        private void getFriendsList(ArrayList<UserData> friends, FriendsListAdapter friendsListAdapter) {
+        private void getFriendsList(ArrayList<UserData> friends, FriendsListAdapter friendsListAdapter, ListView friendsListView) {
             ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
             SharedPreferences sp = getActivity().getSharedPreferences("msb", Context.MODE_PRIVATE);
             Call<List<UserData>> call = apiInterface.getFriends("Token " + sp.getString("token", ""));
@@ -185,6 +190,8 @@ public class PersonFragment extends Fragment {
                             friends.add(userData);
                         }
                         friendsListAdapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.GONE);
+                        friendsListView.setVisibility(View.VISIBLE);
                     } else {
 //                    unsuccessful
                     }

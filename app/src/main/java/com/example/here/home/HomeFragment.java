@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +26,7 @@ import com.example.here.constants.ActivityType;
 import com.example.here.restapi.ApiInterface;
 import com.example.here.restapi.Firstname;
 import com.example.here.restapi.RetrofitClient;
+import com.example.here.restapi.Username;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView statusView;
     private SharedPreferences sp;
     private TextView welcomeTextView;
+    private ProgressBar progressBar;
+    private ScrollView scrollView;
 
     String[] items = {"Marsz","Bieganie","Jazda na rowerze","Kajakarstwo"};
     AutoCompleteTextView autoCompleteTxt;
@@ -70,10 +75,15 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);;
         this.statusView = view.findViewById(R.id.recyclerView_OnlineFriends);
-
+        this.progressBar = view.findViewById(R.id.progressBar);
+        this.scrollView = view.findViewById(R.id.scrollView2);
+        this.progressBar.setVisibility(View.VISIBLE);
+        this.scrollView.setVisibility(View.GONE);
         this.welcomeTextView = (TextView) view.findViewById(R.id.textView_WelcomeUser);
+
         this.sp = this.getActivity().getSharedPreferences("msb", MODE_PRIVATE);
-        getUserFirstname();
+
+        loadData();
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
@@ -83,23 +93,29 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private void loadData() {
+        getUserFirstname();
+    }
+
     private void getUserFirstname() {
         ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
-        Call<Firstname> call = apiInterface.getFirstname("Token " + sp.getString("token", ""));
-        call.enqueue(new Callback<Firstname>() {
+        Call<Username> call = apiInterface.getUsername("Token " + sp.getString("token", ""));
+        call.enqueue(new Callback<Username>() {
             @Override
-            public void onResponse(Call<Firstname> call, Response<Firstname> response) {
+            public void onResponse(Call<Username> call, Response<Username> response) {
                 if (response.isSuccessful()) {
-                    String firstname = response.body().getFirstname();
+                    String username = response.body().getUsername();
                     //Log.d("retro", firstname);
-                    welcomeTextView.setText(getString(R.string.welcomeText, firstname));
+                    welcomeTextView.setText(getString(R.string.welcomeText, username));
+                    progressBar.setVisibility(View.GONE);
+                    scrollView.setVisibility(View.VISIBLE);
                 } else {
 //                    unsuccessful
                 }
             }
 
             @Override
-            public void onFailure(Call<Firstname> call, Throwable t) {
+            public void onFailure(Call<Username> call, Throwable t) {
                 //handle network problems
             }
         });
