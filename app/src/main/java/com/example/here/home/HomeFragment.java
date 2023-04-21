@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -70,10 +72,15 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);;
         this.statusView = view.findViewById(R.id.recyclerView_OnlineFriends);
+        ProgressBar progressBar = view.findViewById(R.id.progressBar);
+        ScrollView scrollView = view.findViewById(R.id.scrollView2);
+        progressBar.setVisibility(View.VISIBLE);
+        scrollView.setVisibility(View.GONE);
 
         this.welcomeTextView = (TextView) view.findViewById(R.id.textView_WelcomeUser);
         this.sp = this.getActivity().getSharedPreferences("msb", MODE_PRIVATE);
-        getUserFirstname();
+
+        loadData(progressBar, scrollView);
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
@@ -83,7 +90,11 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void getUserFirstname() {
+    private void loadData(ProgressBar progressBar, ScrollView scrollView) {
+        getUserFirstname(progressBar, scrollView);
+    }
+
+    private void getUserFirstname(ProgressBar progressBar, ScrollView scrollView) {
         ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
         Call<Firstname> call = apiInterface.getFirstname("Token " + sp.getString("token", ""));
         call.enqueue(new Callback<Firstname>() {
@@ -93,6 +104,8 @@ public class HomeFragment extends Fragment {
                     String firstname = response.body().getFirstname();
                     //Log.d("retro", firstname);
                     welcomeTextView.setText(getString(R.string.welcomeText, firstname));
+                    progressBar.setVisibility(View.GONE);
+                    scrollView.setVisibility(View.VISIBLE);
                 } else {
 //                    unsuccessful
                 }
