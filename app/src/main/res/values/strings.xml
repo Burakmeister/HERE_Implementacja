@@ -65,8 +65,8 @@
 
     <!--    SignUp-->
     <string name="welcome_signup">Utwórz konto</string>
-    <string name="nick">Nick</string>
-    <string name="setNick">Wpisz nick</string>
+    <string name="username">Nazwa użytkownika</string>
+    <string name="setUsername">Wpisz nazwę</string>
     <string name="repassword">Podaj hasło jeszcze raz</string>
     <string name="signup">Zarejestruj się</string>
 
@@ -79,5 +79,13 @@
     <string name="please_complete_the_form">Wypełnij wszystkie pola formularza</string>
     <string name="wrong_repeated_password">Powtórzone hasło jest błędne</string>
     <string name="something_went_wrong">Coś poszło nie tak</string>
+    <string name="insert_data_textView">Podaj dane</string>
+    <string name="nick">Nick</string>
+    <string name="setNick">Wpisz nick</string>
+    <string name="add_data_btn_text">Dodaj dane</string>
+    <string name="sex">Płeć</string>
+    <string name="birth_date_textView">Data urodzenia</string>
+    <string name="height">Wzrost</string>
+    <string name="weight">Waga</string>
 
 </resources>
