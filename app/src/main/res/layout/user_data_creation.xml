@@ -30,12 +30,12 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView_SignIn"
+        android:id="@+id/textView_UserData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="56dp"
-        android:text="@string/welcome_signup"
+        android:text="@string/insert_data_textView"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -56,7 +56,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/username"
+            android:text="@string/nick"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -67,77 +67,115 @@
             android:layout_marginTop="12dp"
             android:background="@drawable/edittext_background"
             android:ems="10"
-            android:hint="@string/setUsername"
+            android:hint="@string/setNick"
             android:inputType="textPersonName"
             android:padding="12dp"
             android:textColor="@color/light_gray"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView_SignIn_Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/email"
+            android:text="@string/sex"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editText_SignIn_Email"
+        <Spinner
+            android:id="@+id/spinner_Sex"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/edittext_background"
             android:ems="10"
-            android:hint="@string/setEmail"
-            android:inputType="textPersonName"
             android:padding="12dp"
             android:textColor="@color/light_gray"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView_SignIn_Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/password"
+            android:text="@string/birth_date_textView"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editText_Password"
+        <Button
+            android:id="@+id/birth_date_btn"
+            android:text="23 APR 2023"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/edittext_background"
             android:ems="10"
-            android:hint="@string/setPassword"
-            android:inputType="textPassword"
             android:padding="12dp"
             android:textColor="@color/light_gray"
+            style="?android:spinnerStyle"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/textView_SignIn_RePassword"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/repassword"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editText_Password_Again"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/edittext_background"
-            android:ems="10"
-            android:hint="@string/setPassword"
-            android:inputType="textPassword"
-            android:padding="12dp"
-            android:textColor="@color/light_gray"
-            android:textSize="18sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/height"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <NumberPicker
+                    android:id="@+id/height_picker"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edittext_background"
+                    android:ems="10"
+                    android:hint="@string/setPassword"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:textColor="@color/light_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weight"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <NumberPicker
+                    android:id="@+id/weight_picker"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edittext_background"
+                    android:ems="10"
+                    android:hint="@string/setPassword"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:textColor="@color/light_gray"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_SignInButton"
@@ -146,7 +184,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/button_background"
-            android:text="@string/signup"
+            android:text="@string/add_data_btn_text"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold" />
