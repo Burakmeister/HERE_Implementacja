@@ -45,19 +45,20 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(
-                        nickEdit.getText().toString().equals("") ||
-                                emailEdit.getText().toString().equals("") ||
-                                passwordEdit.getText().toString().equals("") ||
-                                repeatPasswordEdit.getText().toString().equals("")
-                ) {
-                    Toast.makeText(getApplicationContext(), R.string.please_complete_the_form, Toast.LENGTH_SHORT).show();
-                }
-                else if(!passwordEdit.getText().toString().equals(repeatPasswordEdit.getText().toString())) {
-                    Toast.makeText(getApplicationContext(), R.string.wrong_repeated_password, Toast.LENGTH_SHORT).show();
-                }
-                else
-                    registerUser(nickEdit.getText().toString(), emailEdit.getText().toString(), passwordEdit.getText().toString());
+                goToUserDataCreationActivity();
+//                if(
+//                        nickEdit.getText().toString().equals("") ||
+//                                emailEdit.getText().toString().equals("") ||
+//                                passwordEdit.getText().toString().equals("") ||
+//                                repeatPasswordEdit.getText().toString().equals("")
+//                ) {
+//                    Toast.makeText(getApplicationContext(), R.string.please_complete_the_form, Toast.LENGTH_SHORT).show();
+//                }
+//                else if(!passwordEdit.getText().toString().equals(repeatPasswordEdit.getText().toString())) {
+//                    Toast.makeText(getApplicationContext(), R.string.wrong_repeated_password, Toast.LENGTH_SHORT).show();
+//                }
+//                else
+//                    registerUser(nickEdit.getText().toString(), emailEdit.getText().toString(), passwordEdit.getText().toString());
             }
         });
 
@@ -73,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String token = response.body().getToken();
                     sp.edit().putString("token", token).commit();
                     sp.edit().putBoolean("logged",true).apply();
-                    goToMainActivity();
+                    goToUserDataCreationActivity();
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.something_went_wrong,Toast.LENGTH_SHORT).show();
                 }
@@ -86,8 +87,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void goToMainActivity(){
-        Intent i = new Intent(this,MainActivity.class);
+    public void goToUserDataCreationActivity(){
+        Intent i = new Intent(this,UserDataCreation.class);
         startActivity(i);
         finish();
     }

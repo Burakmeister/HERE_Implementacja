@@ -87,5 +87,16 @@
     <string name="birth_date_textView">Data urodzenia</string>
     <string name="height">Wzrost</string>
     <string name="weight">Waga</string>
+    <string name="country">Państwo</string>
+    <string name="skip_user_data_creation">Na razie pomiń</string>
+
+
+<!--    Countries:-->
+    <string-array name="countries">
+        <item>Poland</item>
+        <item>United States</item>
+        <item>France</item>
+        <item>Japan</item>
+    </string-array>
 
 </resources>
