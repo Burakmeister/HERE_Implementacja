@@ -11,7 +11,7 @@ public class UserData {
     private Character sex;
     @SerializedName("height")
     private Integer height;
-    @SerializedName("weight")
+    @SerializedName("weigth")
     private Float weight;
     @SerializedName("country")
     private String country;

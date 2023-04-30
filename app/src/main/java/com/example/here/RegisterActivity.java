@@ -73,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String token = response.body().getToken();
                     sp.edit().putString("token", token).commit();
                     sp.edit().putBoolean("logged",true).apply();
-                    goToMainActivity();
+                    goToUserDataCreationActivity(username);
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.something_went_wrong,Toast.LENGTH_SHORT).show();
                 }
@@ -86,8 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void goToMainActivity(){
-        Intent i = new Intent(this,MainActivity.class);
+    public void goToUserDataCreationActivity(String username){
+        Intent i = new Intent(this,UserDataCreation.class);
+        i.putExtra("nick", username);
         startActivity(i);
         finish();
     }

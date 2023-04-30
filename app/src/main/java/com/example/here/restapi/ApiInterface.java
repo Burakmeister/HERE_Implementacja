@@ -32,4 +32,7 @@ public interface ApiInterface {
     @POST("/api/user/register")
     Call<Token> register(@Body RegisterCredentials credentials);
 
+    @POST("/api/user/add_data")
+    Call<Void> addData(@Header("Authorization") String authorization, @Body UserData userData);
+
 }
