@@ -42,7 +42,6 @@
                 android:hint="@string/setNick"
                 android:inputType="textPersonName"
                 android:padding="12dp"
-                android:textColor="@color/light_gray"
                 android:textSize="18sp" />
 
             <TextView

@@ -90,13 +90,18 @@
     <string name="country">Państwo</string>
     <string name="skip_user_data_creation">Na razie pomiń</string>
 
+<!--    Genders:-->
+    <string-array name="genders">
+        <item>mężczyzna</item>
+        <item>kobieta</item>
+    </string-array>
 
 <!--    Countries:-->
     <string-array name="countries">
-        <item>Poland</item>
-        <item>United States</item>
-        <item>France</item>
-        <item>Japan</item>
+        <item>Polska</item>
+        <item>Stany Zjednoczone</item>
+        <item>Francja</item>
+        <item>Japonia</item>
     </string-array>
 
 </resources>
