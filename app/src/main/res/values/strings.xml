@@ -96,7 +96,7 @@
     <string name="settingsBannerText">Ustawienia</string>
     <string name="changePassword">Zmień swoje hasło</string>
     <string name="changeUsername">Zmień nazwę użytkownika</string>
-    <string name="changeEmail">Zmień email przypisany do konta</string>
+    <string name="changeEmail">Zmień email</string>
     <string name="changeData">Zmień dane użytkownika</string>
     <string name="changeAvatar">Zmień swój awatar</string>
     <string name="logOut">Wyloguj się</string>

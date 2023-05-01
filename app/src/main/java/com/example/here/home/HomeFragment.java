@@ -121,7 +121,6 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<Username> call, Response<Username> response) {
                 if (response.isSuccessful()) {
                     String username = response.body().getUsername();
-                    //Log.d("retro", firstname);
                     welcomeTextView.setText(getString(R.string.welcomeText, username));
                     progressBar.setVisibility(View.GONE);
                     scrollView.setVisibility(View.VISIBLE);
