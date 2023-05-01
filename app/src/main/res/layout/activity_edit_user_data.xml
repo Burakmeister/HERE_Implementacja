@@ -23,7 +23,6 @@
             android:padding="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_view4"
             app:layout_constraintVertical_bias="0.533">
 
             <TextView
@@ -36,14 +35,13 @@
             <EditText
                 android:id="@+id/editText_FirstName"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_background"
                 android:ems="10"
                 android:hint="@string/setFirstName"
                 android:inputType="textPersonName"
                 android:padding="12dp"
-                android:textColor="@color/light_gray"
                 android:textSize="18sp" />
 
             <TextView
@@ -57,20 +55,19 @@
             <EditText
                 android:id="@+id/editText_LastName"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_background"
                 android:ems="10"
                 android:hint="@string/setLastName"
                 android:inputType="textPersonName"
                 android:padding="12dp"
-                android:textColor="@color/light_gray"
                 android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/username"
+                android:text="@string/nick"
                 android:textSize="20sp"
                 android:layout_marginTop="16dp"
                 android:textStyle="bold" />
@@ -78,81 +75,135 @@
             <EditText
                 android:id="@+id/editText_Nick"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_background"
                 android:ems="10"
-                android:hint="@string/setUsername"
+                android:hint="@string/setNick"
                 android:inputType="textPersonName"
                 android:padding="12dp"
-                android:textColor="@color/light_gray"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView_SignIn_Email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/email"
+                android:text="@string/sex"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editText_SignIn_Email"
+            <Spinner
+                android:id="@+id/spinner_Sex"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_background"
                 android:ems="10"
-                android:hint="@string/setEmail"
-                android:inputType="textPersonName"
                 android:padding="12dp"
                 android:textColor="@color/light_gray"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView_SignIn_Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/password"
+                android:text="@string/birth_date_textView"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editText_Password"
+            <Button
+                android:id="@+id/birth_date_btn"
+                style="?android:spinnerStyle"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/edittext_background"
                 android:ems="10"
-                android:hint="@string/setPassword"
-                android:inputType="textPassword"
                 android:padding="12dp"
+                android:text="23 APR 2023"
                 android:textColor="@color/light_gray"
                 android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/height"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
+                        android:id="@+id/height_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/edittext_background"
+                        android:ems="10"
+                        android:padding="12dp"
+                        android:textColor="@color/light_gray"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/weight"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
+                        android:id="@+id/weight_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/edittext_background"
+                        android:ems="10"
+                        android:hint="@string/setPassword"
+                        android:inputType="textPassword"
+                        android:padding="12dp"
+                        android:textColor="@color/light_gray"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/textView_SignIn_RePassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/repassword"
+                android:text="@string/country"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editText_Password_Again"
+            <Spinner
+                android:id="@+id/spinner_Country"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_background"
                 android:ems="10"
-                android:hint="@string/setPassword"
-                android:inputType="textPassword"
                 android:padding="12dp"
                 android:textColor="@color/light_gray"
                 android:textSize="18sp" />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_SignInButton"
@@ -161,10 +212,11 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="32dp"
                 android:background="@drawable/button_background"
-                android:text="@string/signup"
+                android:text="@string/add_data_btn_text"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
         </LinearLayout>
 
     </ScrollView>
@@ -181,22 +233,23 @@
 
     <View
         android:id="@+id/top_view4"
-        android:layout_width="372dp"
-        android:layout_height="291dp"
+        android:layout_width="353dp"
+        android:layout_height="278dp"
         android:layout_marginStart="-100dp"
         android:layout_marginTop="-130dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/bg_view2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView_SignIn"
+        android:id="@+id/textView_UserData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="56dp"
-        android:text="@string/welcome_signup"
+        android:text="@string/insert_data_textView"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"

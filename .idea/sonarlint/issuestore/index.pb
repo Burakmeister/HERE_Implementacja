@@ -1,7 +1,5 @@
 
 l
-<app/src/main/java/com/example/here/UserSettingsFragment.java,a\8\a8a6f760c0bda15a50d175be7d06af59fc5043d8
-l
 <app/src/main/java/com/example/here/PermissionsRequestor.java,6\1\61cda66c078956a6d3e68a3b6b5577c4d13c9388
 s
 Capp/src/main/java/com/example/here/PlatformPositioningProvider.java,3\9\391c4e4505c55452a8ed114c604aefa696ff676b
@@ -21,29 +19,7 @@ n
 >app/src/main/java/com/example/here/restapi/RetrofitClient.java,8\7\874acd619d8f0cc5d03360286c477131e7a58f09
 e
 5app/src/main/java/com/example/here/restapi/Token.java,4\7\476166849cc6188a1c21302bb04d4aa38f09b7f5
-d
-4app/src/main/java/com/example/here/MainActivity.java,2\1\2106911c0b55d142b318509b22d2e5c720f7f401
-k
-;app/src/main/java/com/example/here/restapi/Credentials.java,b\d\bd15ce78df06427c48325797faf555c335bdba8a
-s
-Capp/src/main/java/com/example/here/restapi/RegisterCredentials.java,2\d\2ddbefe75b761d833f2687988e83e1eafd3c881a
-i
-9app/src/main/java/com/example/here/home/HomeFragment.java,e\3\e365de57595a6dd0de332744e6b07b9676eb6416
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 h
 8app/src/main/java/com/example/here/restapi/Username.java,6\8\686df6e4e98b21ff77cf9974fcf2ef477a6a4a61
-i
-9app/src/main/java/com/example/here/restapi/Firstname.java,9\c\9cb930f5a683f20ad1f929437d930c4171923bae
-g
-7app/src/main/java/com/example/here/models/UserData.java,1\4\146be587be6a006262f327949ad67d952bb710c2
-l
-<app/src/main/java/com/example/here/restapi/ApiInterface.java,7\1\714a504d3346a2da09807a883b57c47eadd49d0e
-e
-5app/src/main/java/com/example/here/LoginActivity.java,b\8\b8aab09d99e0575ca4a4ca5cd2b9c8d68c8e4ef4
 f
 6app/src/main/java/com/example/here/PersonFragment.java,f\c\fced7fa60a2b77bce762b094b5babdee8603b095
-h
-8app/src/main/java/com/example/here/UserDataCreation.java,6\0\60cbbfc73c7852f154a92e95bca0635c74fa5504
-h
-8app/src/main/java/com/example/here/RegisterActivity.java,3\1\31a0147c0c29194cc977ffd751022f78a214dfc2

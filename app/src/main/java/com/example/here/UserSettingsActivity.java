@@ -1,6 +1,8 @@
 package com.example.here;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +12,12 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
 
 public class UserSettingsActivity extends AppCompatActivity {
+
+    SharedPreferences sp;
+
     private Button usernameButton;
     private Button passwordButton;
     private Button emailButton;
@@ -24,6 +30,8 @@ public class UserSettingsActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_view);
+
+        sp = getSharedPreferences("msb", MODE_PRIVATE);
 
         usernameButton = (Button) findViewById(R.id.change_username_button);
         passwordButton = (Button) findViewById(R.id.change_password_button);
@@ -113,7 +121,8 @@ public class UserSettingsActivity extends AppCompatActivity {
         this.dataButton.setOnClickListener(new View.OnClickListener() {     // utwórz okno dialogowe po naciśnięciu
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(UserSettingsActivity.this);
+                goToEditUserData();
+//                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(UserSettingsActivity.this);
                 // tu jeszcze dodać funkcjonalność na podstawie tego co w innych przyciskach
             }
         });
@@ -128,29 +137,44 @@ public class UserSettingsActivity extends AppCompatActivity {
         this.logOutButton.setOnClickListener(new View.OnClickListener() {     // utwórz okno dialogowe po naciśnięciu
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(UserSettingsActivity.this);
-                LayoutInflater inflater = UserSettingsActivity.this.getLayoutInflater();
-                final View dialogView = inflater.inflate(R.layout.dialog_view, null);
-                dialogBuilder.setView(dialogView);
-                dialogBuilder.setTitle("Potwierdź wylogowanie");
-                dialogBuilder.setMessage("Czy na pewno chcesz się wylogować?");
-                dialogBuilder.setPositiveButton("Potwierdź", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // wyloguj, dodać później funkcjonalność
-                    }
-                });
-                dialogBuilder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // nic nie rób
-                    }
-                });
-                AlertDialog b = dialogBuilder.create();
-                b.show();
+                sp.edit().remove("token").apply();
+                sp.edit().putBoolean("logged", false).apply();
+                goToLogin();
+//                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(UserSettingsActivity.this);
+//                LayoutInflater inflater = UserSettingsActivity.this.getLayoutInflater();
+//                final View dialogView = inflater.inflate(R.layout.dialog_view, null);
+//                dialogBuilder.setView(dialogView);
+//                dialogBuilder.setTitle("Potwierdź wylogowanie");
+//                dialogBuilder.setMessage("Czy na pewno chcesz się wylogować?");
+//                dialogBuilder.setPositiveButton("Potwierdź", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        // wyloguj, dodać później funkcjonalność
+//                    }
+//                });
+//                dialogBuilder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        // nic nie rób
+//                    }
+//                });
+//                AlertDialog b = dialogBuilder.create();
+//                b.show();
             }
         });
 
 
 
+    }
+
+    private void goToLogin() {
+        Intent i = new Intent(this, LoginActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+        finish();
+    }
+
+    private void goToEditUserData() {
+        Intent i = new Intent(this, EditUserData.class);
+        startActivity(i);
     }
 
 

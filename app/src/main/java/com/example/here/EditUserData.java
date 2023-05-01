@@ -1,31 +1,26 @@
 package com.example.here;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.here.models.UserData;
 import com.example.here.restapi.ApiInterface;
-import com.example.here.restapi.RegisterCredentials;
+import com.example.here.restapi.Name;
 import com.example.here.restapi.RetrofitClient;
-import com.example.here.restapi.Token;
+import com.example.here.restapi.Username;
 
 import java.util.Calendar;
 
@@ -33,10 +28,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserDataCreation extends AppCompatActivity {
+public class EditUserData extends AppCompatActivity {
 
+    ApiInterface apiInterface;
     SharedPreferences sp;
 
+    EditText firstNameEdit, lastNameEdit;
     EditText nicknameEdit;
     String[] genders;
     String[] countries;
@@ -49,20 +46,26 @@ public class UserDataCreation extends AppCompatActivity {
     NumberPicker heightPicker, weightPicker;
 
     Button addDataButton;
-    TextView skipButton;
+
+    ArrayAdapter countriesAdapter;
+
+    String token;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_data_creation);
+        setContentView(R.layout.activity_edit_user_data);
 
+        apiInterface  = RetrofitClient.getInstance().create(ApiInterface.class);
         sp = getSharedPreferences("msb",MODE_PRIVATE);
+        token = sp.getString("token", "");
+
+        //first and last name
+        firstNameEdit = findViewById(R.id.editText_FirstName);
+        lastNameEdit = findViewById(R.id.editText_LastName);
 
         //nickname
         nicknameEdit = findViewById(R.id.editText_Nick);
-
-        String nick = getIntent().getExtras().getString("nick");
-        nicknameEdit.setText(nick);
 
         //sex
         genders = getResources().getStringArray(R.array.genders);
@@ -74,8 +77,8 @@ public class UserDataCreation extends AppCompatActivity {
         //country
         countries = getResources().getStringArray(R.array.countries);
         this.countriesSpinner = findViewById(R.id.spinner_Country);
-        ArrayAdapter countriesAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, countries);
-        sexAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        countriesAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, countries);
+        countriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         countriesSpinner.setAdapter(countriesAdapter);
 
         //bday
@@ -106,17 +109,66 @@ public class UserDataCreation extends AppCompatActivity {
             public void onClick(View v) {addData();}
         });
 
-        //skip
+        setDataToViews();
 
-        skipButton = findViewById(R.id.skip_data_creation_btn);
-        skipButton.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void setDataToViews() {
+
+        Call<Name> nameCall = apiInterface.getName("Token " + token);
+        Call<UserData> dataCall = apiInterface.getUserData("Token " + token);
+
+        nameCall.enqueue(new Callback<Name>() {
             @Override
-            public void onClick(View v) {goToMainActivity();}
+            public void onResponse(Call<Name> call, Response<Name> response) {
+                if (response.isSuccessful()) {
+                    String firstName = response.body().getFirst_name();
+                    String lastName = response.body().getLast_name();
+
+                    firstNameEdit.setText(firstName);
+                    lastNameEdit.setText(lastName);
+
+                } else {
+//                    unsuccessful
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Name> call, Throwable t) {
+                //handle network problems
+            }
+        });
+
+        dataCall.enqueue(new Callback<UserData>() {
+            @Override
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
+                UserData userData = response.body();
+
+                nicknameEdit.setText(userData.getNick());
+
+                int s = userData.getSex() == 'M' ? 0 : 1;
+                sexSpinner.setSelection(s);
+
+                int c = countriesAdapter.getPosition(userData.getCountry());
+                if(c != -1) {
+                    countriesSpinner.setSelection(c);
+                }
+
+                heightPicker.setValue(userData.getHeight());
+                weightPicker.setValue(userData.getWeight().intValue());
+
+            }
+
+            @Override
+            public void onFailure(Call<UserData> call, Throwable t) {
+
+            }
         });
 
     }
 
     private void addData() {
+
         if(nicknameEdit.getText().toString().isEmpty()) {
             nicknameEdit.setBackgroundResource(R.drawable.edit_text_wrong);
             Toast.makeText(getApplicationContext(), R.string.please_complete_the_form, Toast.LENGTH_SHORT).show();
@@ -125,32 +177,49 @@ public class UserDataCreation extends AppCompatActivity {
 
         nicknameEdit.setBackgroundResource(R.drawable.edittext_background);
 
-        ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
+        String firstName = firstNameEdit.getText().toString();
+        String lastname = lastNameEdit.getText().toString();
+
+        String nick = nicknameEdit.getText().toString();
+        char sex = sexSpinner.getSelectedItemPosition() == 0 ? 'M' : 'F';
+        String country = (String) countriesSpinner.getSelectedItem();
+        int height = heightPicker.getValue();
+        int weight = weightPicker.getValue();
 
         UserData userData = new UserData();
-        userData.setNick(nicknameEdit.getText().toString());
-        char sex = sexSpinner.getSelectedItemPosition() == 0 ? 'M' : 'F';
+        userData.setNick(nick);
         userData.setSex(sex);
-        userData.setCountry(countriesSpinner.getSelectedItem().toString());
-        userData.setHeight(heightPicker.getValue());
-        userData.setWeight((float) weightPicker.getValue());
+        userData.setCountry(country);
+        userData.setHeight(height);
+        userData.setWeight((float) weight);
 
-        Call<Void> call = apiInterface.addData("Token " + sp.getString("token", ""), userData);
-        call.enqueue(new Callback<Void>() {
+        Call<Void> nameCall = apiInterface.editName("Token " + token, new Name(firstName, lastname));
+        Call<Void> dataCall = apiInterface.editData("Token " + token, userData);
+
+        nameCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    goToMainActivity();
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.something_went_wrong,Toast.LENGTH_SHORT).show();
-                }
+                Log.d("ass", firstName+" "+lastname);
+                finish();
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                //handle network problems
+                Toast.makeText(getApplicationContext(), R.string.something_went_wrong,Toast.LENGTH_SHORT).show();
             }
         });
+        dataCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), R.string.something_went_wrong,Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private String today() {
@@ -186,12 +255,6 @@ public class UserDataCreation extends AppCompatActivity {
             datePickerDialog = new DatePickerDialog(this, dateSetListener, year, month, day);
         }
 
-    }
-
-    public void goToMainActivity(){
-        Intent i = new Intent(this,MainActivity.class);
-        startActivity(i);
-        finish();
     }
 
 }

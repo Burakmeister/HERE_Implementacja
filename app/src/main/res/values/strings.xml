@@ -76,7 +76,7 @@
     <string name="upcoming_events">Nadchodzące wydarzenia</string>
     <string name="noAccountRegister">Nie masz konta? Stwórz je teraz!</string>
     <string name="wrong_email_or_password">Błędny email lub hasło</string>
-    <string name="please_complete_the_form">Wypełnij wszystkie pola formularza</string>
+    <string name="please_complete_the_form">Wypełnij brakujące pola formularza</string>
     <string name="wrong_repeated_password">Powtórzone hasło jest błędne</string>
     <string name="something_went_wrong">Coś poszło nie tak</string>
     <string name="insert_data_textView">Podaj dane</string>
@@ -89,14 +89,25 @@
     <string name="weight">Waga</string>
     <string name="country">Państwo</string>
     <string name="skip_user_data_creation">Na razie pomiń</string>
+    <string name="setFirstName">Wpisz imię</string>
+    <string name="firstName">Imię</string>
+    <string name="lastName">Nazwisko</string>
+    <string name="setLastName">Wpisz nazwisko</string>
+    <string name="settingsBannerText">Ustawienia</string>
+    <string name="changePassword">Zmień swoje hasło</string>
+    <string name="changeUsername">Zmień nazwę użytkownika</string>
+    <string name="changeEmail">Zmień email przypisany do konta</string>
+    <string name="changeData">Zmień dane użytkownika</string>
+    <string name="changeAvatar">Zmień swój awatar</string>
+    <string name="logOut">Wyloguj się</string>
 
-<!--    Genders:-->
+    <!--    Genders:-->
     <string-array name="genders">
         <item>mężczyzna</item>
         <item>kobieta</item>
     </string-array>
 
-<!--    Countries:-->
+    <!--    Countries:-->
     <string-array name="countries">
         <item>Polska</item>
         <item>Stany Zjednoczone</item>
