@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton = (TextView) findViewById(R.id.registerTextView);
 
         sp = getSharedPreferences("msb",MODE_PRIVATE);
-        sp.edit().putBoolean("logged", false).apply(); // FOR TESTING!!!!11
+        //sp.edit().putBoolean("logged", false).apply(); // FOR TESTING!!!!11
 
         if(sp.getBoolean("logged",false)){
             goToMainActivity();
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.isSuccessful()) {
                     String token = response.body().getToken();
-                    sp.edit().putString("token", token).commit();
+                    sp.edit().putString("token", token).apply();
                     sp.edit().putBoolean("logged",true).apply();
                     goToMainActivity();
                 } else {
@@ -91,6 +91,5 @@ public class LoginActivity extends AppCompatActivity {
     public void goToRegisterActivity(){
         Intent i = new Intent(this,RegisterActivity.class);
         startActivity(i);
-        finish();
     }
 }

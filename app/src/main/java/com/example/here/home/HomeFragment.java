@@ -2,6 +2,7 @@ package com.example.here.home;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -22,9 +24,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.here.R;
+import com.example.here.UserSettingsActivity;
 import com.example.here.constants.ActivityType;
 import com.example.here.restapi.ApiInterface;
-import com.example.here.restapi.Firstname;
 import com.example.here.restapi.RetrofitClient;
 import com.example.here.restapi.Username;
 
@@ -46,6 +48,7 @@ public class HomeFragment extends Fragment {
     private TextView welcomeTextView;
     private ProgressBar progressBar;
     private ScrollView scrollView;
+    private Button settingsButton;
 
     String[] items = {"Marsz","Bieganie","Jazda na rowerze","Kajakarstwo"};
     AutoCompleteTextView autoCompleteTxt;
@@ -81,6 +84,14 @@ public class HomeFragment extends Fragment {
         this.scrollView.setVisibility(View.GONE);
         this.welcomeTextView = (TextView) view.findViewById(R.id.textView_WelcomeUser);
 
+        //settings
+        this.settingsButton = view.findViewById(R.id.button_settings);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {goToSettings();}
+        });
+        //
+
         this.sp = this.getActivity().getSharedPreferences("msb", MODE_PRIVATE);
 
         loadData();
@@ -91,6 +102,11 @@ public class HomeFragment extends Fragment {
         chooseDiscipline();
 
         return view;
+    }
+
+    private void goToSettings() {
+        Intent i = new Intent(getActivity(), UserSettingsActivity.class);
+        startActivity(i);
     }
 
     private void loadData() {
