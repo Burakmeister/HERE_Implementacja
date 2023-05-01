@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,9 +22,9 @@ import com.example.here.models.UserData;
 import com.example.here.restapi.ApiInterface;
 import com.example.here.restapi.Name;
 import com.example.here.restapi.RetrofitClient;
-import com.example.here.restapi.Username;
 
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,10 +53,16 @@ public class EditUserData extends AppCompatActivity {
 
     String token;
 
+    private ProgressBar progressBar;
+    private ScrollView scrollView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_data);
+
+        progressBar = findViewById(R.id.progressBar);
+        scrollView = findViewById(R.id.scroll);
 
         apiInterface  = RetrofitClient.getInstance().create(ApiInterface.class);
         sp = getSharedPreferences("msb",MODE_PRIVATE);
@@ -115,6 +123,9 @@ public class EditUserData extends AppCompatActivity {
 
     private void setDataToViews() {
 
+        startLoading();
+        AtomicInteger finishedLoading = new AtomicInteger(0);
+
         Call<Name> nameCall = apiInterface.getName("Token " + token);
         Call<UserData> dataCall = apiInterface.getUserData("Token " + token);
 
@@ -127,6 +138,10 @@ public class EditUserData extends AppCompatActivity {
 
                     firstNameEdit.setText(firstName);
                     lastNameEdit.setText(lastName);
+
+                    finishedLoading.incrementAndGet();
+                    if(finishedLoading.get() == 2)
+                        stopLoading();
 
                 } else {
 //                    unsuccessful
@@ -157,6 +172,9 @@ public class EditUserData extends AppCompatActivity {
                 heightPicker.setValue(userData.getHeight());
                 weightPicker.setValue(userData.getWeight().intValue());
 
+                finishedLoading.incrementAndGet();
+                if(finishedLoading.get() == 2)
+                    stopLoading();
             }
 
             @Override
@@ -165,6 +183,16 @@ public class EditUserData extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void startLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+        scrollView.setVisibility(View.GONE);
+    }
+
+    private void stopLoading() {
+        progressBar.setVisibility(View.GONE);
+        scrollView.setVisibility(View.VISIBLE);
     }
 
     private void addData() {
