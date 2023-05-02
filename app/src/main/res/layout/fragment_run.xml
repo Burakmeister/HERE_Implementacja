@@ -8,12 +8,28 @@
     android:fillViewport="true"
     android:gravity="center">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"/>
+
+    <LinearLayout
+        android:id="@+id/trainingData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:fillViewport="true"
+        android:gravity="top">
+
         <Button
             android:id="@+id/start_new_training"
             android:layout_width="300dp"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/green"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="@string/start_new_training" />
         <!--            android:layout_below="@id/first_panel"-->
@@ -51,23 +67,33 @@
             android:layout_weight="2"
             android:layout_below="@id/motivation_field"/>
 
-    <TextView
-        android:id="@+id/statistics_training"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/start_new_training"
-        android:text="@string/statistics_training_text"
-        android:shadowColor="@color/green"
-        android:shadowDx="-2"
-        android:shadowDy="-2"
-        android:shadowRadius="1"
-        android:textSize="25dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="10dp"/>
+        <TextView
+            android:id="@+id/statistics_training"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/start_new_training"
+            android:text="@string/statistics_training_text"
+            android:shadowColor="@color/green"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
+            android:shadowRadius="1"
+            android:textSize="25dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="10dp"/>
+
+        <TextView
+            android:id="@+id/noStatsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/noStats"
+            android:textSize="20dp"/>
 
         <LinearLayout
-            android:layout_below="@id/map_view"
+            android:id="@+id/statsView"
+            android:layout_below="@+id/map_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
@@ -100,13 +126,13 @@
                 android:gravity="center"
                 android:text="szczegóły"
                 android:textSize="20dp"/>
-            <TextView
-                android:id="@+id/max_speed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="szczegóły"
-                android:textSize="20dp"/>
+<!--            <TextView-->
+<!--                android:id="@+id/max_speed"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:text="szczegóły"-->
+<!--                android:textSize="20dp"/>-->
             <TextView
                 android:id="@+id/distance"
                 android:layout_width="match_parent"
@@ -122,6 +148,8 @@
                 android:text="szczegóły"
                 android:textSize="20dp"/>
             </LinearLayout>
+    </LinearLayout>
+
 
     <!--    <SeekBar-->
     <!--        android:layout_width="match_parent"-->

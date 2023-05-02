@@ -19,11 +19,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- training data: -->
+    <string name="duration">Czas trwania: %1$.0f minut</string>
     <string name="curSpeedText">Prędkość: %1$.1f m/s</string>
     <string name="avgSpeedText">Średnia prędkość: %1$.1f m/s</string>
     <string name="maxSpeedText">Maksymalna prędkość: %1$.1f m/s</string>
     <string name="distanceText">Dystans: %1$.0f m</string>
-    <string name="kcalText">Spalone kalorie: %1$d kcal</string>
+    <string name="kcalText">Spalone kalorie: %1$.0f kcal</string>
     <string name="user_image_content_description">zdjęcie</string>
     <string name="action_button_content_description">zdjęcie</string>
     <string-array name="statistics_options">
@@ -100,6 +101,8 @@
     <string name="changeData">Zmień dane użytkownika</string>
     <string name="changeAvatar">Zmień swój awatar</string>
     <string name="logOut">Wyloguj się</string>
+    <string name="noStats">Brak danych statystyk ostatniego treningu</string>
+
 
     <!--    Genders:-->
     <string-array name="genders">

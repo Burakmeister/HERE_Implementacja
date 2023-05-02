@@ -1,27 +1,24 @@
 
-C
-java:S16047"(Make this anonymous inner class a lambda(ÈÑÙöüÿÿÿÿ
-[
-java:S1659"EDeclare "avgSpeed" and all following declarations on a separate line.(Øáûå
-g
-java:S1659"LDeclare "lastTourStartV2" and all following declarations on a separate line.(àİ‹”úÿÿÿÿ
-m
-java:S1450"WRemove the "avgSpeed" field and declare it as a local variable in the relevant methods.(Øáûå
-m
-java:S1450"WRemove the "distance" field and declare it as a local variable in the relevant methods.(Øáûå
-m
-java:S1450"WRemove the "duration" field and declare it as a local variable in the relevant methods.(Øáûå
-i
-java:S1450"SRemove the "kcal" field and declare it as a local variable in the relevant methods.(Øáûå
-q
-java:S1450!"VRemove the "mapView" field and declare it as a local variable in the relevant methods.(·Àºúÿÿÿÿ
-m
-java:S1450"WRemove the "maxSpeed" field and declare it as a local variable in the relevant methods.(Øáûå
-q
-java:S1450$"[Remove the "routeCreator" field and declare it as a local variable in the relevant methods.(æÁËó
-w
-java:S1450""\Remove the "startTraining" field and declare it as a local variable in the relevant methods.(íß‚¦ÿÿÿÿÿ
-i
-java:S1450"SRemove the "view" field and declare it as a local variable in the relevant methods.(ØÊ»¶
-V	java:S125O"<This block of commented-out lines of code should be removed.(‰ ½äøÿÿÿÿ
-V	java:S125a"<This block of commented-out lines of code should be removed.(àÛÅûÿÿÿÿ
+K
+java:S1604²"(Make this anonymous inner class a lambda(ÈÑÙöüÿÿÿÿ8áÊ¥ßı0
+b
+java:S1659."EDeclare "avgSpeed" and all following declarations on a separate line.(Øáûå8‡Ë¥ßı0
+r
+java:S14504"VRemove the "spinner" field and declare it as a local variable in the relevant methods.(Ï‰¯8ˆË¥ßı0
+~
+java:S14500"\Remove the "startTraining" field and declare it as a local variable in the relevant methods.(íß‚¦ÿÿÿÿÿ8ˆË¥ßı0
+p
+java:S1450,"SRemove the "view" field and declare it as a local variable in the relevant methods.(ØÊ»¶8ˆË¥ßı0
+t
+java:S3776A"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ï¦üÿÿÿÿ8Ë¥ßı0
+X	java:S125F"<This block of commented-out lines of code should be removed.(·ÌÄû8Ë¥ßı0
+£
+java:S1186m"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ø¨Åüÿÿÿÿ8’Ë¥ßı0
+¤
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÏÓõ‡üÿÿÿÿ8–Ë¥ßı0
+Y	java:S125®"<This block of commented-out lines of code should be removed.(Û˜ûÎ8›Ë¥ßı0
+D	java:S131Â""Add a default case to this switch.(¼œóÛüÿÿÿÿ8 Ë¥ßı0
+^	java:S125Ü"<This block of commented-out lines of code should be removed.(‰ ½äøÿÿÿÿ8¡Ë¥ßı0
+^	java:S125î"<This block of commented-out lines of code should be removed.(àÛÅûÿÿÿÿ8¡Ë¥ßı0
+I
+java:S1068.",Remove this unused "maxSpeed" private field.(Øáûå8¡Ë¥ßı0

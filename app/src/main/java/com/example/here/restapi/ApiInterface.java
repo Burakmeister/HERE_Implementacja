@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ApiInterface {
 
@@ -38,5 +39,11 @@ public interface ApiInterface {
 
     @POST("/api/user/edit_user")
     Call<Void> editName(@Header("Authorization") String authorization, @Body Name name);
+
+    @GET("/api/training/get_last_route")
+    Call<List<Coordinates>> getLastRoute(@Header("Authorization") String authorization);
+
+    @GET("/api/training/get_statistics/{number}")
+    Call<TrainingStats> getTrainingStatistics(@Header("Authorization") String authorization, @Path("number") int number);
 
 }
