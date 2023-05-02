@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,10 +34,26 @@ public class RegisterActivity extends AppCompatActivity {
     boolean formIncomplete = false;
     Button registerButton;
 
+    ProgressBar progressBar;
+    ScrollView scrollView;
+
+    private void startLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+        scrollView.setVisibility(View.GONE);
+    }
+
+    private void stopLoading() {
+        progressBar.setVisibility(View.GONE);
+        scrollView.setVisibility(View.VISIBLE);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
+
+        progressBar = findViewById(R.id.progressBar);
+        scrollView = findViewById(R.id.scroll);
 
         nickEdit = findViewById(R.id.editText_Nick);
         emailEdit = findViewById(R.id.editText_SignIn_Email);
@@ -79,6 +97,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(String username, String email, String password, String firstName, String lastName) {
+
+        startLoading();
+
         ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
         Call<Token> call = apiInterface.register(new RegisterCredentials(firstName, lastName, username, email, password));
         call.enqueue(new Callback<Token>() {
@@ -90,6 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                     sp.edit().putBoolean("logged",true).apply();
                     goToUserDataCreationActivity(username);
                 } else {
+                    stopLoading();
                     Toast.makeText(getApplicationContext(), response.message(),Toast.LENGTH_SHORT).show();
                 }
             }

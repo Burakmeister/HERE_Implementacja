@@ -203,6 +203,9 @@ public class EditUserData extends AppCompatActivity {
             return;
         }
 
+        startLoading();
+        AtomicInteger finished = new AtomicInteger(0);
+
         nicknameEdit.setBackgroundResource(R.drawable.edittext_background);
 
         String firstName = firstNameEdit.getText().toString();
@@ -227,19 +230,23 @@ public class EditUserData extends AppCompatActivity {
         nameCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d("ass", firstName+" "+lastname);
-                finish();
+                if(finished.incrementAndGet() == 2) {
+                    finish();
+                }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                stopLoading();
                 Toast.makeText(getApplicationContext(), R.string.something_went_wrong,Toast.LENGTH_SHORT).show();
             }
         });
         dataCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                finish();
+                if(finished.incrementAndGet() == 2) {
+                    finish();
+                }
             }
 
             @Override

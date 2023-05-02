@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,10 +53,16 @@ public class UserDataCreation extends AppCompatActivity {
     Button addDataButton;
     TextView skipButton;
 
+    ProgressBar progressBar;
+    ScrollView scrollView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_data_creation);
+
+        progressBar = findViewById(R.id.progressBar);
+        scrollView = findViewById(R.id.scroll);
 
         sp = getSharedPreferences("msb",MODE_PRIVATE);
 
@@ -123,6 +131,8 @@ public class UserDataCreation extends AppCompatActivity {
             return;
         }
 
+        startLoading();
+
         nicknameEdit.setBackgroundResource(R.drawable.edittext_background);
 
         ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
@@ -142,6 +152,7 @@ public class UserDataCreation extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     goToMainActivity();
                 } else {
+                    stopLoading();
                     Toast.makeText(getApplicationContext(), R.string.something_went_wrong,Toast.LENGTH_SHORT).show();
                 }
             }
@@ -186,6 +197,16 @@ public class UserDataCreation extends AppCompatActivity {
             datePickerDialog = new DatePickerDialog(this, dateSetListener, year, month, day);
         }
 
+    }
+
+    private void startLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+        scrollView.setVisibility(View.GONE);
+    }
+
+    private void stopLoading() {
+        progressBar.setVisibility(View.GONE);
+        scrollView.setVisibility(View.VISIBLE);
     }
 
     public void goToMainActivity(){
