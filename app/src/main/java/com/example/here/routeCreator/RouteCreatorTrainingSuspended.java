@@ -25,6 +25,7 @@ public class RouteCreatorTrainingSuspended extends RouteCreator{
             distanceView.setText("Odległość: " + currentRouteLength/1000.0 + " km");
         mapView.getMapScene().loadScene(MapScheme.NORMAL_DAY, mapError -> {
             if (mapError == null) {
+
                 MapMeasure mapMeasureZoom = new MapMeasure(MapMeasure.Kind.DISTANCE, this.currentRouteLength);
                 double lastTourStartV1 = this.currentWaypoints.get(0).coordinates.latitude;
                 double lastTourEndV1 = this.currentWaypoints.get(currentWaypoints.size()-1).coordinates.latitude;
@@ -33,7 +34,7 @@ public class RouteCreatorTrainingSuspended extends RouteCreator{
                 mapView.getCamera().lookAt(
                         new GeoCoordinates((lastTourStartV1+lastTourEndV1)/2, (lastTourStartV2+lastTourEndV2)/2), mapMeasureZoom);
             } else {
-                Log.d("loadMapScene()", "Loading map failed: mapError: " + mapError.name());
+                Log.d("loadMapScene", "Loading map failed: mapError: " + mapError.name());
             }
         });
     }

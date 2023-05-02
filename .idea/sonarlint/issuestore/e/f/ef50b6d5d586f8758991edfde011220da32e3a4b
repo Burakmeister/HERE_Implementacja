@@ -1,0 +1,41 @@
+
+a	java:S112“"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+n	java:S127Œ"XRefactor the code in order to not assign to this loop counter from within the loop body.(û²‡×
+>
+java:S1604o"(Make this anonymous inner class a lambda(ü“áÕ
+C
+java:S1604~"(Make this anonymous inner class a lambda(ŠÂŽáÿÿÿÿÿ
+D
+java:S1604˜"(Make this anonymous inner class a lambda(âäš´ÿÿÿÿÿ
+?
+java:S1604·"(Make this anonymous inner class a lambda(ë¤ÿ‡
+_
+java:S2184„"HCast one of the operands of this multiplication operation to a "double".(Î¤†ð
+`
+java:S2259œ"DA "NullPointerException" could be thrown; "routes" is nullable here.(ˆîè´úÿÿÿÿ
+n
+java:S14502"XRemove the "endButton" field and declare it as a local variable in the relevant methods.(ÏÜçŽ
+s
+java:S1450L"^Remove the "locationRequest" field and declare it as a local variable in the relevant methods.(¢¢ B
+|
+java:S1450U"aRemove the "savedInstanceState" field and declare it as a local variable in the relevant methods.(ïôÈ‹ùÿÿÿÿ
+V	java:S125I"<This block of commented-out lines of code should be removed.(¨ß£¡úÿÿÿÿ
+K
+java:S1874u"0Remove this use of "getColor"; it is deprecated.(Š’±€úÿÿÿÿ
+F
+java:S1874z"0Remove this use of "getColor"; it is deprecated.(ÌÊØ‘
+?	java:S108¦")Either remove or fill this block of code.(å¥ž‡
+n
+java:S3776¬"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(Îä—ýÿÿÿÿ
+m
+java:S3252³"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(µ‰¯0
+n
+java:S3252µ"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(…à‡
+W	java:S125À"<This block of commented-out lines of code should be removed.(Õß ýÿÿÿÿ
+W	java:S125È"<This block of commented-out lines of code should be removed.(˜æ­Çøÿÿÿÿ
+u
+java:S2142Å"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€
+S
+java:S1068G"8Remove this unused "permissionsRequestor" private field.(êê‚öùÿÿÿÿ
+Q
+java:S1068U"6Remove this unused "savedInstanceState" private field.(ïôÈ‹ùÿÿÿÿ
