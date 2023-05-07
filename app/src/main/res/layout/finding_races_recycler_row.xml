@@ -9,12 +9,14 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints" >
+        tools:ignore="MissingConstraints"
+        android:layout_marginTop="12dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="12dp"
+        android:background="@drawable/border_green">
 
         <TextView
             android:id="@+id/race_id_text"
