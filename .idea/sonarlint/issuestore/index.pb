@@ -9,8 +9,6 @@ Capp/src/main/java/com/example/here/PlatformPositioningProvider.java,3\9\391c4e
 app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-c
-3app/src/main/java/com/example/here/CupFragment.java,3\6\3684c734b26a4e56c91ce04d9600a8d147361ff0
 n
 >app/src/main/java/com/example/here/restapi/RetrofitClient.java,8\7\874acd619d8f0cc5d03360286c477131e7a58f09
 e
@@ -53,8 +51,6 @@ h
 8app/src/main/java/com/example/here/TrainingActivity.java,e\f\ef50b6d5d586f8758991edfde011220da32e3a4b
 f
 6app/src/main/java/com/example/here/MovingFragment.java,1\a\1a11d4e6a9942c3de8ccd7334cb936794c145c52
-h
-8app/src/main/java/com/example/here/SetRouteActivity.java,4\e\4e69f51165802753915ef091542f619201ed5507
 c
 3app/src/main/java/com/example/here/RunFragment.java,f\5\f5cd3d8462b83babf50f8d112083a0fbbe7f9bdc
 e

@@ -95,8 +95,11 @@ public class CreateRaceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Przejdź do widoku ustawiania trasy (trzeba zrobić SetRaceRouteFragment na podstawie SetRouteActivity)
-
-
+                Fragment newFragment = new SetRaceRouteFragment(); //utworzenie nowej instancji klasy MyRacesFragment
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
