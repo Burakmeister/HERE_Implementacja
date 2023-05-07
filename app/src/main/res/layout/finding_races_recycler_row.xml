@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="April 25, 2023, 11:18 p.m"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/green"
             app:layout_constraintBottom_toBottomOf="@+id/race_id_text"
             app:layout_constraintStart_toStartOf="@+id/race_title_text"
             app:layout_constraintTop_toBottomOf="@+id/race_title_text" />
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:text="Bartunio"
             android:textSize="18sp"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/green"
             app:layout_constraintBottom_toBottomOf="@+id/race_id_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/race_id_text" />
