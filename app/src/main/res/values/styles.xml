@@ -5,6 +5,6 @@
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">@color/green</item>
         <item name="colorAccent">@color/green</item>
-        <item name="android:textSize">20sp</item>
+<!--        <item name="android:textSize">20sp</item> przez to się niektóre widoki rozjechały to narazie off-->
     </style>
 </resources>

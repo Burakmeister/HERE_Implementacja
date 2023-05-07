@@ -32,6 +32,11 @@
         <item>Ostatnie 5 treningów</item>
         <item>Ostatnie 10 treningów</item>
     </string-array>
+    <string-array name="myraces_spinner_options">
+        <item>Aktywne wyścigi</item>
+        <item>Nadchodzące wyścigi</item>
+        <item>Zakończone wyścigi</item>
+    </string-array>
     <string name="statistics_training_text">Statystyki:</string>
     <string name="set_route_text">Wyznacz trasę:</string>
     <string name="reset_route">Wyczyść trasę</string>

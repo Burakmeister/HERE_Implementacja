@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class CupFragment extends Fragment {
 
@@ -34,10 +35,11 @@ public class CupFragment extends Fragment {
         myRacesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Narazie po kliknięciu przechodzi do widoku ustawiania trasy, zmienić to potem!!!!
-
-                Intent intent = new Intent(getActivity(), SetRouteActivity.class);
-                startActivity(intent);
+                Fragment newFragment = new MyRacesFragment(); //utworzenie nowej instancji klasy MyRacesFragment
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
