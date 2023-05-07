@@ -52,7 +52,8 @@ public class MyRacesFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    // Tutaj do spinnera trzeba dodać funkcjonalność nie tylko wyświetlania odpowiednich wyścigów ale również żeby np. w nadchodzących po naciśnięciu pokazywało odpowiedni widok (patrz skrypt)
+                    // Tutaj do spinnera trzeba dodać funkcjonalność nie tylko wyświetlania odpowiednich wyścigów ale również żeby np. w nadchodzących po naciśnięciu pokazywało odpowiedni widok (patrz skrypt),
+                    // widok nadchodzącego i zakończonego wyścigu już jest, trzeba będzie je tylko podpiąć
                     case 0: // Aktualne wyścigi
                         // Kod do wyświetlenia aktywnych wyścigów
 
@@ -131,8 +132,8 @@ public class MyRacesFragment extends Fragment {
 
     private static class RacesListAdapter extends ArrayAdapter<MyRacesFragment.Race> {
 
-        public RacesListAdapter(Context context, ArrayList<MyRacesFragment.Race> users) {
-            super(context, 0, users);
+        public RacesListAdapter(Context context, ArrayList<MyRacesFragment.Race> races) {
+            super(context, 0, races);
         }
 
         @NonNull

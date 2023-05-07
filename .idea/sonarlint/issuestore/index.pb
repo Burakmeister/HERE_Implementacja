@@ -19,8 +19,6 @@ l
 <app/src/main/java/com/example/here/UserSettingsFragment.java,a\8\a8a6f760c0bda15a50d175be7d06af59fc5043d8
 d
 4app/src/main/java/com/example/here/MainActivity.java,2\1\2106911c0b55d142b318509b22d2e5c720f7f401
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 l
 <app/src/main/java/com/example/here/UserSettingsActivity.java,7\7\772ec16fb091763617718d670a385b906fb3130b
 k
@@ -33,8 +31,6 @@ d
 4app/src/main/java/com/example/here/restapi/Name.java,4\6\468d69a38e3d242b80ce2c1629d5c1b8da6b2fcc
 i
 9app/src/main/java/com/example/here/home/FriendStatus.java,e\d\edc929ccbc5ce7aae6b65c012d68aeb4b5b9e8dd
-f
-6app/src/main/java/com/example/here/PersonFragment.java,f\c\fced7fa60a2b77bce762b094b5babdee8603b095
 l
 <app/src/main/java/com/example/here/restapi/ApiInterface.java,7\1\714a504d3346a2da09807a883b57c47eadd49d0e
 i
@@ -51,8 +47,6 @@ h
 8app/src/main/java/com/example/here/TrainingActivity.java,e\f\ef50b6d5d586f8758991edfde011220da32e3a4b
 f
 6app/src/main/java/com/example/here/MovingFragment.java,1\a\1a11d4e6a9942c3de8ccd7334cb936794c145c52
-c
-3app/src/main/java/com/example/here/RunFragment.java,f\5\f5cd3d8462b83babf50f8d112083a0fbbe7f9bdc
 e
 5app/src/main/java/com/example/here/LoginActivity.java,b\8\b8aab09d99e0575ca4a4ca5cd2b9c8d68c8e4ef4
 h
@@ -61,3 +55,7 @@ h
 8app/src/main/java/com/example/here/UserDataCreation.java,6\0\60cbbfc73c7852f154a92e95bca0635c74fa5504
 d
 4app/src/main/java/com/example/here/EditUserData.java,0\e\0ec3d44dd780a123a44fdcfb137c6446e580eb11
+l
+<app/src/main/java/com/example/here/SetRaceRouteFragment.java,d\4\d413f1aa163bd41083b61f2de6f4775fb3009539
+c
+3app/src/main/java/com/example/here/CupFragment.java,3\6\3684c734b26a4e56c91ce04d9600a8d147361ff0

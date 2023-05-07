@@ -107,6 +107,10 @@
     <string name="changeAvatar">Zmień swój awatar</string>
     <string name="logOut">Wyloguj się</string>
     <string name="noStats">Brak danych statystyk ostatniego treningu</string>
+    <string name="race_name_text">Nazwa wyścigu</string>
+    <string name="generated_race_code">Wygenerowany kod wyścigu:</string>
+    <string name="invite_friends">Zaproś znajomych</string>
+    <string name="contestants_list">Lista uczestników</string>
 
 
     <!--    Genders:-->

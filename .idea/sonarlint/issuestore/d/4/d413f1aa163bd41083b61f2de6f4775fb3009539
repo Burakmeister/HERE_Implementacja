@@ -1,0 +1,29 @@
+
+b	java:S112|"FDefine and throw a dedicated exception instead of using a generic one.(÷ß¥ë8õ‡¿¸ÿ0
+K
+java:S1604‚"(Make this anonymous inner class a lambda(âäš´ÿÿÿÿÿ8ş‡¿¸ÿ0
+f
+java:S2184ƒ"HCast one of the operands of this multiplication operation to a "double".(Î¤†ğ8ˆ¿¸ÿ0
+b
+java:S2259†"DA "NullPointerException" could be thrown; "routes" is nullable here.(¯¶Ãè8–‰¿¸ÿ0
+y
+java:S14508"WRemove the "setRoute" field and declare it as a local variable in the relevant methods.(÷¡‡—ıÿÿÿÿ8…¬Ü¸ÿ0
+X	java:S125T"<This block of commented-out lines of code should be removed.(¿¯Îœ8Ïçâ¸ÿ0
+X	java:S125c"<This block of commented-out lines of code should be removed.(æ‘Áí8¬Ü¸ÿ0
+\
+java:S1874s":Remove this use of "getFragmentManager"; it is deprecated.(å¿…¶ıÿÿÿÿ8şˆŞ¸ÿ0
+J
+java:S1659Š"'Declare "longitude" on a separate line.(öîƒÆÿÿÿÿÿ8¬‰¿¸ÿ0
+a
+java:S1155‹">Use isEmpty() to check whether the collection is empty or not.(Èé®óøÿÿÿÿ8­‰¿¸ÿ0
+m
+java:S1874œ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Ó»×¶şÿÿÿÿ8¯‰¿¸ÿ0
+`
+java:S1874"BRemove this use of "onRequestPermissionsResult"; it is deprecated.(Öƒà8²‰¿¸ÿ0
+Y	java:S125¡"<This block of commented-out lines of code should be removed.(“ËÍ8ú®â¸ÿ0
+Y	java:S125¹"<This block of commented-out lines of code should be removed.(ñí¹8ßòá¸ÿ0
+F	java:S108‘")Either remove or fill this block of code.(å¥‡8Æ‰¿¸ÿ0
+N
+java:S10688",Remove this unused "setRoute" private field.(÷¡‡—ıÿÿÿÿ8¨¬Ü¸ÿ0
+[
+java:S1068>"9Remove this unused "distanceUntilWaypoint" private field.(Ú¸º›øÿÿÿÿ8éòá¸ÿ0
