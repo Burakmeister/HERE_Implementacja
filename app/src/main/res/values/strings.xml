@@ -125,4 +125,11 @@
 
     <!-- Find races-->
     <string name="findRace">Szukaj wyścig</string>
+
+    <!--    User account view-->
+    <string name="birth_date_txt">Data urodzenia: </string>
+    <string name="country_txt">Państwo: </string>
+    <string name="gender_txt">Płeć: </string>
+    <string name="height_txt">Wzrost: </string>
+    <string name="weight_txt">Waga: </string>
 </resources>
