@@ -123,4 +123,6 @@
         <item>Japonia</item>
     </string-array>
 
+    <!-- Find races-->
+    <string name="findRace">Szukaj wyścig</string>
 </resources>
