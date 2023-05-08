@@ -111,6 +111,8 @@
     <string name="generated_race_code">Wygenerowany kod wyścigu:</string>
     <string name="invite_friends">Zaproś znajomych</string>
     <string name="contestants_list">Lista uczestników</string>
+    <string name="race_time">Czas trwania:</string>
+    <string name="ranking">Ranking</string>
 
 
     <!--    Genders:-->

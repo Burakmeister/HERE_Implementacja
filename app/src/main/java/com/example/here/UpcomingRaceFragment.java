@@ -33,7 +33,6 @@ public class UpcomingRaceFragment extends Fragment {
 
     private TextView raceCode;
     private Button inviteFriends;
-    private TabLayout tabLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +42,6 @@ public class UpcomingRaceFragment extends Fragment {
 
         this.raceCode = view.findViewById(R.id.generated_race_code);
         this.inviteFriends = view.findViewById(R.id.invite_friends_button);
-        this.tabLayout = view.findViewById(R.id.contestants_tab);
 
         inviteFriends.setOnClickListener(new View.OnClickListener() {   // przełączenie na widok zapraszania znajomych, widok do zrobienia!!
             @Override
@@ -68,7 +66,7 @@ public class UpcomingRaceFragment extends Fragment {
         users.add(new User("Jan", "Kowalski", R.drawable.ic_round_person_24));
         users.add(new User("Jan", "Kowalski", R.drawable.ic_round_person_24));
         ParticipantsListAdapter racesListAdapter = new ParticipantsListAdapter(getContext(), users);
-        ListView participantListView = view.findViewById(R.id.friends_list);
+        ListView participantListView = view.findViewById(R.id.participants_list);
         participantListView.setAdapter(racesListAdapter);
 
         return view;

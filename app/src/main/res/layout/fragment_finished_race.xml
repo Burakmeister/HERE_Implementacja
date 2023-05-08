@@ -5,7 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".UpcomingRaceFragment"
     android:fillViewport="true">
 
     <TextView
@@ -29,38 +28,46 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/generated_race_code_text"
+            android:id="@+id/race_time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/race_time"
+            android:shadowColor="@color/green"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
+            android:shadowRadius="1"
+            android:textSize="25dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="20dp"
-            android:text="@string/generated_race_code"
-            android:textColor="@color/green"
-            android:textSize="15dp" />
+            android:paddingTop="10dp"/>
 
         <TextView
-            android:id="@+id/generated_race_code"
+            android:id="@+id/race_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1111"
-            android:textColor="@color/green"
-            android:textSize="15dp"
-            android:paddingLeft="4dp"/>
+            android:text="00:00:00"
+            android:shadowColor="@color/green"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
+            android:shadowRadius="1"
+            android:textSize="25dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="3dp"
+            android:paddingTop="10dp"/>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/invite_friends_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/green"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:text="@string/invite_friends" />
+    <com.here.sdk.mapview.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"/>
 
     <TextView
-        android:id="@+id/contestants_list_text"
-        android:layout_width="match_parent"
+        android:id="@+id/ranking"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/contestants_list"
+        android:text="@string/ranking"
         android:shadowColor="@color/green"
         android:shadowDx="-2"
         android:shadowDy="-2"
@@ -70,14 +77,20 @@
         android:paddingLeft="20dp"
         android:paddingTop="10dp"/>
 
-    <ListView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/participants_list"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/ranking_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/ranking"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/ranking_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:scrollbars="vertical"
-        android:paddingTop="0dp"
-        android:paddingBottom="8dp" />
+        android:layout_marginTop="160dp"
+        app:layout_constraintTop_toBottomOf="@id/ranking_tab" />
 
 </LinearLayout>
