@@ -57,3 +57,13 @@ l
 <app/src/main/java/com/example/here/SetRaceRouteFragment.java,d\4\d413f1aa163bd41083b61f2de6f4775fb3009539
 c
 3app/src/main/java/com/example/here/RunFragment.java,f\5\f5cd3d8462b83babf50f8d112083a0fbbe7f9bdc
+h
+8app/src/main/java/com/example/here/SetRouteActivity.java,4\e\4e69f51165802753915ef091542f619201ed5507
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+f
+6app/src/main/java/com/example/here/PersonFragment.java,f\c\fced7fa60a2b77bce762b094b5babdee8603b095
+c
+3app/src/main/java/com/example/here/CupFragment.java,3\6\3684c734b26a4e56c91ce04d9600a8d147361ff0
+d
+4app/src/main/java/com/example/here/MainActivity.java,2\1\2106911c0b55d142b318509b22d2e5c720f7f401

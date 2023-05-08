@@ -25,7 +25,8 @@ public class FinishedRaceFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private TextView raceTime;
+    private TextView raceTime;  // trzeba będzie zimplementować pobieranie z bazy czasu trwania wyścigu i nazwy!!
+    private TextView raceName;
     private MapView mapView;
 
     @Override
@@ -43,16 +44,16 @@ public class FinishedRaceFragment extends Fragment {
 
         // Ustawienie adaptera na przykładowe dane
         ArrayList<FinishedRaceFragment.User> users = new ArrayList<FinishedRaceFragment.User>();
-        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24));
-        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24));
-        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24));
-        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24));
-        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24));
-        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24));
-        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24));
-        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24));
-        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24));
-        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24));
+        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24, 1));
+        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24, 2));
+        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24, 3));
+        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24, 4));
+        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24, 5));
+        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24, 6));
+        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24, 7));
+        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24, 8));
+        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24, 9));
+        users.add(new FinishedRaceFragment.User("Jan", "Kowalski", R.drawable.ic_round_person_24, 10));
         FinishedRaceFragment.RankingListAdapter racesListAdapter = new FinishedRaceFragment.RankingListAdapter(getContext(), users);
         ListView participantListView = view.findViewById(R.id.ranking_list);
         participantListView.setAdapter(racesListAdapter);
@@ -70,17 +71,19 @@ public class FinishedRaceFragment extends Fragment {
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_user, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_user_ranking, parent, false);
             }
             ImageView userIconImageView = convertView.findViewById(R.id.user_image);
             TextView userNameTextView = convertView.findViewById(R.id.user_name);
             TextView userSurnameTextView = convertView.findViewById(R.id.user_surname);
+            TextView racePositionTextView = convertView.findViewById(R.id.race_position);
             FinishedRaceFragment.User user = getItem(position);
             if (user != null) {
                 //userIconImageView.setImageResource(user.getAvatar());
                 userIconImageView.setImageResource(R.drawable.ic_round_person_24);
                 userNameTextView.setText(user.getName());
                 userSurnameTextView.setText(user.getSurname());
+                racePositionTextView.setText(user.getRacePosition() + ". miejsce");
             }
             return convertView;
         }
@@ -91,11 +94,13 @@ public class FinishedRaceFragment extends Fragment {
         private String name;
         private String surname;
         private int iconResource;
+        private int racePosition;
 
-        public User(String name, String surname, int iconResource) {
+        public User(String name, String surname, int iconResource, int racePosition) {
             this.name = name;
             this.surname = surname;
             this.iconResource = iconResource;
+            this.racePosition = racePosition;
         }
 
         public String getName() {
@@ -109,6 +114,8 @@ public class FinishedRaceFragment extends Fragment {
         public int getIconResource() {
             return iconResource;
         }
+
+        public int getRacePosition() {return racePosition;}
     }
 
 }

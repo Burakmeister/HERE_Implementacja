@@ -25,6 +25,7 @@ public class UpcomingRaceFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private TextView raceName;  // trzeba będzie zimplementować pobieranie z bazy nazwy wyścigu!!
     private TextView raceCode;
     private Button inviteFriends;
 
