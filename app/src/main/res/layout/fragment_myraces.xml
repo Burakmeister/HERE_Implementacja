@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyRacesFragment"
+    android:id="@+id/my_races_container"
     android:orientation="vertical">
 
     <Button

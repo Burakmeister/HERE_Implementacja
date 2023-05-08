@@ -17,8 +17,6 @@ h
 8app/src/main/java/com/example/here/restapi/Username.java,6\8\686df6e4e98b21ff77cf9974fcf2ef477a6a4a61
 l
 <app/src/main/java/com/example/here/UserSettingsFragment.java,a\8\a8a6f760c0bda15a50d175be7d06af59fc5043d8
-d
-4app/src/main/java/com/example/here/MainActivity.java,2\1\2106911c0b55d142b318509b22d2e5c720f7f401
 l
 <app/src/main/java/com/example/here/UserSettingsActivity.java,7\7\772ec16fb091763617718d670a385b906fb3130b
 k
@@ -57,9 +55,5 @@ d
 4app/src/main/java/com/example/here/EditUserData.java,0\e\0ec3d44dd780a123a44fdcfb137c6446e580eb11
 l
 <app/src/main/java/com/example/here/SetRaceRouteFragment.java,d\4\d413f1aa163bd41083b61f2de6f4775fb3009539
-c
-3app/src/main/java/com/example/here/CupFragment.java,3\6\3684c734b26a4e56c91ce04d9600a8d147361ff0
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 c
 3app/src/main/java/com/example/here/RunFragment.java,f\5\f5cd3d8462b83babf50f8d112083a0fbbe7f9bdc
