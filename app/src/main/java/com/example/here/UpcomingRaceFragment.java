@@ -17,13 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.here.models.UserData;
-import com.google.android.material.tabs.TabLayout;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class UpcomingRaceFragment extends Fragment {
 
