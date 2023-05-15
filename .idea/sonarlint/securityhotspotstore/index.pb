@@ -9,12 +9,8 @@ h
 8app/src/main/java/com/example/here/restapi/Username.java,6\8\686df6e4e98b21ff77cf9974fcf2ef477a6a4a61
 l
 <app/src/main/java/com/example/here/UserSettingsFragment.java,a\8\a8a6f760c0bda15a50d175be7d06af59fc5043d8
-d
-4app/src/main/java/com/example/here/MainActivity.java,2\1\2106911c0b55d142b318509b22d2e5c720f7f401
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
-l
-<app/src/main/java/com/example/here/UserSettingsActivity.java,7\7\772ec16fb091763617718d670a385b906fb3130b
 k
 ;app/src/main/java/com/example/here/restapi/Credentials.java,b\d\bd15ce78df06427c48325797faf555c335bdba8a
 s
@@ -27,8 +23,6 @@ i
 9app/src/main/java/com/example/here/home/FriendStatus.java,e\d\edc929ccbc5ce7aae6b65c012d68aeb4b5b9e8dd
 f
 6app/src/main/java/com/example/here/PersonFragment.java,f\c\fced7fa60a2b77bce762b094b5babdee8603b095
-i
-9app/src/main/java/com/example/here/home/HomeFragment.java,e\3\e365de57595a6dd0de332744e6b07b9676eb6416
 l
 <app/src/main/java/com/example/here/restapi/ApiInterface.java,7\1\714a504d3346a2da09807a883b57c47eadd49d0e
 q
