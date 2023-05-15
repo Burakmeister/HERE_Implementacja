@@ -2,6 +2,7 @@ package com.example.here;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,8 @@ public class MyRacesFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    // Tutaj do spinnera trzeba dodać funkcjonalność nie tylko wyświetlania odpowiednich wyścigów ale również żeby np. w nadchodzących po naciśnięciu pokazywało odpowiedni widok (patrz skrypt)
+                    // Tutaj do spinnera trzeba dodać funkcjonalność nie tylko wyświetlania odpowiednich wyścigów ale również żeby np. w nadchodzących po naciśnięciu pokazywało odpowiedni widok (patrz skrypt),
+                    // widok nadchodzącego i zakończonego wyścigu już są podpięte, brakuje wyścigu trwającego!!
                     case 0: // Aktualne wyścigi
                         // Kod do wyświetlenia aktywnych wyścigów
 
@@ -103,9 +105,9 @@ public class MyRacesFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new CreatedRacesListFragment();
+                    return new CreatedRacesListFragment(spinner);
                 case 1:
-                    return new ParticipatedRacesListFragment();
+                    return new ParticipatedRacesListFragment(spinner);
                 default:
                     return null;
             }
@@ -131,8 +133,8 @@ public class MyRacesFragment extends Fragment {
 
     private static class RacesListAdapter extends ArrayAdapter<MyRacesFragment.Race> {
 
-        public RacesListAdapter(Context context, ArrayList<MyRacesFragment.Race> users) {
-            super(context, 0, users);
+        public RacesListAdapter(Context context, ArrayList<MyRacesFragment.Race> races) {
+            super(context, 0, races);
         }
 
         @NonNull
@@ -155,6 +157,12 @@ public class MyRacesFragment extends Fragment {
         public CreatedRacesListFragment() {
         }
 
+        public CreatedRacesListFragment(Spinner spinner) {  // aby wyłapać wybraną opcję spinnera
+            this.spinner = spinner;
+        }
+
+        private Spinner spinner;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -166,6 +174,31 @@ public class MyRacesFragment extends Fragment {
             MyRacesFragment.RacesListAdapter racesListAdapter = new MyRacesFragment.RacesListAdapter(getContext(), races);
             ListView racesListView = (ListView) view.findViewById(R.id.friends_list);
             racesListView.setAdapter(racesListAdapter);
+
+            racesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {    // wyświetl odpowiedni widok na podstawie spinnera
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    String selectedSpinnerOption = spinner.getSelectedItem().toString();
+
+                    if (selectedSpinnerOption.equals("Aktywne wyścigi")) {  // tutaj dodać widok aktywnego wyścigu gdy będzie już zrobiony!!
+
+
+                    } if (selectedSpinnerOption.equals("Nadchodzące wyścigi")) {
+                        Fragment newFragment = new UpcomingRaceFragment();
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.container, newFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    } if (selectedSpinnerOption.equals("Zakończone wyścigi")) {
+                        Fragment newFragment = new FinishedRaceFragment();
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.container, newFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                }
+            });
+
             return view;
         }
     }
@@ -174,6 +207,12 @@ public class MyRacesFragment extends Fragment {
 
         public ParticipatedRacesListFragment() {
         }
+
+        public ParticipatedRacesListFragment(Spinner spinner) {  // aby wyłapać wybraną opcję spinnera
+            this.spinner = spinner;
+        }
+
+        private Spinner spinner;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -186,6 +225,31 @@ public class MyRacesFragment extends Fragment {
             MyRacesFragment.RacesListAdapter racesListAdapter = new MyRacesFragment.RacesListAdapter(getContext(), races);
             ListView racesListView = (ListView) view.findViewById(R.id.invitations_list);
             racesListView.setAdapter(racesListAdapter);
+
+            racesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {    // wyświetl odpowiedni widok na podstawie spinnera
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    String selectedSpinnerOption = spinner.getSelectedItem().toString();
+
+                    if (selectedSpinnerOption.equals("Aktywne wyścigi")) {  // tutaj dodać widok aktywnego wyścigu gdy będzie już zrobiony!!
+
+
+                    } if (selectedSpinnerOption.equals("Nadchodzące wyścigi")) {
+                        Fragment newFragment = new UpcomingRaceFragment();
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.container, newFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    } if (selectedSpinnerOption.equals("Zakończone wyścigi")) {
+                        Fragment newFragment = new FinishedRaceFragment();
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.container, newFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                }
+            });
+
             return view;
         }
     }

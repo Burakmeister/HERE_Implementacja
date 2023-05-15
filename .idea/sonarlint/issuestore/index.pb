@@ -9,8 +9,6 @@ Capp/src/main/java/com/example/here/PlatformPositioningProvider.java,3\9\391c4e
 app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-c
-3app/src/main/java/com/example/here/CupFragment.java,3\6\3684c734b26a4e56c91ce04d9600a8d147361ff0
 n
 >app/src/main/java/com/example/here/restapi/RetrofitClient.java,8\7\874acd619d8f0cc5d03360286c477131e7a58f09
 e
@@ -19,10 +17,6 @@ h
 8app/src/main/java/com/example/here/restapi/Username.java,6\8\686df6e4e98b21ff77cf9974fcf2ef477a6a4a61
 l
 <app/src/main/java/com/example/here/UserSettingsFragment.java,a\8\a8a6f760c0bda15a50d175be7d06af59fc5043d8
-d
-4app/src/main/java/com/example/here/MainActivity.java,2\1\2106911c0b55d142b318509b22d2e5c720f7f401
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 l
 <app/src/main/java/com/example/here/UserSettingsActivity.java,7\7\772ec16fb091763617718d670a385b906fb3130b
 k
@@ -35,15 +29,13 @@ d
 4app/src/main/java/com/example/here/restapi/Name.java,4\6\468d69a38e3d242b80ce2c1629d5c1b8da6b2fcc
 i
 9app/src/main/java/com/example/here/home/FriendStatus.java,e\d\edc929ccbc5ce7aae6b65c012d68aeb4b5b9e8dd
-f
-6app/src/main/java/com/example/here/PersonFragment.java,f\c\fced7fa60a2b77bce762b094b5babdee8603b095
 l
 <app/src/main/java/com/example/here/restapi/ApiInterface.java,7\1\714a504d3346a2da09807a883b57c47eadd49d0e
 i
 9app/src/main/java/com/example/here/home/HomeFragment.java,e\3\e365de57595a6dd0de332744e6b07b9676eb6416
 q
 Aapp/src/main/java/com/example/here/routeCreator/RouteCreator.java,2\5\25a73faa76bf2713e2714d5020c9bc3bfd68b9af
-‚
+ï¿½
 Rapp/src/main/java/com/example/here/routeCreator/RouteCreatorTrainingSuspended.java,6\e\6e203bc69060a3dc70b9b4d1e58c62eb053f4ce0
 k
 ;app/src/main/java/com/example/here/restapi/Coordinates.java,8\b\8be7885db673ab10d12b8a3bc8f0f96cd645da66
@@ -53,10 +45,6 @@ h
 8app/src/main/java/com/example/here/TrainingActivity.java,e\f\ef50b6d5d586f8758991edfde011220da32e3a4b
 f
 6app/src/main/java/com/example/here/MovingFragment.java,1\a\1a11d4e6a9942c3de8ccd7334cb936794c145c52
-h
-8app/src/main/java/com/example/here/SetRouteActivity.java,4\e\4e69f51165802753915ef091542f619201ed5507
-c
-3app/src/main/java/com/example/here/RunFragment.java,f\5\f5cd3d8462b83babf50f8d112083a0fbbe7f9bdc
 e
 5app/src/main/java/com/example/here/LoginActivity.java,b\8\b8aab09d99e0575ca4a4ca5cd2b9c8d68c8e4ef4
 h

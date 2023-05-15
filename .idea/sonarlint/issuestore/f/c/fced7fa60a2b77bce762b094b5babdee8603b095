@@ -1,13 +1,9 @@
 
-ˆ
-java:S1319‚"eThe type of "users" should be an interface such as "List" rather than the implementation "ArrayList".(¯ü€”ùÿÿÿÿ8ƒ„‰¬ú0
 s	java:S117¼"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤œƒËÿÿÿÿÿ8ƒ„‰¬ú0
 E
 java:S1604:"(Make this anonymous inner class a lambda(Ò„‡¬8ƒ„‰¬ú0
 z
 java:S1488Ù"\Immediately return this expression instead of assigning it to the temporary variable "view".(¿ôÖ£8ÚÄ‰¬ú0
-b
-java:S2637i"EThis method's return value is marked "@NonNull" but null is returned.(¥¹ï8Ì„‰¬ú0
 z
 java:S1450,"XRemove the "addButton" field and declare it as a local variable in the relevant methods.(™õù»ÿÿÿÿÿ8Ö„‰¬ú0
 u
@@ -24,8 +20,6 @@ Y	java:S125‘"<This block of commented-out lines of code should be removed.(¹‡
 java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ö¬¥8à„‰¬ú0
 Y
 java:S2696©"6Make the enclosing method "static" or remove this set.(Œîœßÿÿÿÿÿ8à„‰¬ú0
-O
-java:S1905¼",Remove this unnecessary cast to "ArrayList".(¤œƒËÿÿÿÿÿ8ê„‰¬ú0
 Ÿ
 java:S1186Ó"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(—ã’å8—Å‰¬ú0
 ^	java:S125Û"<This block of commented-out lines of code should be removed.(ÈÕœ¤ùÿÿÿÿ8™Å‰¬ú0
