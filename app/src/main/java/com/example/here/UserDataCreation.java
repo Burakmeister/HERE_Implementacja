@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -99,11 +100,11 @@ public class UserDataCreation extends AppCompatActivity {
 
         //height and weight
         heightPicker = findViewById(R.id.height_picker);
-        heightPicker.setMinValue(0);
+        heightPicker.setMinValue(1);
         heightPicker.setMaxValue(300);
 
         weightPicker = findViewById(R.id.weight_picker);
-        weightPicker.setMinValue(0);
+        weightPicker.setMinValue(1);
         weightPicker.setMaxValue(300);
 
         //confirm button
@@ -144,6 +145,14 @@ public class UserDataCreation extends AppCompatActivity {
         userData.setCountry(countriesSpinner.getSelectedItem().toString());
         userData.setHeight(heightPicker.getValue());
         userData.setWeight((float) weightPicker.getValue());
+
+        //date
+        int year = datePickerDialog.getDatePicker().getYear();
+        int month = datePickerDialog.getDatePicker().getMonth()+1;
+        int day = datePickerDialog.getDatePicker().getDayOfMonth();
+
+        String birthDate = String.format("%d-%02d-%02d", year, month, day);
+        userData.setBirthDate(birthDate);
 
         Call<Void> call = apiInterface.addData("Token " + sp.getString("token", ""), userData);
         call.enqueue(new Callback<Void>() {

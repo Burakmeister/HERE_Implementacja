@@ -2,6 +2,7 @@ package com.example.here.home;
 
 import static android.content.Context.MODE_PRIVATE;
 
+//import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -23,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.here.ProfileFragment;
 import com.example.here.R;
 import com.example.here.UserSettingsActivity;
 import com.example.here.constants.ActivityType;
@@ -49,6 +51,7 @@ public class HomeFragment extends Fragment {
     private ProgressBar progressBar;
     private ScrollView scrollView;
     private Button settingsButton;
+    private Button showProfileButton;
 
     String[] items = {"Marsz","Bieganie","Jazda na rowerze","Kajakarstwo"};
     AutoCompleteTextView autoCompleteTxt;
@@ -83,6 +86,7 @@ public class HomeFragment extends Fragment {
         this.progressBar.setVisibility(View.VISIBLE);
         this.scrollView.setVisibility(View.GONE);
         this.welcomeTextView = (TextView) view.findViewById(R.id.textView_WelcomeUser);
+        this.showProfileButton = view.findViewById(R.id.button_YourProfile);
 
         //settings
         this.settingsButton = view.findViewById(R.id.button_settings);
@@ -91,6 +95,12 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {goToSettings();}
         });
         //
+
+        //show profile
+        this.showProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {goToProfile();}
+        });
 
         this.sp = this.getActivity().getSharedPreferences("msb", MODE_PRIVATE);
 
@@ -102,6 +112,12 @@ public class HomeFragment extends Fragment {
         chooseDiscipline();
 
         return view;
+    }
+
+    private void goToProfile() {
+//        Intent i = new Intent(getActivity(), UserSettingsActivity.class);
+//        startActivity(i);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new ProfileFragment()).commit();
     }
 
     private void goToSettings() {
