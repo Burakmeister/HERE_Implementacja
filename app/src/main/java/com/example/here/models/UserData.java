@@ -30,10 +30,21 @@ public class UserData {
     @SerializedName("races")
     private List<Object> races;
 
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    @SerializedName("birth_date")
+    private String birthDate;
+
     public UserData() {
 
     }
-    public UserData(Integer id, Character sex, Integer height, Float weight, String country, String avatar, String nick, Integer age, String language, Integer user, List<Object> friends, List<Object> races) {
+    public UserData(Integer id, Character sex, Integer height, Float weight, String country, String avatar, String nick, Integer age, String language, Integer user, List<Object> friends, List<Object> races, String birthDate) {
         this.id = id;
         this.sex = sex;
         this.height = height;
@@ -46,6 +57,7 @@ public class UserData {
         this.user = user;
         this.friends = friends;
         this.races = races;
+        this.birthDate = birthDate;
     }
 
     public Integer getId() {

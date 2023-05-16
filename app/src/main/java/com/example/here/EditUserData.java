@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -91,8 +90,6 @@ public class EditUserData extends AppCompatActivity {
 
         //bday
         dateButton = findViewById(R.id.birth_date_btn);
-        dateButton.setText(today());
-        initDatePicker();
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,11 +99,11 @@ public class EditUserData extends AppCompatActivity {
 
         //height and weight
         heightPicker = findViewById(R.id.height_picker);
-        heightPicker.setMinValue(0);
+        heightPicker.setMinValue(1);
         heightPicker.setMaxValue(300);
 
         weightPicker = findViewById(R.id.weight_picker);
-        weightPicker.setMinValue(0);
+        weightPicker.setMinValue(1);
         weightPicker.setMaxValue(300);
 
         //confirm button
@@ -172,6 +169,10 @@ public class EditUserData extends AppCompatActivity {
                 heightPicker.setValue(userData.getHeight());
                 weightPicker.setValue(userData.getWeight().intValue());
 
+                //date
+                initDatePicker(userData.getBirthDate());
+
+
                 finishedLoading.incrementAndGet();
                 if(finishedLoading.get() == 2)
                     stopLoading();
@@ -224,6 +225,15 @@ public class EditUserData extends AppCompatActivity {
         userData.setHeight(height);
         userData.setWeight((float) weight);
 
+
+        //date
+        int year = datePickerDialog.getDatePicker().getYear();
+        int month = datePickerDialog.getDatePicker().getMonth()+1;
+        int day = datePickerDialog.getDatePicker().getDayOfMonth();
+
+        String birthDate = String.format("%d-%02d-%02d", year, month, day);
+        userData.setBirthDate(birthDate);
+
         Call<Void> nameCall = apiInterface.editName("Token " + token, new Name(firstName, lastname));
         Call<Void> dataCall = apiInterface.editData("Token " + token, userData);
 
@@ -257,20 +267,11 @@ public class EditUserData extends AppCompatActivity {
 
     }
 
-    private String today() {
-
-        Calendar calendar = Calendar.getInstance();
-        int y = calendar.get(Calendar.YEAR);
-        int m = calendar.get(Calendar.MONTH);
-        int d = calendar.get(Calendar.DAY_OF_MONTH);
-        return dateFromValues(y,m+1,d);
-    }
-
     private String dateFromValues(int y, int m, int d) {
         return d+"/"+m+"/"+y;
     }
 
-    private void initDatePicker()
+    private void initDatePicker(String birthDate)
     {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
         {
@@ -281,10 +282,13 @@ public class EditUserData extends AppCompatActivity {
             }
         };
 
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
+        String[] parsedDate = birthDate.split("-");
+
+        int year = Integer.parseInt(parsedDate[0]);
+        int month = Integer.parseInt(parsedDate[1])-1;
+        int day = Integer.parseInt(parsedDate[2]);
+
+        dateButton.setText(dateFromValues(year, month+1, day));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             datePickerDialog = new DatePickerDialog(this, dateSetListener, year, month, day);

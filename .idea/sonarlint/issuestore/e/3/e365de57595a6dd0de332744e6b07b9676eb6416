@@ -1,0 +1,35 @@
+
+|
+java:S2293ª"YReplace the type specification in this constructor call with the diamond operator ("<>").(íŽ¡•úÿÿÿÿ8¥Ö¥Š‚1
+J
+java:S1604]"(Make this anonymous inner class a lambda(çº½ôüÿÿÿÿ8¦Ö¥Š‚1
+E
+java:S1604d"(Make this anonymous inner class a lambda(º¤ª‡8¦Ö¥Š‚1
+F
+java:S1604­"(Make this anonymous inner class a lambda(ŽÜã»8¦Ö¥Š‚1
+X	java:S125"<This block of commented-out lines of code should be removed.(½ß¢—8Í×¥Š‚1
+n
+java:S1659<"LDeclare "lastTourStartV2" and all following declarations on a separate line.(àÝ‹”úÿÿÿÿ8Ô×¥Š‚1
+z
+java:S14505"]Remove the "settingsButton" field and declare it as a local variable in the relevant methods.(ŠÐ«é8Õ×¥Š‚1
+‚
+java:S14506"`Remove the "showProfileButton" field and declare it as a local variable in the relevant methods.(òí—þÿÿÿÿ8Õ×¥Š‚1
+]	java:S125C"<This block of commented-out lines of code should be removed.(þŸ–¼üÿÿÿÿ8Þ×¥Š‚1
+9
+java:S1116R"Remove this empty statement.(¯á©÷8à×¥Š‚1
+X	java:S125v"<This block of commented-out lines of code should be removed.(†ØˆÏ8è×¥Š‚1
+[
+java:S1854°"8Remove this useless assignment to local variable "item".(¨ÐÐÿÿÿÿÿ8ö×¥Š‚1
+L
+java:S1481°")Remove this unused "item" local variable.(¨ÐÐÿÿÿÿÿ8÷×¥Š‚1
+Y	java:S125±"<This block of commented-out lines of code should be removed.(×¼”ï8ø×¥Š‚1
+x
+java:S1450½"URemove the "status" field and declare it as a local variable in the relevant methods.(ÚºåÙüÿÿÿÿ8û×¥Š‚1
+U
+java:S1068<"3Remove this unused "lastTourStartV1" private field.(àÝ‹”úÿÿÿÿ8‚Ø¥Š‚1
+U
+java:S1068<"3Remove this unused "lastTourStartV2" private field.(àÝ‹”úÿÿÿÿ8‚Ø¥Š‚1
+S
+java:S1068="1Remove this unused "lastTourEndV1" private field.(ùÿþ†ûÿÿÿÿ8‚Ø¥Š‚1
+S
+java:S1068="1Remove this unused "lastTourEndV2" private field.(ùÿþ†ûÿÿÿÿ8‚Ø¥Š‚1

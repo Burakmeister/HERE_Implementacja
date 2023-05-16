@@ -19,6 +19,9 @@ public interface ApiInterface {
     @GET("/api/user/username")
     Call<Username> getUsername(@Header("Authorization") String authorization);
 
+    @GET("/api/user/email")
+    Call<UserEmail> getEmail(@Header("Authorization") String authorization);
+
     @GET("/api/user/friends")
     Call<List<UserData>> getFriends(@Header("Authorization") String authorization);
 
