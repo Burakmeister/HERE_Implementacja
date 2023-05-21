@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         editTexts.add(password);
 
         sp = getSharedPreferences("msb",MODE_PRIVATE);
-        //sp.edit().putBoolean("logged", false).apply(); // FOR TESTING!!!!11
+//        sp.edit().putBoolean("logged", false).apply(); // FOR TESTING!!!!11
 
         if(sp.getBoolean("logged",false)){
             goToMainActivity();

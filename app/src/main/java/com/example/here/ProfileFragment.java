@@ -5,7 +5,6 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +14,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.here.home.HomeFragment;
 import com.example.here.models.UserData;
 import com.example.here.restapi.ApiInterface;
-import com.example.here.restapi.Name;
 import com.example.here.restapi.RetrofitClient;
 import com.example.here.restapi.UserEmail;
-import com.example.here.restapi.Username;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -114,7 +109,7 @@ public class ProfileFragment extends Fragment{
         startLoading();
         AtomicInteger finishedLoading = new AtomicInteger(0);
 
-        Call<UserData> dataCall = apiInterface.getUserData("Token " + token);
+        Call<UserData> dataCall = apiInterface.getMyData("Token " + token);
         Call<UserEmail> emailCall = apiInterface.getEmail("Token " + token);
 
 

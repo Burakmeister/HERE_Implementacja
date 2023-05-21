@@ -22,7 +22,6 @@ import com.example.here.restapi.ApiInterface;
 import com.example.here.restapi.Name;
 import com.example.here.restapi.RetrofitClient;
 
-import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
@@ -124,7 +123,7 @@ public class EditUserData extends AppCompatActivity {
         AtomicInteger finishedLoading = new AtomicInteger(0);
 
         Call<Name> nameCall = apiInterface.getName("Token " + token);
-        Call<UserData> dataCall = apiInterface.getUserData("Token " + token);
+        Call<UserData> dataCall = apiInterface.getMyData("Token " + token);
 
         nameCall.enqueue(new Callback<Name>() {
             @Override
