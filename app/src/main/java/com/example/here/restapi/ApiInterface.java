@@ -1,5 +1,6 @@
 package com.example.here.restapi;
 
+import com.example.here.models.Race;
 import com.example.here.models.UserData;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public interface ApiInterface {
 
     @GET("/api/user/friends")
     Call<List<UserData>> getFriends(@Header("Authorization") String authorization);
+
+    @GET("/api/race/get_races_id")  // czy dobrze??
+    Call<List<Integer>> getRacesId(@Header("Authorization") String authorization);
 
     @POST("/api/auth")
     Call<Token> getAuthToken(@Body Credentials credentials);
