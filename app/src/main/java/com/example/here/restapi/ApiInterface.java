@@ -12,6 +12,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -63,4 +64,15 @@ public interface ApiInterface {
     @GET("/api/training/get_statistics/{number}")
     Call<TrainingStats> getTrainingStatistics(@Header("Authorization") String authorization, @Path("number") int number);
 
+    @GET("/api/users/")
+    Call<List<UserData>> findUsersByNickname(@Header("Authorization") String authorization, @Query("nickname") String nickname);
+
+    @GET("/api/user/{id}")
+    Call<UserData> getUserDataById(@Path("id") int id);
+
+    @GET("/api/user/{id}/email")
+    Call<UserEmail> getUserEmailById(@Path("id") int id);
+
+    @POST("/api/user/invite/{id}")
+    Call<Void> invite(@Header("Authorization") String authorization, @Path("id") int id);
 }

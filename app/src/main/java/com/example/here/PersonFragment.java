@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.here.models.Invitation;
@@ -65,7 +66,7 @@ public class PersonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Obsługa kliknięcia przycisku Dodaj znajomego
-                Toast.makeText(getActivity(), "Kliknięto przycisk Dodaj znajomego", Toast.LENGTH_SHORT).show();
+                goToFindUserFragment();
             }
         });
 
@@ -91,6 +92,10 @@ public class PersonFragment extends Fragment {
 //        invitationsListView.setAdapter(invitationsListAdapter);
 
         return view;
+    }
+
+    private void goToFindUserFragment() {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new FindUserFragment()).commit();
     }
 
     // Adapter dla ViewPager z zakładkami

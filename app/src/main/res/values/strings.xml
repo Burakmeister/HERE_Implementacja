@@ -140,4 +140,7 @@
     <string name="weight_txt">Waga: </string>
     <string name="accept">Akceptuj</string>
     <string name="reject">Odrzuć</string>
+    <string name="findUser">Podaj nick użytkownika</string>
+    <string name="invite">Zaproś</string>
+    <string name="invitation_sent">Zaproszenie zostało wysłane</string>
 </resources>
