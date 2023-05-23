@@ -3,6 +3,7 @@ package com.example.here.restapi;
 import com.example.here.models.UserData;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -49,4 +50,9 @@ public interface ApiInterface {
     @GET("/api/training/get_statistics/{number}")
     Call<TrainingStats> getTrainingStatistics(@Header("Authorization") String authorization, @Path("number") int number);
 
+    @GET("/api/race/get_all_races")
+    Call<Races> getRaces(@Header("Authorization") String authorization);
+
+    @GET("/api/race/get_race_name_by_id/{number}")
+    Call<RaceInfo> getRace(@Header("Authorization") String authorization, @Path("number") int number);
 }
