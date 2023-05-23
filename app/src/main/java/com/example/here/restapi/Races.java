@@ -20,7 +20,7 @@ public class Races {
         String city;
         Integer limit_of_participants;
         Integer route_id;
-        Integer organizer_id;
+        String organizer;
         Boolean visibility;
 
         public Integer getRace_id() {
@@ -71,12 +71,12 @@ public class Races {
             this.route_id = route_id;
         }
 
-        public Integer getOrganizer_id() {
-            return organizer_id;
+        public String getOrganizer_id() {
+            return organizer;
         }
 
-        public void setOrganizer_id(Integer organizer_id) {
-            this.organizer_id = organizer_id;
+        public void setOrganizer(String organizer) {
+            this.organizer = organizer;
         }
 
         public Boolean getVisibility() {

@@ -25,8 +25,10 @@ import com.example.here.restapi.RetrofitClient;
 import com.example.here.restapi.TrainingStats;
 import com.example.here.restapi.Username;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -96,8 +98,8 @@ public class FindRaces extends AppCompatActivity implements SearchView.OnQueryTe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_races);
-
-        sp = getSharedPreferences("your_preference_name", MODE_PRIVATE);
+        
+        sp = getSharedPreferences("msb", MODE_PRIVATE);
         recyclerView = findViewById(R.id.kuba);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -142,7 +144,7 @@ public class FindRaces extends AppCompatActivity implements SearchView.OnQueryTe
     }
 
     private void getRaceInfo() {
-        Call<Races> raceCall = apiInterface.getRaces("Token 7657d91254e0beff089cb04adedae33c7278d885");
+        Call<Races> raceCall = apiInterface.getRaces("Token " + sp.getString("token", ""));
         raceCall.enqueue(new Callback<Races>() {
             @Override
             public void onResponse(Call<Races> call, Response<Races> response) {
@@ -207,8 +209,19 @@ public class FindRaces extends AppCompatActivity implements SearchView.OnQueryTe
             public void bind(Races.races race) {
                 raceIdText.setText(String.valueOf(race.getRace_id()));
                 raceTitleText.setText(race.getName());
-                raceStartTime.setText(String.valueOf(race.getDate_time()));
-                raceOrganizer.setText(String.valueOf(race.getOrganizer_id()));
+                // Formatowanie daty
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
+
+                try {
+                    // Parsowanie i formatowanie daty
+                    String raceDateTime = outputFormat.format(inputFormat.parse(race.getDate_time()));
+                    raceStartTime.setText(raceDateTime);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    raceStartTime.setText("");
+                }
+                raceOrganizer.setText(race.getOrganizer_id());
             }
         }
     }
