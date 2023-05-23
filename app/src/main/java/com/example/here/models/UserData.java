@@ -29,6 +29,9 @@ public class UserData {
     private List<Object> friends;
     @SerializedName("races")
     private List<Object> races;
+    @SerializedName("birth_date")
+    private String birthDate;
+
 
     public String getBirthDate() {
         return birthDate;
@@ -37,9 +40,6 @@ public class UserData {
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
-
-    @SerializedName("birth_date")
-    private String birthDate;
 
     public UserData() {
 

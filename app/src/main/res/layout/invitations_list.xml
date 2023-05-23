@@ -5,6 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:scrollbars="vertical"
-    android:paddingTop="108dp"
-    android:paddingBottom="8dp" />
+    android:scrollbars="vertical"/>

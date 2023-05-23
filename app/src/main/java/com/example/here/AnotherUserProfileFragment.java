@@ -2,9 +2,9 @@ package com.example.here;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +12,13 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.here.home.HomeFragment;
 import com.example.here.models.UserData;
 import com.example.here.restapi.ApiInterface;
 import com.example.here.restapi.RetrofitClient;
@@ -30,12 +30,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileFragment extends Fragment{
+public class AnotherUserProfileFragment extends Fragment{
     private ApiInterface apiInterface;
     private SharedPreferences sp;
     private String token;
     private View view;
-    private Button editButton;
+    private Button inviteButton;
     private TextView birthDateText;
     private TextView countryText;
     private TextView sexText;
@@ -48,7 +48,19 @@ public class ProfileFragment extends Fragment{
     private ProgressBar progressBar;
     private ScrollView scrollView;
 
-    public ProfileFragment() {}
+    private int userId;
+
+    public AnotherUserProfileFragment() {}
+
+    public static Fragment newInstance(int userId) {
+        AnotherUserProfileFragment fragment = new AnotherUserProfileFragment();
+        fragment.setUserId(userId);
+        return fragment;
+    }
+
+    private void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     @Nullable
     @Override
@@ -57,7 +69,7 @@ public class ProfileFragment extends Fragment{
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new FindUserFragment()).commit(); // at least for now
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
@@ -69,12 +81,13 @@ public class ProfileFragment extends Fragment{
         this.scrollView = view.findViewById(R.id.profile_scroll);
         this.progressBar = view.findViewById(R.id.progressBar);
 
-        //edit button
-        this.editButton = view.findViewById(R.id.edit_button);
-        this.editButton.setOnClickListener(new View.OnClickListener() {
+        //invite button
+        this.inviteButton = view.findViewById(R.id.edit_button);
+        this.inviteButton.setText(R.string.invite);
+        this.inviteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToEditUserData();
+                invite();
             }
         });
 
@@ -109,8 +122,10 @@ public class ProfileFragment extends Fragment{
         startLoading();
         AtomicInteger finishedLoading = new AtomicInteger(0);
 
-        Call<UserData> dataCall = apiInterface.getMyData("Token " + token);
-        Call<UserEmail> emailCall = apiInterface.getEmail("Token " + token);
+        Log.d("lol", String.valueOf(userId));
+
+        Call<UserData> dataCall = apiInterface.getUserDataById(userId);
+        Call<UserEmail> emailCall = apiInterface.getUserEmailById(userId);
 
 
         emailCall.enqueue(new Callback<UserEmail>() {
@@ -171,9 +186,21 @@ public class ProfileFragment extends Fragment{
         scrollView.setVisibility(View.VISIBLE);
     }
 
-    private void goToEditUserData() {
-        Intent i = new Intent(getActivity(), EditUserData.class);
-        startActivity(i);
+    private void invite() {
+        inviteButton.setEnabled(false);
+        inviteButton.setAlpha(0.5f);
+        Call<Void> call = apiInterface.invite("Token " + token, userId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(getActivity(), R.string.invitation_sent, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                inviteButton.setEnabled(true);
+            }
+        });
     }
 
     @Override
