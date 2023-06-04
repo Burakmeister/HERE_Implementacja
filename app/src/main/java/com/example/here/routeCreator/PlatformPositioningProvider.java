@@ -89,7 +89,6 @@ public class PlatformPositioningProvider implements LocationListener {
     }
 
     public void startLocating(PlatformLocationListener locationCallback) {
-        Log.d(LOG_TAG, "START LOCATING.");
         if (this.platformLocationListener != null) {
             throw new RuntimeException("Please stop locating before starting again.");
         }
@@ -105,7 +104,10 @@ public class PlatformPositioningProvider implements LocationListener {
         this.platformLocationListener = locationCallback;
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
+        if (locationManager.isProviderEnabled(LocationManager.FUSED_PROVIDER) &&
+                context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
+            locationManager.requestLocationUpdates(LocationManager.FUSED_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 1,this);
+        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)&&
                 context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 1,this);
         } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
@@ -117,7 +119,6 @@ public class PlatformPositioningProvider implements LocationListener {
     }
 
     public void stopLocating() {
-        Log.d(LOG_TAG, "STOP LOCATING.");
         if (locationManager == null) {
             return;
         }

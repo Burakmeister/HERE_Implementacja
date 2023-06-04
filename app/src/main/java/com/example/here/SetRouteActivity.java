@@ -23,6 +23,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.here.sdk.core.Anchor2D;
 import com.here.sdk.core.Color;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.core.GeoPolyline;
@@ -31,10 +32,18 @@ import com.here.sdk.core.errors.InstantiationErrorException;
 import com.here.sdk.gestures.GestureState;
 import com.here.sdk.gestures.LongPressListener;
 import com.here.sdk.mapview.LocationIndicator;
+import com.here.sdk.mapview.MapImage;
+import com.here.sdk.mapview.MapImageFactory;
+import com.here.sdk.mapview.MapMarker;
+import com.here.sdk.mapview.MapMarker3D;
+import com.here.sdk.mapview.MapMarkerCluster;
 import com.here.sdk.mapview.MapMeasure;
 import com.here.sdk.mapview.MapPolyline;
 import com.here.sdk.mapview.MapScheme;
 import com.here.sdk.mapview.MapView;
+import com.here.sdk.mapview.MapViewBase;
+import com.here.sdk.mapview.PickMapItemsResult;
+import com.here.sdk.mapview.RenderSize;
 import com.here.sdk.routing.BicycleOptions;
 import com.here.sdk.routing.CalculateRouteCallback;
 import com.here.sdk.routing.CarOptions;
@@ -63,6 +72,7 @@ public class SetRouteActivity extends AppCompatActivity {
     private LocationIndicator locationIndicator;
     private List<Waypoint> currentWaypoints = new ArrayList<>();
     private List<MapPolyline> lines = new ArrayList<>();
+    private List<MapMarker> markers = new ArrayList<>();
 
     private RoutingEngine routingEngine;
     public SetRouteActivity() {
@@ -97,20 +107,26 @@ public class SetRouteActivity extends AppCompatActivity {
             mapView.getMapScene().removeMapPolylines(lines);
             lines.clear();
             currentWaypoints.clear();
+            mapView.getMapScene().removeMapMarkers(this.markers);
+            this.markers.clear();
             loadMapScene();
         });
 
         setRoute.setOnClickListener(view -> {
             // Zapisz zaznaczoną trasę
-            Intent intent = new Intent(SetRouteActivity.this, TrainingActivity.class);
-            double []array = new double[currentWaypoints.size()*2];
-            int j=0;
-            for(int i=0; i<currentWaypoints.size(); i++){
-                array[j++] = currentWaypoints.get(i).coordinates.latitude;
-                array[j++] = currentWaypoints.get(i).coordinates.longitude;
+            if(currentWaypoints.size()<1){
+                Toast.makeText(getApplicationContext(), R.string.please_complete_route, Toast.LENGTH_SHORT).show();
+            }else{
+                Intent intent = new Intent(SetRouteActivity.this, TrainingActivity.class);
+                double []array = new double[currentWaypoints.size()*2];
+                int j=0;
+                for(int i=0; i<currentWaypoints.size(); i++){
+                    array[j++] = currentWaypoints.get(i).coordinates.latitude;
+                    array[j++] = currentWaypoints.get(i).coordinates.longitude;
+                }
+                intent.putExtra("coords", array);
+                startActivity(intent);
             }
-            intent.putExtra("coords", array);
-            startActivity(intent);
         });
 
         cancelButton.setOnClickListener(view -> {
@@ -134,8 +150,6 @@ public class SetRouteActivity extends AppCompatActivity {
     private void loadMapScene() {
         mapView.getMapScene().loadScene(MapScheme.NORMAL_DAY, mapError -> {
             if (mapError == null) {
-                double distanceInMeters = 1000 * 10;
-                mapMeasureZoom = new MapMeasure(MapMeasure.Kind.DISTANCE, distanceInMeters);
 
                 locationIndicator = new LocationIndicator();
                 locationIndicator.setLocationIndicatorStyle(LocationIndicator.IndicatorStyle.PEDESTRIAN);
@@ -145,13 +159,17 @@ public class SetRouteActivity extends AppCompatActivity {
                 if(this.currentWaypoints.size()>0){
                     latitude = currentWaypoints.get(currentWaypoints.size()-1).coordinates.latitude;
                     longitude = currentWaypoints.get(currentWaypoints.size()-1).coordinates.longitude;
+//                    if(this.currentWaypoints.size()>2){
+//                        distanceInMeters = currentWaypoints.get(0).coordinates.distanceTo(currentWaypoints.get(currentWaypoints.size()-1).coordinates);
+//                    }
                 }else{
                     latitude = pastLocation.getLatitude();
                     longitude = pastLocation.getLongitude();
                 }
+
                 mapView.addLifecycleListener(locationIndicator);
                 mapView.getCamera().lookAt(
-                        new GeoCoordinates(latitude , longitude), mapMeasureZoom); //start
+                        new GeoCoordinates(latitude, longitude)); //start
             } else {
                 Log.d("loadMapScene()", "Loading map failed: mapError: " + mapError.name());
             }
@@ -280,6 +298,19 @@ public class SetRouteActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
+                        MapImage mapImage = MapImageFactory.fromResource(getResources(), R.drawable.point);
+
+                        Anchor2D anchor2D = new Anchor2D(0.5F, 1);
+                        MapMarker mapMarkerEnd = new MapMarker(this.currentWaypoints.get(currentWaypoints.size()-1).coordinates, mapImage, anchor2D);
+                        mapView.getMapScene().addMapMarker(mapMarkerEnd);
+                        markers.add(mapMarkerEnd);
+                    }else if(currentWaypoints.size()==1){
+                        MapImage mapImage = MapImageFactory.fromResource(getResources(), R.drawable.point);
+
+                        Anchor2D anchor2D = new Anchor2D(0.5F, 1);
+                        MapMarker mapMarker = new MapMarker(this.currentWaypoints.get(0).coordinates, mapImage, anchor2D);
+                        mapView.getMapScene().addMapMarker(mapMarker);
+                        markers.add(mapMarker);
                     }
                     break;
                 case UPDATE:
