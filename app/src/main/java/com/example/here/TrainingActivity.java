@@ -1,10 +1,5 @@
 package com.example.here;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,26 +9,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.here.routeCreator.RouteCreatorTrainingActive;
-import com.example.here.routeCreator.RouteCreatorTrainingSuspended;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.Priority;
-import com.google.android.gms.tasks.OnSuccessListener;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import com.example.here.routeCreator.PlatformPositioningProvider;
 import com.here.sdk.core.Color;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.core.GeoPolyline;
+import com.here.sdk.core.Location;
 import com.here.sdk.core.errors.InstantiationErrorException;
 import com.here.sdk.mapview.LocationIndicator;
 import com.here.sdk.mapview.MapMeasure;
 import com.here.sdk.mapview.MapPolyline;
 import com.here.sdk.mapview.MapScheme;
 import com.here.sdk.mapview.MapView;
+import com.here.sdk.routing.BicycleOptions;
 import com.here.sdk.routing.CalculateRouteCallback;
 import com.here.sdk.routing.PedestrianOptions;
 import com.here.sdk.routing.Route;
@@ -41,8 +34,8 @@ import com.here.sdk.routing.RoutingEngine;
 import com.here.sdk.routing.RoutingError;
 import com.here.sdk.routing.Waypoint;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TrainingActivity extends AppCompatActivity {
@@ -62,26 +55,17 @@ public class TrainingActivity extends AppCompatActivity {
     private int timeInSec;
     private boolean trainingActive = true;
 
-    private float curSpeed = 0;
-    private float avgSpeed = 0;
-    private float maxSpeed = 0;
-    private float distance = 0;
+    private double curSpeed = 0;
+    private double avgSpeed = 0;
+    private double maxSpeed = 0;
+    private double distance = 0;
     private int kcal = 0;
 
-    private PermissionsRequestor permissionsRequestor;
-    private MapMeasure mapMeasureZoom;
-    //    private android.location.Location startLocation;
-    private android.location.Location pastLocation;
-    private FusedLocationProviderClient fusedLocationProviderClient;
-    private LocationRequest locationRequest;
-    private float distanceUntilWaypoint = 10.0f;
+    private PlatformPositioningProvider platformPositioningProvider;
     private LocationIndicator locationIndicator;
-    private LocationCallback locationCallback;
     private Route route;
     private List<Waypoint> currentWaypoints = new ArrayList<>();
     List<Waypoint> traceWaypoints = new ArrayList<>();
-    RouteCreatorTrainingActive routeCreatorTrainingActive;
-    RouteCreatorTrainingSuspended routeCreatorTrainingSuspended;
     private Bundle savedInstanceState;
 
     double[] traceInDoubles;
@@ -90,7 +74,6 @@ public class TrainingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         traceInDoubles = getIntent().getDoubleArrayExtra("coords");
-
         this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.training_activity);
         this.mapView = findViewById(R.id.map_view);
@@ -104,7 +87,6 @@ public class TrainingActivity extends AppCompatActivity {
         this.distanceLeft = findViewById(R.id.distance_left);
         this.kcalTextView = findViewById(R.id.kcal);
         this.timeLeft = findViewById(R.id.time_left);
-        this.locationIndicator = new LocationIndicator();
 
         this.mapView.onCreate(savedInstanceState);
 
@@ -113,19 +95,20 @@ public class TrainingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (trainingActive) {
                     pauseReturnButton.setText(R.string.paused);
-                    trainingActive = !trainingActive;
                     pauseReturnButton.setBackgroundColor(getResources().getColor(R.color.orange));
-                    routeCreatorTrainingSuspended.createRoute(currentWaypoints);
                 } else {
                     pauseReturnButton.setText(R.string.started);
-                    trainingActive = !trainingActive;
                     pauseReturnButton.setBackgroundColor(getResources().getColor(R.color.green));
                 }
+                trainingActive = !trainingActive;
             }
         });
         this.endButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // ekran zakończonego wyścigu
+
                 Intent intent = new Intent(TrainingActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -135,11 +118,12 @@ public class TrainingActivity extends AppCompatActivity {
     }
 
     private void initTrace(double[] array) {
-        traceWaypoints.add(new Waypoint(new GeoCoordinates(pastLocation.getLatitude(), pastLocation.getLongitude())));
+        Waypoint start = new Waypoint(new GeoCoordinates(platformPositioningProvider.getLastKnownLocation().getLatitude(), platformPositioningProvider.getLastKnownLocation().getLongitude()));
+        currentWaypoints.add(start);
+        traceWaypoints.add(start);
         for(int i=0; i<array.length; i++){
             traceWaypoints.add(new Waypoint(new GeoCoordinates(array[i], array[++i])));
         }
-        Log.d("nullCzyNie", " NIE ");
         RoutingEngine routingEngine = null;
         try {
             routingEngine = new RoutingEngine();
@@ -148,7 +132,7 @@ public class TrainingActivity extends AppCompatActivity {
         }
         routingEngine.calculateRoute(
                 traceWaypoints,
-                new PedestrianOptions(),
+                new BicycleOptions(),
                 new CalculateRouteCallback() {
                     @Override
                     public void onRouteCalculated(@Nullable RoutingError routingError, @Nullable List<Route> routes) {
@@ -163,111 +147,107 @@ public class TrainingActivity extends AppCompatActivity {
 
                             mapView.getMapScene().addMapPolyline(routeMapPolyline);
                             loadMapScene();
-                        } else {
                         }
                     }
                 });
     }
 
+    private void addLocationIndicator(GeoCoordinates geoCoordinates,
+                                      LocationIndicator.IndicatorStyle indicatorStyle) {
+        locationIndicator = new LocationIndicator();
+        locationIndicator.setLocationIndicatorStyle(indicatorStyle);
+
+
+        Location location = new Location(geoCoordinates);
+        location.time = new Date();
+        location.bearingInDegrees = 180d;
+
+        locationIndicator.updateLocation(location);
+
+        mapView.addLifecycleListener(locationIndicator);
+    }
+
     private void startTrainingActivity() {
-        this.locationRequest = new LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
-                .setWaitForAccurateLocation(false)
-                .setMinUpdateIntervalMillis(500)
-                .setMaxUpdateDelayMillis(1000)
-                .build();
-        this.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<android.location.Location>() {
-                @Override
-                public void onSuccess(android.location.Location location) {
-                    pastLocation = location;
-                }
-            });
-
-        }
-        else {
-//            Toast.makeText(getApplicationContext(),"Permission denied",Toast.LENGTH_SHORT).show();
-            Log.d("PERM", "NO PERMISSIONS");
-            finish();
-        }
-        this.locationCallback = new LocationCallback() {
+        this.platformPositioningProvider = new PlatformPositioningProvider(TrainingActivity.this);
+        platformPositioningProvider.startLocating(new PlatformPositioningProvider.PlatformLocationListener() {
             @Override
-            public void onLocationResult(@NonNull LocationResult locationResult) {
-                android.location.Location location = locationResult.getLastLocation();
-//                mapView.onCreate(savedInstanceState);
-//                mapView.getCamera().lookAt(
-//                        new GeoCoordinates(location.getLatitude(), location.getLongitude()), mapMeasureZoom);
+            public void onLocationUpdated(android.location.Location location) {
+                Location loc = convertLocation(location);
+                loc.time = new Date();
+                locationIndicator.updateLocation(loc);
 
-                if(route!=null){
-                    distanceLeft.setText("Pozostało: " + Math.round(route.getLengthInMeters()/10.0)/10.0 + " km");
-                    if(avgSpeed>0)
-                        timeLeft.setText(Math.round(route.getLengthInMeters()/avgSpeed/60) + " minut");
-                }
+                mapView.getCamera().lookAt(new GeoCoordinates(location.getLatitude(), location.getLongitude()));
 
                 if(locationIndicator != null)
                     locationIndicator.updateLocation(LocationConverter.convertToHERE(location));
 
-                float currentDistance = pastLocation.distanceTo(location);
-                distanceUntilWaypoint -= currentDistance;
-
-                if(distanceUntilWaypoint <= 0) {
-                    distanceUntilWaypoint = 10.0f;
-                    currentWaypoints.add(new Waypoint(new GeoCoordinates(location.getLatitude(), location.getLongitude())));
-                }
-
                 if (trainingActive) {
-
-                    distance += currentDistance;
-
-                    avgSpeed = distance / timeInSec;
-                    curSpeed = location.getSpeed();
+                    if(route!=null){
+                        distanceLeft.setText("Pozostało: " + (Math.round(route.getLengthInMeters()/100.0)/10.0 - Math.round(distance/100.0)/10.0)+ " km");
+                        if(avgSpeed>0)
+                            timeLeft.setText(Math.round(route.getLengthInMeters()/avgSpeed/60) + " minut");
+                        if(distance>route.getLengthInMeters()/2 && loc.coordinates.distanceTo(traceWaypoints.get(traceWaypoints.size()-1).coordinates)<100){
+                            // widok zakończonego wyścigu
+                        }
+                    }
+                    currentWaypoints.add(new Waypoint(loc.coordinates));
+                    distance += currentWaypoints.get(currentWaypoints.size()-1).coordinates.distanceTo(currentWaypoints.get(currentWaypoints.size()-2).coordinates);
+                    avgSpeed = Math.round(distance/timeInSec*3.6);
+                    curSpeed = Math.round(location.getSpeed()*3.6);
+                    int masa = 80;
+                    kcal = (int) (masa*timeInSec/60*(0.6345*avgSpeed*avgSpeed+0.7563*avgSpeed+36.725)/(3600));     // masa ciała potrzebna
                     if (curSpeed > maxSpeed)
                         maxSpeed = curSpeed;
                     displayTrainingData();
-
-                    pastLocation = new android.location.Location(location);
-
-
-                    /// to nie powinno byc tu! ale nie rozumiem tej lokalizacji XD
-                    if(traceInDoubles!=null){
-                        initTrace(traceInDoubles);
-                        traceInDoubles=null;
-                    }
-
-
-                    routeCreatorTrainingActive.createRoute(currentWaypoints);
                 }
             }
-        };
+        });
+        if(traceInDoubles!=null)
+            initTrace(traceInDoubles);
 
-
-
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            this.addLocationIndicator(new GeoCoordinates(platformPositioningProvider.getLastKnownLocation().getLatitude(),platformPositioningProvider.getLastKnownLocation().getLongitude()),
+                    LocationIndicator.IndicatorStyle.PEDESTRIAN);
+        }
+        else {
+            Log.d("PERM", "NO PERMISSIONS");
+            finish();
+        }
         new TimeMeasure().start();
-
         loadMapScene();
+    }
 
-        this.routeCreatorTrainingActive = new RouteCreatorTrainingActive(this.mapView, this.locationIndicator);
-        this.routeCreatorTrainingSuspended = new RouteCreatorTrainingSuspended(this.mapView);
-        this.fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+    private Location convertLocation(android.location.Location nativeLocation) {
+        GeoCoordinates geoCoordinates = new GeoCoordinates(
+                nativeLocation.getLatitude(),
+                nativeLocation.getLongitude(),
+                nativeLocation.getAltitude());
+
+        Location location = new Location(geoCoordinates);
+
+        if (nativeLocation.hasBearing()) {
+            location.bearingInDegrees = (double) nativeLocation.getBearing();
+        }
+
+        if (nativeLocation.hasSpeed()) {
+            location.speedInMetersPerSecond = (double) nativeLocation.getSpeed();
+        }
+
+        if (nativeLocation.hasAccuracy()) {
+            location.horizontalAccuracyInMeters = (double) nativeLocation.getAccuracy();
+        }
+
+        return location;
     }
 
     private void loadMapScene() {
         mapView.getMapScene().loadScene(MapScheme.NORMAL_DAY, mapError -> {
             if (mapError == null) {
-                double distanceInMeters = 1000 * 10;
-                mapMeasureZoom = new MapMeasure(MapMeasure.Kind.DISTANCE, distanceInMeters);
-
-                locationIndicator = new LocationIndicator();
-                locationIndicator.setLocationIndicatorStyle(LocationIndicator.IndicatorStyle.PEDESTRIAN);
-                locationIndicator.updateLocation(LocationConverter.convertToHERE(this.pastLocation)); // start
-
-
-                mapView.addLifecycleListener(locationIndicator);
                 mapView.getCamera().lookAt(
-                        new GeoCoordinates(pastLocation.getLatitude(), pastLocation.getLongitude()), mapMeasureZoom); //start
+                        new GeoCoordinates(platformPositioningProvider.getLastKnownLocation().getLatitude(), platformPositioningProvider.getLastKnownLocation().getLongitude())); //start
             } else {
                 Log.d("loadMapScene()", "Loading map failed: mapError: " + mapError.name());
             }
@@ -286,6 +266,7 @@ public class TrainingActivity extends AppCompatActivity {
     protected void onPause() {
         if(this.mapView != null)
             this.mapView.onPause();
+        platformPositioningProvider.stopLocating();
         super.onPause();
     }
 
@@ -300,8 +281,6 @@ public class TrainingActivity extends AppCompatActivity {
     protected void onDestroy() {
         if(this.mapView != null)
             this.mapView.onDestroy();
-        if(this.fusedLocationProviderClient != null)
-            this.fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         super.onDestroy();
     }
 

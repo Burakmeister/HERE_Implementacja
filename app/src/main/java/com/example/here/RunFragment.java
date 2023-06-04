@@ -64,11 +64,6 @@ public class RunFragment extends Fragment {
 
     private void displayStatistics(int number) {
 
-//        routeCreator.createRoute(Arrays.asList(
-//                new Waypoint(new GeoCoordinates(lastTourStartV1, lastTourStartV2)),
-//                new Waypoint(new GeoCoordinates(lastTourEndV1, lastTourEndV2))
-//        ));
-
         progressBar.setVisibility(View.VISIBLE);
         linearLayout.setVisibility(View.GONE);
 
