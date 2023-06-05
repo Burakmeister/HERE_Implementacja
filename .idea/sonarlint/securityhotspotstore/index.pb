@@ -19,12 +19,6 @@ Aapp/src/main/java/com/example/here/routeCreator/RouteCreator.java,2\5\25a73faa
 Rapp/src/main/java/com/example/here/routeCreator/RouteCreatorTrainingSuspended.java,6\e\6e203bc69060a3dc70b9b4d1e58c62eb053f4ce0
 k
 ;app/src/main/java/com/example/here/restapi/Coordinates.java,8\b\8be7885db673ab10d12b8a3bc8f0f96cd645da66
-m
-=app/src/main/java/com/example/here/restapi/TrainingStats.java,2\a\2ab364d85d0707161e110b9fbff92b05e842f070
-h
-8app/src/main/java/com/example/here/TrainingActivity.java,e\f\ef50b6d5d586f8758991edfde011220da32e3a4b
-f
-6app/src/main/java/com/example/here/MovingFragment.java,1\a\1a11d4e6a9942c3de8ccd7334cb936794c145c52
 h
 8app/src/main/java/com/example/here/SetRouteActivity.java,4\e\4e69f51165802753915ef091542f619201ed5507
 h

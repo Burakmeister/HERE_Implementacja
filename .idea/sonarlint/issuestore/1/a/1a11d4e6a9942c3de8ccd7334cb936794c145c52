@@ -1,12 +1,0 @@
-
-{
-java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(í¡•úÿÿÿÿ8õşçŞı0
-E
-java:S1604"(Make this anonymous inner class a lambda(Üã»8õşçŞı0
-Z
-java:S1854"8Remove this useless assignment to local variable "item".(¨ĞĞÿÿÿÿÿ8ÿçŞı0
-K
-java:S1481")Remove this unused "item" local variable.(¨ĞĞÿÿÿÿÿ8ÿçŞı0
-X	java:S125"<This block of commented-out lines of code should be removed.(×¼”ï8ÿçŞı0
->
-java:S1116&"Remove this empty statement.(ûÓ›Ûıÿÿÿÿ8ÿçŞı0

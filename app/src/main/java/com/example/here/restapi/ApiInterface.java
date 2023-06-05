@@ -79,4 +79,6 @@ public interface ApiInterface {
     @POST("/api/user/friends/{id}/delete")
     Call<Void> deleteFriend(@Header("Authorization") String authorization, @Path("id") int id);
 
+    @GET("/api/statistics/{period}")
+    Call<StatisticsByPeriod> statisticsByPeriod(@Header("Authorization") String authorization, @Path("period") int period);
 }

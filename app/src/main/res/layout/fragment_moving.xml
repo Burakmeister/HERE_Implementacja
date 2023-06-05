@@ -43,9 +43,10 @@
             android:orientation="vertical"
             android:gravity="center">
             <TextView
+                android:id="@+id/distance_text"
                 android:layout_width="120dp"
                 android:layout_height="60dp"
-                android:text="12km"
+                android:text="@string/kilometers"
                 android:textSize="30sp"
                 android:textAlignment="center"
                 android:textStyle="bold"
@@ -78,9 +79,10 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <TextView
+                    android:id="@+id/speed_text"
                     android:layout_width="120dp"
                     android:layout_height="60dp"
-                    android:text="20km/h"
+                    android:text="@string/kmh"
                     android:textAlignment="center"
                     android:textSize="30sp"
                     android:textStyle="bold"
@@ -113,9 +115,10 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <TextView
+                    android:id="@+id/duration_text"
                     android:layout_width="130dp"
                     android:layout_height="60dp"
-                    android:text="3h 20min"
+                    android:text="@string/duration_period"
                     android:textAlignment="center"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -148,6 +151,7 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <TextView
+                    android:id="@+id/stats_count"
                     android:layout_width="120dp"
                     android:layout_height="60dp"
                     android:text="69"
