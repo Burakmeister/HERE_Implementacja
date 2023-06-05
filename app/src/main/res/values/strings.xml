@@ -144,4 +144,5 @@
     <string name="findUser">Podaj nick użytkownika</string>
     <string name="invite">Zaproś</string>
     <string name="invitation_sent">Zaproszenie zostało wysłane</string>
+    <string name="delete">Usuń</string>
 </resources>
