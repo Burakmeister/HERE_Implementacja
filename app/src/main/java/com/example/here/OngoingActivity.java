@@ -19,16 +19,15 @@ import com.example.here.routeCreator.PlatformPositioningProvider;
 import com.here.sdk.core.Color;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.core.GeoPolyline;
+import com.here.sdk.core.LanguageCode;
 import com.here.sdk.core.Location;
 import com.here.sdk.core.errors.InstantiationErrorException;
 import com.here.sdk.mapview.LocationIndicator;
-import com.here.sdk.mapview.MapMeasure;
 import com.here.sdk.mapview.MapPolyline;
 import com.here.sdk.mapview.MapScheme;
 import com.here.sdk.mapview.MapView;
 import com.here.sdk.routing.BicycleOptions;
 import com.here.sdk.routing.CalculateRouteCallback;
-import com.here.sdk.routing.PedestrianOptions;
 import com.here.sdk.routing.Route;
 import com.here.sdk.routing.RoutingEngine;
 import com.here.sdk.routing.RoutingError;
@@ -38,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TrainingActivity extends AppCompatActivity {
+public class OngoingActivity extends AppCompatActivity {
 
     private Button endButton;
     private Button pauseReturnButton;
@@ -69,11 +68,15 @@ public class TrainingActivity extends AppCompatActivity {
     private Bundle savedInstanceState;
 
     double[] traceInDoubles;
+    private boolean isTraining;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MapView.setPrimaryLanguage(LanguageCode.PL_PL);
+
         traceInDoubles = getIntent().getDoubleArrayExtra("coords");
+        isTraining = getIntent().getBooleanExtra("isTraining", true);
         this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.training_activity);
         this.mapView = findViewById(R.id.map_view);
@@ -109,7 +112,7 @@ public class TrainingActivity extends AppCompatActivity {
 
                 // ekran zakończonego wyścigu
 
-                Intent intent = new Intent(TrainingActivity.this, MainActivity.class);
+                Intent intent = new Intent(OngoingActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -168,7 +171,7 @@ public class TrainingActivity extends AppCompatActivity {
     }
 
     private void startTrainingActivity() {
-        this.platformPositioningProvider = new PlatformPositioningProvider(TrainingActivity.this);
+        this.platformPositioningProvider = new PlatformPositioningProvider(OngoingActivity.this);
         platformPositioningProvider.startLocating(new PlatformPositioningProvider.PlatformLocationListener() {
             @Override
             public void onLocationUpdated(android.location.Location location) {

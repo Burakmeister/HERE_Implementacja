@@ -174,6 +174,7 @@ public class RunFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SetRouteActivity.class);
+                intent.putExtra("isTraining", false);
                 startActivity(intent);
             }
         });
