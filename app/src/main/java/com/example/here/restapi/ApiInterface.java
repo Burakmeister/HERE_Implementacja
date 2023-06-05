@@ -26,8 +26,17 @@ public interface ApiInterface {
     @GET("/api/user/friends")
     Call<List<UserData>> getFriends(@Header("Authorization") String authorization);
 
-    @GET("/api/race/get_races_id")  // czy dobrze??
+    @GET("/api/race/get_races_id")
     Call<List<Integer>> getRacesId(@Header("Authorization") String authorization);
+
+    @GET("/api/race/{race_id}/get_participants_limit")
+    Call<Integer> getLimit(@Header("Authorization") String authorization, @Path("race_id") int id);
+
+//    @POST("/api/race/{race_id}/add_participant")
+//    Call<Integer> addParticipant(@Header("Authorization") String authorization, @Path("race_id") int id);
+
+    @POST("/api/race/{race_id}/join_race")
+    Call<Integer> joinRace(@Header("Authorization") String authorization, @Path("race_id") int id);
 
     @POST("/api/auth")
     Call<Token> getAuthToken(@Body Credentials credentials);

@@ -1,0 +1,16 @@
+
+t
+java:S22934"YReplace the type specification in this constructor call with the diamond operator ("<>").(¶Àµ˙˝ˇˇˇˇ
+`
+java:S11925"JDefine a constant instead of duplicating this literal "Kowalski" 10 times.(ñ≤Çâ
+z
+java:S1319H"eThe type of "users" should be an interface such as "List" rather than the implementation "ArrayList".(∫ïÑF
+>
+java:S1604)"(Make this anonymous inner class a lambda(Ä£©∫
+r
+java:S1450"\Remove the "inviteFriends" field and declare it as a local variable in the relevant methods.(ÎÅˇ‰
+m
+java:S1450"WRemove the "raceCode" field and declare it as a local variable in the relevant methods.(¥∑Œ∏
+Q	java:S125W"<This block of commented-out lines of code should be removed.(πá«€
+G
+java:S1068",Remove this unused "raceName" private field.(Ü¿¶≥ˇˇˇˇˇ

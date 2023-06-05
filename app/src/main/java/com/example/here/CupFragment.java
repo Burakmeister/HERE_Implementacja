@@ -24,6 +24,7 @@ import com.example.here.restapi.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -93,43 +94,31 @@ public class CupFragment extends Fragment {
                 // Sprawdź, czy istnieje wyścig o podanym kodzie
                 ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
                 SharedPreferences sp = getActivity().getSharedPreferences("msb", Context.MODE_PRIVATE);
-                Call<List<Integer>> call = apiInterface.getRacesId("Token " + sp.getString("token", ""));
+                Call<Integer> call = apiInterface.joinRace("Token " + sp.getString("token", ""), Integer.parseInt(raceCode));
                 String finalRaceCode = raceCode;    // coś krzyczało dlatego tak
-                call.enqueue(new Callback<List<Integer>>() {
+
+                call.enqueue(new Callback<Integer>() {
                     @Override
-                    public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
                         Log.d("retro", "onresponse");
+                        Log.d("retro", String.valueOf(response.body()));
                         if (response.isSuccessful()) {
                             Log.d("retro", "success");
-                            List<Integer> races_id_list = (ArrayList<Integer>) response.body();
-                            for(Integer id : races_id_list) {
-                                if(id.toString().equals(finalRaceCode)) {
-                                    // Przypisz użytkownika jako uczestnika do wyścigu, jeśli wciąż są miejsca (pobierz z danych wyścigu participants limit, zapisz jako participant do wyścigu)
-                                    // Zimplementować get_race aby osobno nie pobierać już limit i zapisywać
-                                    
-
-                                    Toast.makeText(getActivity(), "Pomyślnie dołączono do wyścigu!", Toast.LENGTH_SHORT).show();
-                                    break;
-                                }
-                                if(id == races_id_list.size()) {
-                                    Toast.makeText(getActivity(), "Nie znaleziono wyścigu, błędny kod!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
+                            Toast.makeText(getActivity(), "Pomyślnie dołączono do wyścigu!", Toast.LENGTH_SHORT).show();
                         } else {
 //                    unsuccessful
-                            Toast.makeText(getActivity(), "Błąd połączenia z serwerem!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Błąd połączenia z serwerem! inny", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Integer>> call, Throwable t) {
+                    public void onFailure(Call<Integer> call, Throwable t) {
                         //handle network problems
                         Toast.makeText(getActivity(), "Błąd połączenia z serwerem!", Toast.LENGTH_SHORT).show();
+                        String errorMessage = t.getMessage();
+                        Log.d("Retrofit", "Błąd: " + errorMessage);
                     }
                 });
-
-
             }
         });
         builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
