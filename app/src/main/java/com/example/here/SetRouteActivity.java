@@ -1,11 +1,13 @@
 package com.example.here;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -14,37 +16,33 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.here.routeCreator.RouteCreator;
-import com.example.here.routeCreator.RouteCreatorTrainingSuspended;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.here.sdk.core.Anchor2D;
 import com.here.sdk.core.Color;
 import com.here.sdk.core.GeoCoordinates;
 import com.here.sdk.core.GeoPolyline;
-import com.here.sdk.core.Point2D;
+import com.here.sdk.core.LanguageCode;
 import com.here.sdk.core.errors.InstantiationErrorException;
-import com.here.sdk.gestures.GestureState;
-import com.here.sdk.gestures.LongPressListener;
 import com.here.sdk.mapview.LocationIndicator;
+import com.here.sdk.mapview.MapImage;
+import com.here.sdk.mapview.MapImageFactory;
+import com.here.sdk.mapview.MapMarker;
 import com.here.sdk.mapview.MapMeasure;
 import com.here.sdk.mapview.MapPolyline;
 import com.here.sdk.mapview.MapScheme;
 import com.here.sdk.mapview.MapView;
-import com.here.sdk.routing.BicycleOptions;
 import com.here.sdk.routing.CalculateRouteCallback;
-import com.here.sdk.routing.CarOptions;
 import com.here.sdk.routing.PedestrianOptions;
 import com.here.sdk.routing.Route;
 import com.here.sdk.routing.RoutingEngine;
 import com.here.sdk.routing.RoutingError;
 import com.here.sdk.routing.Waypoint;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,24 +55,27 @@ public class SetRouteActivity extends AppCompatActivity {
     private Button skipSetRoute;
 
     private PermissionsRequestor permissionsRequestor;
-    private MapMeasure mapMeasureZoom;
     private android.location.Location pastLocation;
     private float distanceUntilWaypoint = 10.0f;
     private LocationIndicator locationIndicator;
     private List<Waypoint> currentWaypoints = new ArrayList<>();
     private List<MapPolyline> lines = new ArrayList<>();
+    private List<MapMarker> markers = new ArrayList<>();
 
     private RoutingEngine routingEngine;
+
+    private boolean isTraining;
     public SetRouteActivity() {
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        MapView.setPrimaryLanguage(LanguageCode.PL_PL);
+
         setTheme(R.style.AppTheme);
-//        getSupportActionBar().hide();
+        isTraining = getIntent().getBooleanExtra("isTraining", true);
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.set_route_activity);
 
         this.mapView = findViewById(R.id.map_view);
@@ -84,8 +85,9 @@ public class SetRouteActivity extends AppCompatActivity {
         this.resetRoute = findViewById(R.id.reset_route);
         this.setRoute = findViewById(R.id.set_route);
         this.cancelButton = findViewById(R.id.cancel_button);
-        this.skipSetRoute = findViewById(R.id.skip_route_button);
         this.locationIndicator = new LocationIndicator();
+
+        this.skipSetRoute = findViewById(R.id.skip_route_button);
 
         handleAndroidPermissions();
         initialization();
@@ -97,32 +99,63 @@ public class SetRouteActivity extends AppCompatActivity {
             mapView.getMapScene().removeMapPolylines(lines);
             lines.clear();
             currentWaypoints.clear();
+            mapView.getMapScene().removeMapMarkers(this.markers);
+            this.markers.clear();
             loadMapScene();
         });
 
         setRoute.setOnClickListener(view -> {
             // Zapisz zaznaczoną trasę
-            Intent intent = new Intent(SetRouteActivity.this, TrainingActivity.class);
-            double []array = new double[currentWaypoints.size()*2];
-            int j=0;
-            for(int i=0; i<currentWaypoints.size(); i++){
-                array[j++] = currentWaypoints.get(i).coordinates.latitude;
-                array[j++] = currentWaypoints.get(i).coordinates.longitude;
+            if(currentWaypoints.size()<1){
+                if(isTraining){
+                    Toast.makeText(getApplicationContext(), R.string.please_complete_route, Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), R.string.please_complete_route_race, Toast.LENGTH_SHORT).show();
+                }
+            }else if(currentWaypoints.size()==1 && !isTraining){
+                Toast.makeText(getApplicationContext(), R.string.please_complete_route_race, Toast.LENGTH_SHORT).show();
+            } else{
+
+                double []array = new double[currentWaypoints.size()*2];
+                int j=0;
+                for(int i=0; i<currentWaypoints.size(); i++){
+                    array[j++] = currentWaypoints.get(i).coordinates.latitude;
+                    array[j++] = currentWaypoints.get(i).coordinates.longitude;
+                }
+                if(isTraining){
+                    Intent intent = new Intent(SetRouteActivity.this, OngoingActivity.class);
+                    intent.putExtra("coords", array);
+                    startActivity(intent);
+                }else{
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("coords", array);
+                    setResult(Activity.RESULT_OK,returnIntent);
+                    finish();
+                }
             }
-            intent.putExtra("coords", array);
-            startActivity(intent);
         });
 
         cancelButton.setOnClickListener(view -> {
             // Anuluj i wyjdź z widoku
-            Intent intent = new Intent(SetRouteActivity.this, MainActivity.class);
-            startActivity(intent);
+            if(isTraining) {
+                Intent intent = new Intent(SetRouteActivity.this, MainActivity.class);
+                startActivity(intent);
+            }else{
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED, returnIntent);
+                finish();
+            }
         });
 
-        skipSetRoute.setOnClickListener(view -> {
-            Intent intent = new Intent(SetRouteActivity.this, TrainingActivity.class);
-            startActivity(intent);
-        });
+        if(isTraining){
+            skipSetRoute.setOnClickListener(view -> {
+                Intent intent = new Intent(SetRouteActivity.this, OngoingActivity.class);
+                startActivity(intent);
+            });
+        }else{
+            skipSetRoute.setVisibility(View.GONE);
+        }
 
         try {
             routingEngine = new RoutingEngine();
@@ -134,8 +167,6 @@ public class SetRouteActivity extends AppCompatActivity {
     private void loadMapScene() {
         mapView.getMapScene().loadScene(MapScheme.NORMAL_DAY, mapError -> {
             if (mapError == null) {
-                double distanceInMeters = 1000 * 10;
-                mapMeasureZoom = new MapMeasure(MapMeasure.Kind.DISTANCE, distanceInMeters);
 
                 locationIndicator = new LocationIndicator();
                 locationIndicator.setLocationIndicatorStyle(LocationIndicator.IndicatorStyle.PEDESTRIAN);
@@ -149,9 +180,10 @@ public class SetRouteActivity extends AppCompatActivity {
                     latitude = pastLocation.getLatitude();
                     longitude = pastLocation.getLongitude();
                 }
+
                 mapView.addLifecycleListener(locationIndicator);
                 mapView.getCamera().lookAt(
-                        new GeoCoordinates(latitude , longitude), mapMeasureZoom); //start
+                        new GeoCoordinates(latitude, longitude)); //start
             } else {
                 Log.d("loadMapScene()", "Loading map failed: mapError: " + mapError.name());
             }
@@ -210,9 +242,6 @@ public class SetRouteActivity extends AppCompatActivity {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 Location location = locationResult.getLastLocation();
-//                mapView.onCreate(savedInstanceState);
-//                mapView.getCamera().lookAt(
-//                        new GeoCoordinates(location.getLatitude(), location.getLongitude()), mapMeasureZoom);
                 if (locationIndicator != null)
                     locationIndicator.updateLocation(LocationConverter.convertToHERE(location));
 
@@ -280,6 +309,19 @@ public class SetRouteActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
+                        MapImage mapImage = MapImageFactory.fromResource(getResources(), R.drawable.point);
+
+                        Anchor2D anchor2D = new Anchor2D(0.5F, 1);
+                        MapMarker mapMarkerEnd = new MapMarker(this.currentWaypoints.get(currentWaypoints.size()-1).coordinates, mapImage, anchor2D);
+                        mapView.getMapScene().addMapMarker(mapMarkerEnd);
+                        markers.add(mapMarkerEnd);
+                    }else if(currentWaypoints.size()==1){
+                        MapImage mapImage = MapImageFactory.fromResource(getResources(), R.drawable.point);
+
+                        Anchor2D anchor2D = new Anchor2D(0.5F, 1);
+                        MapMarker mapMarker = new MapMarker(this.currentWaypoints.get(0).coordinates, mapImage, anchor2D);
+                        mapView.getMapScene().addMapMarker(mapMarker);
+                        markers.add(mapMarker);
                     }
                     break;
                 case UPDATE:

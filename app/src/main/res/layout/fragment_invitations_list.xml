@@ -13,6 +13,14 @@
 <!--        android:textStyle="bold"-->
 <!--        android:padding="16dp" />-->
 
+    <ProgressBar
+        android:id="@+id/invitationProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"/>
+
     <include layout="@layout/invitations_list" />
 
 </LinearLayout>

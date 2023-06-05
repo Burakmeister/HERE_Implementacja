@@ -1,16 +1,20 @@
 package com.example.here.restapi;
 
+
 import com.example.here.models.Race;
+import com.example.here.models.Invitation;
 import com.example.here.models.UserData;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -37,6 +41,15 @@ public interface ApiInterface {
 
     @POST("/api/race/{race_id}/join_race")
     Call<Integer> joinRace(@Header("Authorization") String authorization, @Path("race_id") int id);
+  
+    @GET("/api/user/invitations")
+    Call<List<Invitation>> getInvitations(@Header("Authorization") String authorization);
+
+    @DELETE("/api/user/invitations/{id}/accept")
+    Call<Void> acceptInvitation(@Header("Authorization") String authorization, @Path("id") int id);
+
+    @DELETE("/api/user/invitations/{id}/reject")
+    Call<Void> rejectInvitation(@Header("Authorization") String authorization, @Path("id") int id);
 
     @POST("/api/auth")
     Call<Token> getAuthToken(@Body Credentials credentials);
@@ -48,7 +61,10 @@ public interface ApiInterface {
     Call<Void> addData(@Header("Authorization") String authorization, @Body UserData userData);
 
     @GET("/api/user/get_data")
-    Call<UserData> getUserData(@Header("Authorization") String authorization);
+    Call<UserData> getMyData(@Header("Authorization") String authorization);
+
+    @GET("api/user/{id}")
+    Call<UserData> getUserData(@Path("id") int id);
 
     @POST("/api/user/edit_data")
     Call<Void> editData(@Header("Authorization") String authorization, @Body UserData userData);
@@ -62,4 +78,15 @@ public interface ApiInterface {
     @GET("/api/training/get_statistics/{number}")
     Call<TrainingStats> getTrainingStatistics(@Header("Authorization") String authorization, @Path("number") int number);
 
+    @GET("/api/users/")
+    Call<List<UserData>> findUsersByNickname(@Header("Authorization") String authorization, @Query("nickname") String nickname);
+
+    @GET("/api/user/{id}")
+    Call<UserData> getUserDataById(@Path("id") int id);
+
+    @GET("/api/user/{id}/email")
+    Call<UserEmail> getUserEmailById(@Path("id") int id);
+
+    @POST("/api/user/invite/{id}")
+    Call<Void> invite(@Header("Authorization") String authorization, @Path("id") int id);
 }

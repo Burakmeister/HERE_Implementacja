@@ -1,4 +1,4 @@
-package com.example.here;
+package com.example.here.routeCreator;
 
 import android.Manifest;
 import android.content.Context;
@@ -8,10 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
-//import android.support.annotation.Nullable;
-//import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-
 import static android.content.Context.LOCATION_SERVICE;
 
 import androidx.annotation.Nullable;
@@ -20,12 +17,11 @@ import androidx.core.app.ActivityCompat;
 // A simple Android based positioning implementation.
 public class PlatformPositioningProvider implements LocationListener {
 
-    public static final String LOG_TAG = PlatformPositioningProvider.class.getName();
-    public static final int LOCATION_UPDATE_INTERVAL_IN_MS = 100;
+    public static final String LOG_TAG = "LOCALIZATION";
+    public static final int LOCATION_UPDATE_INTERVAL_IN_MS = 50;
 
     private Context context;
     private LocationManager locationManager;
-
     @Nullable
     private PlatformLocationListener platformLocationListener;
 
@@ -35,31 +31,11 @@ public class PlatformPositioningProvider implements LocationListener {
 
     public PlatformPositioningProvider(Context context) {
         this.context = context;
-        this.locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-    }
-
-    public Location getLastKnownLocation() {
-        if (ActivityCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(context,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.d(LOG_TAG, "Positioning permissions denied.");
-            return null;
-        }
-
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
-                context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
-            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        } else {
-            Log.d(LOG_TAG, "Positioning not possible.");
-            return null;
-        }
     }
 
     @Override
     public void onLocationChanged(android.location.Location location) {
+        Log.d(LOG_TAG, "LOCATION CHANGED");
         if (platformLocationListener != null) {
             platformLocationListener.onLocationUpdated(location);
         }
@@ -79,6 +55,26 @@ public class PlatformPositioningProvider implements LocationListener {
                 break;
             default:
                 Log.d(LOG_TAG, "PlatformPositioningProvider status: UNKNOWN");
+        }
+    }
+
+    public Location getLastKnownLocation() {
+        if (ActivityCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(context,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d(LOG_TAG, "Positioning permissions denied.");
+            return null;
+        }
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
+                context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
+            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        } else {
+            Log.d(LOG_TAG, "Positioning not possible.");
+            return null;
         }
     }
 
@@ -106,8 +102,12 @@ public class PlatformPositioningProvider implements LocationListener {
         }
 
         this.platformLocationListener = locationCallback;
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
+        if (locationManager.isProviderEnabled(LocationManager.FUSED_PROVIDER) &&
+                context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
+            locationManager.requestLocationUpdates(LocationManager.FUSED_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 1,this);
+        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)&&
                 context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 1,this);
         } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
