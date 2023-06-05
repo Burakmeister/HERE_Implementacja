@@ -43,6 +43,7 @@ public class PersonFragment extends Fragment {
         // require a empty public constructor
     }
 
+
     private Button addButton;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -158,7 +159,30 @@ public class PersonFragment extends Fragment {
                 //userIconImageView.setImageResource(user.getAvatar());
                 userIconImageView.setImageResource(R.drawable.ic_round_person_24);
                 userNameTextView.setText(user.getNick());
+
+                //delete
+                Button deleteButton = convertView.findViewById(R.id.delete_button);
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
+                        SharedPreferences sp = getContext().getSharedPreferences("msb", Context.MODE_PRIVATE);
+                        Call<Void> delete = apiInterface.deleteFriend("Token " + sp.getString("token", ""), user.getUser());
+                        delete.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                PersonFragment.friendsListFragment.refresh();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                });
             }
+
             return convertView;
         }
     }

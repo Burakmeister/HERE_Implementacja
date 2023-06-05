@@ -75,4 +75,8 @@ public interface ApiInterface {
 
     @POST("/api/user/invite/{id}")
     Call<Void> invite(@Header("Authorization") String authorization, @Path("id") int id);
+
+    @POST("/api/user/friends/{id}/delete")
+    Call<Void> deleteFriend(@Header("Authorization") String authorization, @Path("id") int id);
+
 }
