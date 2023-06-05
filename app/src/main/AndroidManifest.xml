@@ -23,7 +23,7 @@
             android:name=".EditUserData"
             android:exported="false" />
         <activity
-            android:name=".TrainingActivity"
+            android:name=".OngoingActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

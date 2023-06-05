@@ -84,6 +84,7 @@
     <string name="wrong_email_or_password">Błędny email lub hasło</string>
     <string name="please_complete_the_form">Wypełnij brakujące pola formularza</string>
     <string name="please_complete_route">Najpierw wyznacz trasę lub punkt docelowy</string>
+    <string name="please_complete_route_race">Najpierw wyznacz trasę</string>
     <string name="wrong_repeated_password">Powtórzone hasło jest błędne</string>
     <string name="something_went_wrong">Coś poszło nie tak</string>
     <string name="insert_data_textView">Podaj dane</string>
