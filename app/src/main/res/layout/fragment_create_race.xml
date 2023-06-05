@@ -58,38 +58,15 @@
             android:layout_marginRight="16dp"
             android:inputType="text" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wybierz trasę:"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
-            android:textSize="16dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp">
-
-            <Button
-                android:id="@+id/saved_routes_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="16dp"
-                android:text="Zapisane trasy" />
 
             <Button
                 android:id="@+id/create_route_button"
-                android:layout_width="0dp"
-                android:layout_marginRight="16dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="Utwórz trasę" />
 
-        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

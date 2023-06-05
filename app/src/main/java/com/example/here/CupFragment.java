@@ -46,7 +46,6 @@ public class CupFragment extends Fragment {
 
         myRacesButton = view.findViewById(R.id.my_races_button);
         joinRaceButton = view.findViewById(R.id.join_race_button);
-        searchRaceButton = view.findViewById(R.id.search_race_button);
 
         myRacesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,13 +62,6 @@ public class CupFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 showJoinRaceDialog();
-            }
-        });
-
-        searchRaceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Tutaj zimplementować wyszukiwanie wyścigu!!
             }
         });
 
@@ -101,14 +93,15 @@ public class CupFragment extends Fragment {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
                         Log.d("retro", "onresponse");
-                        Log.d("retro", String.valueOf(response.body()));
+//                        Log.d("retro", String.valueOf(response.body()));
                         if (response.isSuccessful()) {
                             Log.d("retro", "success");
-                            Toast.makeText(getActivity(), "Pomyślnie dołączono do wyścigu!", Toast.LENGTH_SHORT).show();
+
                         } else {
 //                    unsuccessful
-                            Toast.makeText(getActivity(), "Błąd połączenia z serwerem! inny", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "Błąd połączenia z serwerem! inny", Toast.LENGTH_SHORT).show();
                         }
+                        Toast.makeText(getActivity(), "Pomyślnie dołączono do wyścigu!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

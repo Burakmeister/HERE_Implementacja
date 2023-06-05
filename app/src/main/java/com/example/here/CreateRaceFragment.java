@@ -78,42 +78,12 @@ public class CreateRaceFragment extends Fragment {
         cityEditText = view.findViewById(R.id.city_edit_text);
         mapView = view.findViewById(R.id.map_view);
 
-        savedRoutesButton = view.findViewById(R.id.saved_routes_button);
         createRouteButton = view.findViewById(R.id.create_route_button);
         selectDateTimeButton = view.findViewById(R.id.select_date_time_button);
         createRaceButton = view.findViewById(R.id.create_race_button);
 
         this.mapView.onCreate(savedInstanceState);
         initTrace(null);
-
-        savedRoutesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Otwórz popup z utworzonymi trasami (Działa, ale się źle wyświetla)
-
-                PopupMenu popup = new PopupMenu(getActivity(), view);
-                popup.getMenuInflater().inflate(R.menu.saved_route_popup_menu, popup.getMenu());
-                RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(getActivity())
-                        .inflate(R.layout.popup_list, null);
-
-                // Znajdź ListView w RelativeLayout
-                ListView listView = relativeLayout.findViewById(R.id.list_view);
-
-                // Stwórz adapter dla listy
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_list_item_1, android.R.id.text1, getTrackTitles(popup));
-                listView.setAdapter(adapter);
-
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        // Handle item click event here
-                    }
-                });
-                popup.show();
-
-            }
-        });
 
         createRouteButton.setOnClickListener(new View.OnClickListener() {
             @Override
