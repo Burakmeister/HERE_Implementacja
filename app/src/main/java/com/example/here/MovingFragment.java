@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.GridLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -35,6 +37,10 @@ public class MovingFragment extends Fragment {
     TextView duration;
     TextView count;
 
+    ProgressBar progressBar;
+
+    GridLayout gridLayout;
+
     public MovingFragment(){
         // require a empty public constructor
     }
@@ -46,6 +52,10 @@ public class MovingFragment extends Fragment {
     // 3 - year
     // 4 - all
     public void loadStats(int period) {
+
+        gridLayout.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
         ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
         SharedPreferences sp = getActivity().getSharedPreferences("msb",MODE_PRIVATE);
         String token = sp.getString("token", "");
@@ -57,10 +67,14 @@ public class MovingFragment extends Fragment {
             public void onResponse(Call<StatisticsByPeriod> call, Response<StatisticsByPeriod> response) {
                 StatisticsByPeriod statistics = response.body();
                 Log.d("stats", statistics.toString());
-                duration.setText(String.valueOf(statistics.getDuration()));
-                distance.setText(String.valueOf(statistics.getDistance()));
-                speed.setText(String.valueOf(statistics.getSpeed()));
+                duration.setText(getString(R.string.duration_period, statistics.getDuration()));
+                distance.setText(getString(R.string.kilometers, statistics.getDistance()));
+                speed.setText(getString(R.string.kmh, statistics.getSpeed()*3600));
                 count.setText(String.valueOf(statistics.getCount()));
+
+                gridLayout.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -88,6 +102,9 @@ public class MovingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_moving, container, false);
+
+        this.progressBar = view.findViewById(R.id.progressBar);
+        this.gridLayout = view.findViewById(R.id.grid_layout);
 
         this.distance = view.findViewById(R.id.distance_text);
         this.duration = view.findViewById(R.id.duration_text);

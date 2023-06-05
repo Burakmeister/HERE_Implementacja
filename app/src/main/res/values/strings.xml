@@ -149,5 +149,5 @@
 <!--    statistics by period-->
     <string name="kilometers">%1$.1f km</string>
     <string name="kmh">%1$.1f km/h</string>
-    <string name="duration_period">%1$.1f księżyców</string>
+    <string name="duration_period">%1$.1f s</string>
 </resources>
