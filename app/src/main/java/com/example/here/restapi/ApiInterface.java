@@ -1,5 +1,6 @@
 package com.example.here.restapi;
 
+import com.example.here.home.FriendsStatus;
 import com.example.here.models.Invitation;
 import com.example.here.models.UserData;
 
@@ -81,4 +82,7 @@ public interface ApiInterface {
 
     @GET("/api/statistics/{period}")
     Call<StatisticsByPeriod> statisticsByPeriod(@Header("Authorization") String authorization, @Path("period") int period);
+
+    @GET("/api/user/friends/activities")
+    Call<List<FriendsStatus>> getActivities(@Header("Authorization") String token);
 }

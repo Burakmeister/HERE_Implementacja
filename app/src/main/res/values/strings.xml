@@ -150,4 +150,6 @@
     <string name="kilometers">%1$.1f km</string>
     <string name="kmh">%1$.1f km/h</string>
     <string name="duration_period">%1$.1f s</string>
+    <string name="friends_activity_race">%1$s zdobył %2$d miejsce w %3$s\n</string>
+    <string name="friends_activity_training">%1$s przebiegł %2$.1f m</string>
 </resources>

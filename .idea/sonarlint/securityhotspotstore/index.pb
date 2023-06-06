@@ -11,8 +11,6 @@ k
 ;app/src/main/java/com/example/here/restapi/Credentials.java,b\d\bd15ce78df06427c48325797faf555c335bdba8a
 s
 Capp/src/main/java/com/example/here/restapi/RegisterCredentials.java,2\d\2ddbefe75b761d833f2687988e83e1eafd3c881a
-i
-9app/src/main/java/com/example/here/home/FriendStatus.java,e\d\edc929ccbc5ce7aae6b65c012d68aeb4b5b9e8dd
 q
 Aapp/src/main/java/com/example/here/routeCreator/RouteCreator.java,2\5\25a73faa76bf2713e2714d5020c9bc3bfd68b9af
 ‚
