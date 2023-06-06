@@ -167,7 +167,6 @@ public class SetRouteActivity extends AppCompatActivity {
     private void loadMapScene() {
         mapView.getMapScene().loadScene(MapScheme.NORMAL_DAY, mapError -> {
             if (mapError == null) {
-
                 locationIndicator = new LocationIndicator();
                 locationIndicator.setLocationIndicatorStyle(LocationIndicator.IndicatorStyle.PEDESTRIAN);
                 locationIndicator.updateLocation(LocationConverter.convertToHERE(this.pastLocation)); // start

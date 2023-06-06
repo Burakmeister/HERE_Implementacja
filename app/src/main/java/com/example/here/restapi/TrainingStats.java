@@ -3,10 +3,10 @@ package com.example.here.restapi;
 public class TrainingStats {
 
     Float distance;
-    Float calories;
+    Integer calories;
     Float duration;
 
-    public TrainingStats(Float distance, Float calories, Float duration) {
+    public TrainingStats(Float distance, Integer calories, Float duration) {
         this.distance = distance;
         this.calories = calories;
         this.duration = duration;
@@ -20,11 +20,11 @@ public class TrainingStats {
         this.distance = distance;
     }
 
-    public Float getCalories() {
+    public Integer getCalories() {
         return calories;
     }
 
-    public void setCalories(Float calories) {
+    public void setCalories(Integer calories) {
         this.calories = calories;
     }
 

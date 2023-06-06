@@ -273,7 +273,6 @@ public class CreateRaceFragment extends Fragment {
     }
 
     private void initTrace(double[] array) {
-        Log.d("initTrace", "array==null: " + (array==null));
         if(array!=null){
             for(int i=0; i<array.length; i++){
                 trace.add(new Waypoint(new GeoCoordinates(array[i], array[++i])));
