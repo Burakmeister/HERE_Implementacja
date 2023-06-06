@@ -52,7 +52,7 @@ public class FindUserFragment extends Fragment {
         @NonNull
         @Override
         public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_user, parent, false);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_user_searched, parent, false);
             return new UserViewHolder(itemView);
         }
 

@@ -1,15 +1,0 @@
-
-G
-java:S1153:"1Directly append the argument of String.valueOf().(š¦Ü€
-L
-java:S1153<"1Directly append the argument of String.valueOf().(±ñßûÿÿÿÿ
-G
-java:S1153>"1Directly append the argument of String.valueOf().(¼øðÅ
-L
-java:S1153@"1Directly append the argument of String.valueOf().(¹”„ºüÿÿÿÿ
-`
-java:S2095("EUse try-with-resources or close this "Scanner" in a "finally" clause.(Õý¡½üÿÿÿÿ
-M
-java:S2589="7Remove this expression which always evaluates to "true"(óìöî
-m
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ìÚäþþÿÿÿÿ

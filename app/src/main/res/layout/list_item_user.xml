@@ -28,6 +28,15 @@ android:padding="16dp">
 
 </LinearLayout>
 
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:layout_marginRight="25dp"
+        android:text="@string/delete">
+    </Button>
+
 <!--<ImageButton-->
 <!--    android:id="@+id/action_button"-->
 <!--    android:layout_width="wrap_content"-->
