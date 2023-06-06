@@ -24,6 +24,7 @@
     <string name="avgSpeedText">Średnia prędkość: %1$.1f km/h</string>
     <string name="maxSpeedText">Maksymalna prędkość: %1$.1f km/h</string>
     <string name="distanceText">Dystans: %1$.0f m</string>
+    <string name="distanceTextKm">Dystans: %1$.2f km</string>
     <string name="kcalText">Spalone kalorie: %d kcal</string>
     <string name="user_image_content_description">zdjęcie</string>
     <string name="action_button_content_description">zdjęcie</string>

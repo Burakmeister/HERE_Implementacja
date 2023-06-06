@@ -9,6 +9,19 @@
     android:id="@+id/activity_training"
     android:background="@color/black">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"/>
+
     <Button
         android:id="@+id/end_trening"
         android:layout_width="300dp"

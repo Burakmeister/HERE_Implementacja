@@ -130,7 +130,7 @@ public class SetRouteActivity extends AppCompatActivity {
                 }else{
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("coords", array);
-                    setResult(Activity.RESULT_OK,returnIntent);
+                    setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 }
             }
@@ -223,8 +223,8 @@ public class SetRouteActivity extends AppCompatActivity {
     private void setUpMap() {
         LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
                 .setWaitForAccurateLocation(false)
-                .setMinUpdateIntervalMillis(500)
-                .setMaxUpdateDelayMillis(1000)
+                .setMinUpdateIntervalMillis(100)
+                .setMaxUpdateDelayMillis(500)
                 .build();
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this,
