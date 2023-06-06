@@ -87,7 +87,7 @@ public class CupFragment extends Fragment {
                 ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
                 SharedPreferences sp = getActivity().getSharedPreferences("msb", Context.MODE_PRIVATE);
                 Call<Integer> call = apiInterface.joinRace("Token " + sp.getString("token", ""), Integer.parseInt(raceCode));
-                String finalRaceCode = raceCode;    // coś krzyczało dlatego tak
+                String finalRaceCode = raceCode;
 
                 call.enqueue(new Callback<Integer>() {
                     @Override
@@ -99,7 +99,7 @@ public class CupFragment extends Fragment {
 
                         } else {
 //                    unsuccessful
-//                            Toast.makeText(getActivity(), "Błąd połączenia z serwerem! inny", Toast.LENGTH_SHORT).show();
+
                         }
                         Toast.makeText(getActivity(), "Pomyślnie dołączono do wyścigu!", Toast.LENGTH_SHORT).show();
                     }

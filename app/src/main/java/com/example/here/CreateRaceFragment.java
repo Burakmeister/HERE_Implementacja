@@ -1,8 +1,10 @@
 package com.example.here;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -26,6 +28,10 @@ import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.here.models.Race;
+import com.example.here.restapi.ApiInterface;
+import com.example.here.restapi.Coordinates;
+import com.example.here.restapi.RetrofitClient;
 import com.here.sdk.core.Anchor2D;
 import com.here.sdk.core.Color;
 import com.here.sdk.core.GeoCoordinates;
@@ -48,7 +54,12 @@ import com.here.sdk.routing.RoutingError;
 import com.here.sdk.routing.Waypoint;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateRaceFragment extends Fragment {
 
@@ -65,6 +76,8 @@ public class CreateRaceFragment extends Fragment {
     private List<Waypoint> trace = new ArrayList<>();       // trasa w wyścigu do zapisania w bazie ( trace.get(nr).coordinates longitude latitude)
     private List<MapPolyline> lines = new ArrayList<>();
     private List<MapMarker> markers = new ArrayList<>();
+    private List<Coordinates> coordinates = new ArrayList<>();
+    private Date date;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +90,7 @@ public class CreateRaceFragment extends Fragment {
         numParticipantsEditText = view.findViewById(R.id.num_participants_edit_text);
         cityEditText = view.findViewById(R.id.city_edit_text);
         mapView = view.findViewById(R.id.map_view);
+        date = new Date();
 
         createRouteButton = view.findViewById(R.id.create_route_button);
         selectDateTimeButton = view.findViewById(R.id.select_date_time_button);
@@ -122,6 +136,9 @@ public class CreateRaceFragment extends Fragment {
                         final int year = datePicker.getYear();
                         final int month = datePicker.getMonth();
                         final int day = datePicker.getDayOfMonth();
+                        date.setYear(year);
+                        date.setMonth(month);
+                        date.setDate(day);
 
                         RelativeLayout timePickerLayout = new RelativeLayout(getActivity());
                         timePickerLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
@@ -145,9 +162,9 @@ public class CreateRaceFragment extends Fragment {
                                 // Pobranie wybranej godziny i minuty
                                 int hour = timePicker.getCurrentHour();
                                 int minute = timePicker.getCurrentMinute();
-                                // Tutaj zrobić coś z pobranymi danymi
-
-
+                                date.setHours(hour);
+                                date.setMinutes(minute);
+                                date.setSeconds(0);
                             }
                         });
                         timePickerBuilder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
@@ -173,6 +190,52 @@ public class CreateRaceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Utwórz wyścig i powróć do poprzedniego widoku
+
+                ApiInterface apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
+                SharedPreferences sp = getActivity().getSharedPreferences("msb", Context.MODE_PRIVATE);
+                // Przekaż dane
+                Race race = new Race();
+//                race.setRaceId();   // tutaj lepiej jakoś automatycznie ustawić id w views
+                race.setCity(cityEditText.getText().toString());
+                race.setVisibility(true);
+                race.setDateTime(date);
+                race.setName(nameEditText.getText().toString());
+//                race.setOrganizer();    // tutaj lepiej pobrać usera w views i ustawić
+                race.setLimitOfParticipants(Integer.valueOf(numParticipantsEditText.getText().toString()));
+                race.setParticipants(null);
+                for(int i=0; i < trace.size(); i++) {
+                    coordinates.add(new Coordinates(trace.get(i).coordinates.longitude, trace.get(i).coordinates.latitude));
+                }
+                com.example.here.models.Route route = new com.example.here.models.Route();
+                route.setCoordinates(coordinates);  // w views ustawić też automatycznie id dla route
+                race.setRoute(route);
+
+                Call<Race> call = apiInterface.createRace("Token " + sp.getString("token", ""), race);
+                call.enqueue(new Callback<Race>() {
+                    @Override
+                    public void onResponse(Call<Race> call, Response<Race> response) {
+                        Log.d("retro", "onresponse");
+//                        Log.d("retro", String.valueOf(response.body()));
+                        if (response.isSuccessful()) {
+                            Log.d("retro", "success");
+
+
+                        } else {
+//                    unsuccessful
+                            Log.d("retro", String.valueOf(response.body()));
+//                            Toast.makeText(getActivity(), "Błąd połączenia z serwerem! inny", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Race> call, Throwable t) {
+                        //handle network problems
+                        Toast.makeText(getActivity(), "Błąd połączenia z serwerem!", Toast.LENGTH_SHORT).show();
+                        String errorMessage = t.getMessage();
+                        Log.d("Retrofit", "Błąd: " + errorMessage);
+                    }
+                });
 
                 Fragment newFragment = new MyRacesFragment(); //utworzenie nowej instancji klasy MyRacesFragment
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -204,26 +267,26 @@ public class CreateRaceFragment extends Fragment {
         super.onResume();
     }
 
-    // Metoda do pobrania nazw zapisanych tras
-    private List<String> getTrackTitles(PopupMenu popup) {
-        List<String> data = new ArrayList<String>();
-        // Tutaj dodanie danych do listy, narazie na sztywno
-
-
-        data.add("Trasa 1");
-        data.add("Trasa 2");
-        data.add("Trasa 3");
-
-        // Pobierz Menu
-        Menu menu = popup.getMenu();
-
-        // Dodaj nowe elementy do menu
-        for (String title : data) {
-            menu.add(title);
-        }
-
-        return data;
-    }
+//    // Metoda do pobrania nazw zapisanych tras
+//    private List<String> getTrackTitles(PopupMenu popup) {
+//        List<String> data = new ArrayList<String>();
+//        // Tutaj dodanie danych do listy, narazie na sztywno
+//
+//
+//        data.add("Trasa 1");
+//        data.add("Trasa 2");
+//        data.add("Trasa 3");
+//
+//        // Pobierz Menu
+//        Menu menu = popup.getMenu();
+//
+//        // Dodaj nowe elementy do menu
+//        for (String title : data) {
+//            menu.add(title);
+//        }
+//
+//        return data;
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

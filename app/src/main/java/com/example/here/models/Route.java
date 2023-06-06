@@ -3,17 +3,19 @@ package com.example.here.models;
 import com.example.here.restapi.Coordinates;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Route {
     @SerializedName("route_id")
     private Integer route_id;
     @SerializedName("coordinates")
-    private Coordinates coordinates;
+    private List<Coordinates> coordinates;
 
     public Route() {
 
     }
 
-    public Route(Integer route_id, Coordinates coordinates) {
+    public Route(Integer route_id, List<Coordinates> coordinates) {
         this.route_id = route_id;
         this.coordinates = coordinates;
     }
@@ -26,11 +28,11 @@ public class Route {
         this.route_id = route_id;
     }
 
-    public Coordinates getCoordinates() {
+    public List<Coordinates> getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(Coordinates coordinates) {
+    public void setCoordinates(List<Coordinates> coordinates) {
         this.coordinates = coordinates;
     }
 }

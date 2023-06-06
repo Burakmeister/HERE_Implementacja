@@ -39,6 +39,9 @@ public interface ApiInterface {
 //    @POST("/api/race/{race_id}/add_participant")
 //    Call<Integer> addParticipant(@Header("Authorization") String authorization, @Path("race_id") int id);
 
+    @POST("/api/race/create_race")
+    Call<Race> createRace(@Header("Authorization") String authorization, @Body Race race);
+
     @POST("/api/race/{race_id}/join_race")
     Call<Integer> joinRace(@Header("Authorization") String authorization, @Path("race_id") int id);
   
