@@ -59,9 +59,6 @@ public class HomeFragment extends Fragment {
     String[] items = {"Marsz","Bieganie","Jazda na rowerze","Kajakarstwo"};
     AutoCompleteTextView autoCompleteTxt;
     ArrayAdapter<String> adapterItems;
-
-    private double lastTourStartV1 = 53.41178404163292, lastTourStartV2 = 23.516119474276664,           // pobierane z bazy danych / z pamieci urzadzenia
-            lastTourEndV1 = 53.1276662351446, lastTourEndV2 = 23.160716949523863;
     private Button friendsButton;
     private AtomicInteger countCalls;
 
@@ -69,18 +66,6 @@ public class HomeFragment extends Fragment {
         // require a empty public constructor
     }
 
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        view = inflater.inflate(R.layout.fragment_home, container, false);;
-////        this.mapView = view.findViewById(R.id.mapView);
-////        this.mapView.onCreate(savedInstanceState);
-//
-////        setToLastRoute(new Waypoint(new GeoCoordinates(lastTourStartV1, lastTourStartV2)), new Waypoint(new GeoCoordinates(lastTourEndV1, lastTourEndV2)));     //rysowanie poprzedniej trasy po wspolrzednych*/
-//
-//        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-//
-//        chooseDiscipline();
-//        return view;
-//    }
 
     public class FriendsStatusAdapter extends RecyclerView.Adapter<FriendsStatusAdapter.FriendsStatusViewHolder> {
         private List<FriendsStatus> friendsStatusList;
@@ -104,7 +89,9 @@ public class HomeFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return friendsStatusList.size();
+            if(friendsStatusList!=null)
+                return friendsStatusList.size();
+            return 0;
         }
 
         public class FriendsStatusViewHolder extends RecyclerView.ViewHolder {
@@ -176,8 +163,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void goToProfile() {
-//        Intent i = new Intent(getActivity(), UserSettingsActivity.class);
-//        startActivity(i);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new ProfileFragment()).commit();
     }
 

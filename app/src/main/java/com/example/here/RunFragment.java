@@ -89,12 +89,13 @@ public class RunFragment extends Fragment {
                 statsView.setVisibility(View.VISIBLE);
 
                 TrainingStats trainingStats = response.body();
-
-                duration.setText(getString(R.string.duration, trainingStats.getDuration()));
-                distance.setText(getString(R.string.distanceText, trainingStats.getDistance()));
-                kcal.setText(getString(R.string.kcalText, trainingStats.getCalories()));
-                float avgSpeedVal = trainingStats.getDistance()/trainingStats.getDuration();
-                avgSpeed.setText(getString(R.string.avgSpeedText, avgSpeedVal));
+                if(trainingStats!=null){
+                    duration.setText(getString(R.string.duration, trainingStats.getDuration()));
+                    distance.setText(getString(R.string.distanceText, trainingStats.getDistance()));
+                    kcal.setText(getString(R.string.kcalText, trainingStats.getCalories()));
+                    float avgSpeedVal = trainingStats.getDistance()/trainingStats.getDuration();
+                    avgSpeed.setText(getString(R.string.avgSpeedText, avgSpeedVal));
+                }
 
                 if(finishedLoading.incrementAndGet() == 2)
                     stopLoading();
@@ -120,15 +121,18 @@ public class RunFragment extends Fragment {
                 mapView.setVisibility(View.VISIBLE);
 
                 List<Coordinates> coordinates = response.body();
-                List<Waypoint> waypoints = new ArrayList<>();
 
-                for(Coordinates c : coordinates) {
-                    waypoints.add(new Waypoint(
-                            new GeoCoordinates(c.getX(), c.getY())
-                    ));
+                if(coordinates!=null){
+                    List<Waypoint> waypoints = new ArrayList<>();
+
+                    for(Coordinates c : coordinates) {
+                        waypoints.add(new Waypoint(
+                                new GeoCoordinates(c.getX(), c.getY())
+                        ));
+                    }
+
+                    routeCreator.createRoute(waypoints);
                 }
-
-                routeCreator.createRoute(waypoints);
 
                 if(finishedLoading.incrementAndGet() == 2)
                     stopLoading();

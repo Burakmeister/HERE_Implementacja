@@ -66,11 +66,12 @@ public class MovingFragment extends Fragment {
             @Override
             public void onResponse(Call<StatisticsByPeriod> call, Response<StatisticsByPeriod> response) {
                 StatisticsByPeriod statistics = response.body();
-                Log.d("stats", statistics.toString());
-                duration.setText(getString(R.string.duration_period, statistics.getDuration()));
-                distance.setText(getString(R.string.kilometers, statistics.getDistance()));
-                speed.setText(getString(R.string.kmh, statistics.getSpeed()*3600));
-                count.setText(String.valueOf(statistics.getCount()));
+                if(statistics!=null){
+                    duration.setText(getString(R.string.duration_period, statistics.getDuration()));
+                    distance.setText(getString(R.string.kilometers, statistics.getDistance()));
+                    speed.setText(getString(R.string.kmh, statistics.getSpeed()*3600));
+                    count.setText(String.valueOf(statistics.getCount()));
+                }
 
                 gridLayout.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
