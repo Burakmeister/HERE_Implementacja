@@ -67,10 +67,17 @@ public class MovingFragment extends Fragment {
             public void onResponse(Call<StatisticsByPeriod> call, Response<StatisticsByPeriod> response) {
                 StatisticsByPeriod statistics = response.body();
                 if(statistics!=null){
-                    duration.setText(getString(R.string.duration_period, statistics.getDuration()));
-                    distance.setText(getString(R.string.kilometers, statistics.getDistance()));
-                    speed.setText(getString(R.string.kmh, statistics.getSpeed()*3600));
-                    count.setText(String.valueOf(statistics.getCount()));
+                    if(statistics.getDistance()!=null) {
+                        duration.setText(getString(R.string.duration_period, statistics.getDuration()));
+                        distance.setText(getString(R.string.kilometers, statistics.getDistance()));
+                        speed.setText(getString(R.string.kmh, statistics.getSpeed() * 3600));
+                        count.setText(String.valueOf(statistics.getCount()));
+                    }
+                }else{
+                    duration.setText("0 s");
+                    distance.setText("0 km");
+                    speed.setText("0 km/h");
+                    count.setText("0");
                 }
 
                 gridLayout.setVisibility(View.VISIBLE);
