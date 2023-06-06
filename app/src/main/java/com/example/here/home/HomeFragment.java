@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
             return friendsStatusList.size();
         }
 
-        public static class FriendsStatusViewHolder extends RecyclerView.ViewHolder {
+        public class FriendsStatusViewHolder extends RecyclerView.ViewHolder {
             private TextView text;
 
             public FriendsStatusViewHolder(View itemView) {
