@@ -1,0 +1,38 @@
+
+u
+java:S2293ª"YReplace the type specification in this constructor call with the diamond operator ("<>").(´¤ô¯ýÿÿÿÿ
+u
+java:S2293Ý"YReplace the type specification in this constructor call with the diamond operator ("<>").(´¤ô¯ýÿÿÿÿ
+
+java:S1319ˆ"eThe type of "races" should be an interface such as "List" rather than the implementation "ArrayList".(Ö Òëúÿÿÿÿ
+C
+java:S1604O"(Make this anonymous inner class a lambda(Ãè˜üûÿÿÿÿ
+D
+java:S1604²"(Make this anonymous inner class a lambda(­¥¸Øýÿÿÿÿ
+D
+java:S1604å"(Make this anonymous inner class a lambda(­¥¸Øýÿÿÿÿ
+v
+java:S1450$"[Remove the "createButton" field and declare it as a local variable in the relevant methods.(ÖŒøÂþÿÿÿÿ
+n
+java:S1450%"XRemove the "tabLayout" field and declare it as a local variable in the relevant methods.(¤×ä
+s
+java:S1450&"XRemove the "viewPager" field and declare it as a local variable in the relevant methods.(åÙ¬Ïûÿÿÿÿ
+^
+java:S1871>"HThis case's code block is the same as the block for the case on line 58.(‚àÄ²
+^
+java:S1871B"HThis case's code block is the same as the block for the case on line 58.(öÝÔÜ
+<	java:S1317""Add a default case to this switch.(¼œóÛüÿÿÿÿ
+U
+java:S1874T":Remove this use of "getFragmentManager"; it is deprecated.(å¿…¶ýÿÿÿÿ
+W
+java:S1874b"<Remove this use of "FragmentPagerAdapter"; it is deprecated.(ßÛÙáøÿÿÿÿ
+C
+java:S1874e".Remove this use of "<init>"; it is deprecated.(‘í›\
+S
+java:S3972º"7Move this "if" to a new line or add the missing "else".(á ÷¤ùÿÿÿÿ
+S
+java:S3972À"7Move this "if" to a new line or add the missing "else".(³ô»áÿÿÿÿÿ
+S
+java:S3972í"7Move this "if" to a new line or add the missing "else".(á ÷¤ùÿÿÿÿ
+S
+java:S3972ó"7Move this "if" to a new line or add the missing "else".(³ô»áÿÿÿÿÿ

@@ -25,6 +25,8 @@
     <string name="maxSpeedText">Maksymalna prędkość: %1$.1f km/h</string>
     <string name="distanceText">Dystans: %1$.0f m</string>
     <string name="kcalText">Spalone kalorie: %.1f kcal</string>
+    <string name="distanceTextKm">Dystans: %1$.2f km</string>
+    //<string name="kcalText">Spalone kalorie: %d kcal</string>
     <string name="user_image_content_description">zdjęcie</string>
     <string name="action_button_content_description">zdjęcie</string>
     <string-array name="statistics_options">
@@ -84,6 +86,7 @@
     <string name="wrong_email_or_password">Błędny email lub hasło</string>
     <string name="please_complete_the_form">Wypełnij brakujące pola formularza</string>
     <string name="please_complete_route">Najpierw wyznacz trasę lub punkt docelowy</string>
+    <string name="please_complete_route_race">Najpierw wyznacz trasę</string>
     <string name="wrong_repeated_password">Powtórzone hasło jest błędne</string>
     <string name="something_went_wrong">Coś poszło nie tak</string>
     <string name="insert_data_textView">Podaj dane</string>

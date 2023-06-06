@@ -18,7 +18,8 @@ import androidx.core.app.ActivityCompat;
 public class PlatformPositioningProvider implements LocationListener {
 
     public static final String LOG_TAG = "LOCALIZATION";
-    public static final int LOCATION_UPDATE_INTERVAL_IN_MS = 50;
+    public static final int LOCATION_UPDATE_INTERVAL_IN_MS = 1000;
+    public static final int LOCATION_UPDATE_INTERVAL_IN_METRES = 2;
 
     private Context context;
     private LocationManager locationManager;
@@ -31,11 +32,11 @@ public class PlatformPositioningProvider implements LocationListener {
 
     public PlatformPositioningProvider(Context context) {
         this.context = context;
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
     }
 
     @Override
     public void onLocationChanged(android.location.Location location) {
-        Log.d(LOG_TAG, "LOCATION CHANGED");
         if (platformLocationListener != null) {
             platformLocationListener.onLocationUpdated(location);
         }
@@ -66,11 +67,16 @@ public class PlatformPositioningProvider implements LocationListener {
             Log.d(LOG_TAG, "Positioning permissions denied.");
             return null;
         }
-
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
+        if (locationManager.isProviderEnabled(LocationManager.FUSED_PROVIDER) &&
+                context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)){
+//            locationManager.requestLocationUpdates(LocationManager.FUSED_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, LOCATION_UPDATE_INTERVAL_IN_METRES, this);
+            return locationManager.getLastKnownLocation(LocationManager.FUSED_PROVIDER);
+        }else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
                 context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
+//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, LOCATION_UPDATE_INTERVAL_IN_METRES, this);
             return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+//            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, LOCATION_UPDATE_INTERVAL_IN_METRES, this);
             return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } else {
             Log.d(LOG_TAG, "Positioning not possible.");
@@ -102,16 +108,15 @@ public class PlatformPositioningProvider implements LocationListener {
         }
 
         this.platformLocationListener = locationCallback;
-        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
         if (locationManager.isProviderEnabled(LocationManager.FUSED_PROVIDER) &&
                 context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
-            locationManager.requestLocationUpdates(LocationManager.FUSED_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 1,this);
+            locationManager.requestLocationUpdates(LocationManager.FUSED_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, LOCATION_UPDATE_INTERVAL_IN_METRES,this);
         } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)&&
                 context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 1,this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, LOCATION_UPDATE_INTERVAL_IN_METRES,this);
         } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, 1,this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_UPDATE_INTERVAL_IN_MS, LOCATION_UPDATE_INTERVAL_IN_METRES,this);
         } else {
             Log.d(LOG_TAG, "Positioning not possible.");
             stopLocating();
