@@ -21,3 +21,25 @@ L
 java:S1659/"*Declare "weightPicker" on a separate line.(™Ï€šÿÿÿÿÿ8÷±¤­‚1
 Ÿ
 java:S1186¶"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(…ÎÉ8ƒ²¤­‚1
+E
+java:S37403"/Provide the parametrized type for this generic.(µÉ´‚
+J
+java:S3740P"/Provide the parametrized type for this generic.(£Ç¯•ûÿÿÿÿ
+J
+java:S3740P"/Provide the parametrized type for this generic.(£Ç¯•ûÿÿÿÿ
+J
+java:S3740W"/Provide the parametrized type for this generic.(ğ¡ ûúÿÿÿÿ
+b
+java:S1192~"GDefine a constant instead of duplicating this literal "Token " 4 times.(È³Ãôşÿÿÿÿ
+>
+java:S1604]"(Make this anonymous inner class a lambda(úŒ¨Å
+>
+java:S1604p"(Make this anonymous inner class a lambda(—Ñ½„
+D
+java:S1604”"(Make this anonymous inner class a lambda(Öğ­‘üÿÿÿÿ
+@
+java:S1659%"*Declare "lastNameEdit" on a separate line.(­¿Ù«
+E
+java:S1659/"*Declare "weightPicker" on a separate line.(™Ï€šÿÿÿÿÿ
+˜
+java:S1186¶"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(…ÎÉ

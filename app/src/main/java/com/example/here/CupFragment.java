@@ -53,7 +53,8 @@ public class CupFragment extends Fragment {
         searchRaceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Wyszukaj wyścig jakoś
+                Intent i = new Intent(getActivity(), FindRaces.class);
+                startActivity(i);
             }
         });
 

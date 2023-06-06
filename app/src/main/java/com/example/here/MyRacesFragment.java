@@ -9,11 +9,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,20 +21,32 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.here.restapi.ApiInterface;
+import com.example.here.restapi.Races;
+import com.example.here.restapi.RetrofitClient;
 import com.google.android.material.tabs.TabLayout;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyRacesFragment extends Fragment {
 
     public MyRacesFragment() {
-        // require a empty public constructor
+        // wymagany pusty konstruktor publiczny
     }
 
     private Button createButton;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Spinner spinner;
+
 
     @Nullable
     @Override
@@ -53,19 +63,14 @@ public class MyRacesFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    // Tutaj do spinnera trzeba dodać funkcjonalność nie tylko wyświetlania odpowiednich wyścigów ale również żeby np. w nadchodzących po naciśnięciu pokazywało odpowiedni widok (patrz skrypt),
-                    // widok nadchodzącego i zakończonego wyścigu już są podpięte, brakuje wyścigu trwającego!!
                     case 0: // Aktualne wyścigi
-                        // Kod do wyświetlenia aktywnych wyścigów
-
+                        viewPager.setCurrentItem(0);
                         break;
                     case 1: // Nadchodzące wyścigi
-                        // Kod do wyświetlenia nadchodzących wyścigów
-
+                        viewPager.setCurrentItem(1);
                         break;
                     case 2: // Zakończone wyścigi
-                        // Kod do wyświetlenia zakończonych wyścigów
-
+                        viewPager.setCurrentItem(2);
                         break;
                 }
             }
@@ -80,8 +85,8 @@ public class MyRacesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Obsługa kliknięcia przycisku Utwórz wyścig
-                Fragment newFragment = new CreateRaceFragment(); //utworzenie nowej instancji klasy MyRacesFragment
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                Fragment newFragment = new CreateRaceFragment();
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.container, newFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -95,166 +100,281 @@ public class MyRacesFragment extends Fragment {
         return view;
     }
 
-    private class MyRacesAdapter extends FragmentPagerAdapter {
+    private static class MyRacesAdapter extends FragmentPagerAdapter {
 
-        public MyRacesAdapter(FragmentManager fm) {
-            super(fm);
+        private static final int NUM_PAGES = 3;
+
+        public MyRacesAdapter(@NonNull FragmentManager fm) {
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new CreatedRacesListFragment(spinner);
+                    return new ActiveRacesFragment();
                 case 1:
-                    return new ParticipatedRacesListFragment(spinner);
+                    return new UpcomingRacesFragment();
+                case 2:
+                    return new FinishedRacesFragment();
                 default:
-                    return null;
+                    throw new IllegalArgumentException("Invalid fragment position: " + position);
             }
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return NUM_PAGES;
         }
 
+        @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Utworzone";
+                    return "Aktywne";
                 case 1:
-                    return "Uczestniczę";
+                    return "Nadchodzące";
+                case 2:
+                    return "Zakończone wyścigi";
                 default:
                     return null;
             }
         }
     }
 
-    private static class RacesListAdapter extends ArrayAdapter<MyRacesFragment.Race> {
+    public static class ActiveRacesFragment extends Fragment {
 
-        public RacesListAdapter(Context context, ArrayList<MyRacesFragment.Race> races) {
-            super(context, 0, races);
+        private List<Race> activeRaces;
+        private ApiInterface apiInterface;
+        private static final String TAG = "FindRaces";
+        private List<Races.races> allRaces;
+
+        public ActiveRacesFragment() {
+            activeRaces = new ArrayList<>();
         }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_race, parent, false);
-            }
-            TextView raceNameTextView = convertView.findViewById(R.id.race_name);
-            MyRacesFragment.Race race = getItem(position);
-            if (race != null) {
-                raceNameTextView.setText(race.getName());
-            }
-            return convertView;
-        }
-    }
-
-    public static class CreatedRacesListFragment extends Fragment {
-
-        public CreatedRacesListFragment() {
-        }
-
-        public CreatedRacesListFragment(Spinner spinner) {  // aby wyłapać wybraną opcję spinnera
-            this.spinner = spinner;
-        }
-
-        private Spinner spinner;
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_friends_list, container, false);
-            ArrayList<MyRacesFragment.Race> races = new ArrayList<MyRacesFragment.Race>();
-            races.add(new MyRacesFragment.Race("Wyścig 1"));
-            races.add(new MyRacesFragment.Race("Wyścig 2"));
-            races.add(new MyRacesFragment.Race("Wyścig 3"));
-            MyRacesFragment.RacesListAdapter racesListAdapter = new MyRacesFragment.RacesListAdapter(getContext(), races);
-            ListView racesListView = (ListView) view.findViewById(R.id.friends_list);
-            racesListView.setAdapter(racesListAdapter);
 
-            racesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {    // wyświetl odpowiedni widok na podstawie spinnera
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    String selectedSpinnerOption = spinner.getSelectedItem().toString();
+            apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
+            getRaceInfo();
 
-                    if (selectedSpinnerOption.equals("Aktywne wyścigi")) {  // tutaj dodać widok aktywnego wyścigu gdy będzie już zrobiony!!
-
-
-                    } if (selectedSpinnerOption.equals("Nadchodzące wyścigi")) {
-                        Fragment newFragment = new UpcomingRaceFragment();
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.container, newFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    } if (selectedSpinnerOption.equals("Zakończone wyścigi")) {
-                        Fragment newFragment = new FinishedRaceFragment();
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.container, newFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
-                }
-            });
+            ListView activeRacesListView = view.findViewById(R.id.friends_list);
+            RaceListAdapter raceListAdapter = new RaceListAdapter(getContext(), activeRaces);
+            activeRacesListView.setAdapter(raceListAdapter);
 
             return view;
         }
+
+        private void getRaceInfo() {
+            Call<Races> raceCall = apiInterface.getRaces("Token 7657d91254e0beff089cb04adedae33c7278d885");
+            raceCall.enqueue(new Callback<Races>() {
+                @Override
+                public void onResponse(Call<Races> call, Response<Races> response) {
+                    Log.d(TAG, "onResponse: code: " + response.code());
+                    if (response.isSuccessful()) {
+                        Races races = response.body();
+                        if (races != null) {
+                            ArrayList<Races.races> raceList = races.getRacess();
+                            if (raceList != null) {
+                                activeRaces.clear();
+                                allRaces = raceList;
+                                addRacesToActiveRacesList();
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "onResponse: Request failed with code: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Races> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+        }
+
+        private void addRacesToActiveRacesList() {
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            LocalDateTime oneHourAgo = currentDateTime.minusHours(1);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            for (Races.races race : allRaces) {
+                String name = race.getName();
+                String dateStr = race.getDate_time(); // Przykładowa data w formacie "2023-05-31T20:07:38Z"
+                LocalDateTime raceDateTime = LocalDateTime.parse(dateStr, formatter);
+                if (raceDateTime.isAfter(oneHourAgo) && raceDateTime.isBefore(currentDateTime)) {
+                    activeRaces.add(new Race(name));
+                }
+            }
+
+            // Aktualizacja adaptera po dodaniu wyścigów
+            if (getView() != null) {
+                ListView activeRacesListView = getView().findViewById(R.id.friends_list);
+                RaceListAdapter raceListAdapter = new RaceListAdapter(getContext(), activeRaces);
+                activeRacesListView.setAdapter(raceListAdapter);
+            }
+        }
     }
 
-    public static class ParticipatedRacesListFragment extends Fragment {
 
-        public ParticipatedRacesListFragment() {
+
+
+    public static class UpcomingRacesFragment extends Fragment {
+
+        private List<Race> upcomingRaces;
+        private ApiInterface apiInterface;
+        private static final String TAG = "FindRaces";
+        private List<Races.races> allRaces;
+
+        public UpcomingRacesFragment() {
+            upcomingRaces = new ArrayList<>();
         }
-
-        public ParticipatedRacesListFragment(Spinner spinner) {  // aby wyłapać wybraną opcję spinnera
-            this.spinner = spinner;
-        }
-
-        private Spinner spinner;
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_invitations_list, container, false);
-            ArrayList<MyRacesFragment.Race> races = new ArrayList<MyRacesFragment.Race>();
-            races.add(new MyRacesFragment.Race("Wyścig 4"));
-            races.add(new MyRacesFragment.Race("Wyścig 5"));
-            races.add(new MyRacesFragment.Race("Wyścig 6"));
-            MyRacesFragment.RacesListAdapter racesListAdapter = new MyRacesFragment.RacesListAdapter(getContext(), races);
-            ListView racesListView = (ListView) view.findViewById(R.id.invitations_list);
-            racesListView.setAdapter(racesListAdapter);
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.fragment_friends_list, container, false);
 
-            racesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {    // wyświetl odpowiedni widok na podstawie spinnera
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    String selectedSpinnerOption = spinner.getSelectedItem().toString();
+            apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
+            getRaceInfo();
 
-                    if (selectedSpinnerOption.equals("Aktywne wyścigi")) {  // tutaj dodać widok aktywnego wyścigu gdy będzie już zrobiony!!
-
-
-                    } if (selectedSpinnerOption.equals("Nadchodzące wyścigi")) {
-                        Fragment newFragment = new UpcomingRaceFragment();
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.container, newFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    } if (selectedSpinnerOption.equals("Zakończone wyścigi")) {
-                        Fragment newFragment = new FinishedRaceFragment();
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.container, newFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
-                }
-            });
+            ListView upcomingRacesListView = view.findViewById(R.id.friends_list);
+            RaceListAdapter raceListAdapter = new RaceListAdapter(getContext(), upcomingRaces);
+            upcomingRacesListView.setAdapter(raceListAdapter);
 
             return view;
         }
+
+        private void getRaceInfo() {
+            Call<Races> raceCall = apiInterface.getRaces("Token 7657d91254e0beff089cb04adedae33c7278d885");
+            raceCall.enqueue(new Callback<Races>() {
+                @Override
+                public void onResponse(Call<Races> call, Response<Races> response) {
+                    Log.d(TAG, "onResponse: code: " + response.code());
+                    if (response.isSuccessful()) {
+                        Races races = response.body();
+                        if (races != null) {
+                            ArrayList<Races.races> raceList = races.getRacess();
+                            if (raceList != null) {
+                                upcomingRaces.clear();
+                                allRaces = raceList;
+                                addRacesToUpcomingRacesList();
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "onResponse: Request failed with code: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Races> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+        }
+
+        private void addRacesToUpcomingRacesList() {
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            for (Races.races race : allRaces) {
+                String name = race.getName();
+                String dateStr = race.getDate_time(); // Przykładowa data w formacie "2023-05-31T20:07:38Z"
+                LocalDateTime raceDateTime = LocalDateTime.parse(dateStr, formatter);
+                if (raceDateTime.isAfter(currentDateTime)) {
+                    upcomingRaces.add(new Race(name));
+                }
+            }
+
+            // Aktualizacja adaptera po dodaniu wyścigów
+            if (getView() != null) {
+                ListView upcomingRacesListView = getView().findViewById(R.id.friends_list);
+                RaceListAdapter raceListAdapter = new RaceListAdapter(getContext(), upcomingRaces);
+                upcomingRacesListView.setAdapter(raceListAdapter);
+            }
+        }
     }
 
-    // Klasa reprezentująca testowy wyścig
+
+    public static class FinishedRacesFragment extends Fragment {
+
+        private List<Race> finishedRaces;
+        private ApiInterface apiInterface;
+        private static final String TAG = "FindRaces";
+        private List<Races.races> allRaces;
+
+        public FinishedRacesFragment() {
+            finishedRaces = new ArrayList<>();
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.fragment_friends_list, container, false);
+
+            apiInterface = RetrofitClient.getInstance().create(ApiInterface.class);
+            getRaceInfo();
+
+            ListView finishedRacesListView = view.findViewById(R.id.friends_list);
+            RaceListAdapter raceListAdapter = new RaceListAdapter(getContext(), finishedRaces);
+            finishedRacesListView.setAdapter(raceListAdapter);
+
+            return view;
+        }
+
+        private void getRaceInfo() {
+            Call<Races> raceCall = apiInterface.getRaces("Token 7657d91254e0beff089cb04adedae33c7278d885");
+            raceCall.enqueue(new Callback<Races>() {
+                @Override
+                public void onResponse(Call<Races> call, Response<Races> response) {
+                    Log.d(TAG, "onResponse: code: " + response.code());
+                    if (response.isSuccessful()) {
+                        Races races = response.body();
+                        if (races != null) {
+                            ArrayList<Races.races> raceList = races.getRacess();
+                            if (raceList != null) {
+                                finishedRaces.clear();
+                                allRaces = raceList;
+                                addRacesToFinishedRacesList();
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "onResponse: Request failed with code: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Races> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+        }
+
+        private void addRacesToFinishedRacesList() {
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            for (Races.races race : allRaces) {
+                String name = race.getName();
+                String dateStr = race.getDate_time(); // Przykładowa data w formacie "2023-05-31T20:07:38Z"
+                LocalDateTime raceDateTime = LocalDateTime.parse(dateStr, formatter);
+                if (raceDateTime.isBefore(currentDateTime)) {
+                    finishedRaces.add(new Race(name));
+                }
+            }
+
+            // Aktualizacja adaptera po dodaniu wyścigów
+            if (getView() != null) {
+                ListView finishedRacesListView = getView().findViewById(R.id.friends_list);
+                RaceListAdapter raceListAdapter = new RaceListAdapter(getContext(), finishedRaces);
+                finishedRacesListView.setAdapter(raceListAdapter);
+            }
+        }
+    }
+
+
+
+
+
     private static class Race {
         private String name;
 
@@ -265,9 +385,28 @@ public class MyRacesFragment extends Fragment {
         public String getName() {
             return name;
         }
-
     }
 
+    private static class RaceListAdapter extends ArrayAdapter<Race> {
+
+        public RaceListAdapter(Context context, List<Race> races) {
+            super(context, 0, races);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_race, parent, false);
+            }
+
+            TextView raceNameTextView = convertView.findViewById(R.id.race_name);
+            Race race = getItem(position);
+            if (race != null) {
+                raceNameTextView.setText(race.getName());
+            }
+
+            return convertView;
+        }
     }
-
-
+}

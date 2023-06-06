@@ -98,7 +98,7 @@ public class FindRaces extends AppCompatActivity implements SearchView.OnQueryTe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_races);
-        
+
         sp = getSharedPreferences("msb", MODE_PRIVATE);
         recyclerView = findViewById(R.id.kuba);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
