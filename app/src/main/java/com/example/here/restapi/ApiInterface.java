@@ -25,6 +25,9 @@ public interface ApiInterface {
     @GET("/api/user/email")
     Call<UserEmail> getEmail(@Header("Authorization") String authorization);
 
+    @GET("/api/ongoingActivity")
+    Call<UserMass> getMass(@Header("Authorization") String authorization);
+
     @GET("/api/user/friends")
     Call<List<UserData>> getFriends(@Header("Authorization") String authorization);
 
@@ -42,6 +45,9 @@ public interface ApiInterface {
 
     @POST("/api/user/register")
     Call<Token> register(@Body RegisterCredentials credentials);
+
+    @POST("/api/user/register")
+    Call<Void> add_training_stats(@Body StatsCredentials credentials);
 
     @POST("/api/user/add_data")
     Call<Void> addData(@Header("Authorization") String authorization, @Body UserData userData);
